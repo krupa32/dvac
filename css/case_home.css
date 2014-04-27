@@ -1,0 +1,18 @@
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+div#toolbar { margin-top:2em;
+	table { width:100%; }
+	td { width:50%; }
+	input[type=text] { width:70%; }
+}
+
+table#proceedings { margin-top:1em;
+	td.case,td.court { width:20%; }
+	td.petitioner,td.respondent { width:30%; }
+}
+
+
+div#addproceedings { margin:1em 0 4em 0; }

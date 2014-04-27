@@ -1,0 +1,43 @@
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+/* less definitions */
+@bg: #ccd;
+@fg: #000;
+@btnbg: #66f;
+@btnfg: #000;
+
+* 	{ margin:0; padding:0; border:dotted 1px #f00; font:12pt sans; }
+body 	{ background:@bg; color:@fg; }
+input[type=text], input[type=password] {
+	padding:1em; background: lighten(@bg, 20%); border:none; border-bottom:#fff; 
+}
+button	{ padding:1em; background:@btnbg; color:@btnfg; border:solid 1px #000; text-shadow:1px 1px 1px lighten(@btnbg,20%); }
+table	{ border-spacing:0; }
+p	{ margin:1em 1em 1em 1em; }
+h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
+
+.alignright	{ text-align:right; }
+.aligncenter	{ text-align:center; }
+.box		{ background:lighten(@bg, 10%); }
+
+.page	{ margin:0 20px; }
+.header { padding:1em; background:@fg; color:@bg; text-align:right; border-bottom:solid 1px #eee;
+	a,a:active,a:visited { margin-right:4em; color: #666; font-size:10px; font-weight:bold; text-decoration:none; text-shadow:1px 1px 1px #000; }
+	a:hover,a.hilite { color:#ccc; }
+}
+
+.sectiontitle { margin-top:4em; border-bottom:dotted 1px #000; }
+
+.list { width:100%; border-spacing:0 1em;
+	tr { background:lighten(@bg, 10%); 
+		td { border-right:dotted 1px @bg; }
+	}
+	.tableheader { background:none; text-shadow:1px 1px 1px #fff; text-align:center; 
+		p { margin-bottom:0; color:#333; font-weight:bold; }
+	}
+	a,a:active,a:visited { color:#00f; text-decoration:none; font-weight:bold; }
+	a:hover { text-decoration:underline; }
+}
