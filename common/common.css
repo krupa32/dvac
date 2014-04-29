@@ -1,0 +1,54 @@
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+/* less definitions */
+@bg: #ccd;
+@fg: #000;
+@btnbg: #fb0;
+@btnfg: #000;
+.gradient(@c1,@c2) {
+	background:-webkit-linear-gradient(top, @c1, @c2);
+	background:-moz-linear-gradient(top, @c1, @c2);
+}
+
+* 	{ margin:0; padding:0; font:12pt sans; }
+/*	{ border:dotted 1px #f00; }*/
+body 	{ background:@bg; color:@fg; }
+input[type=text], input[type=password] { padding:0.5em; background: lighten(@bg, 20%); border:solid 1px #666; }
+button	{ padding:0.5em; background:@btnbg; color:@btnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(@btnbg, darken(@btnbg,10%)); }
+select 	{ padding:0.5em; }
+textarea{ padding:0.5em; border:solid 1px #666; }
+table	{ width:100%; border-spacing:0; }
+p	{ margin:1em; }
+h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
+
+.alignright	{ text-align:right; }
+.aligncenter	{ text-align:center; }
+.box		{ background:lighten(@bg, 10%); }
+.fullwidth	{ width:100%; }
+
+.page	{ margin:0 20px; }
+.header { padding:1em; background:@fg; color:@bg; text-align:right; border-bottom:solid 1px #eee;
+	a,a:active,a:visited { margin-right:4em; color: #777; font-size:10px; font-weight:bold; text-decoration:none; text-shadow:1px 1px 1px #000; }
+	a:hover,a.hilite { color:#ccc; }
+}
+
+.sectiontitle { margin-top:2em; border-bottom:dotted 1px #000; }
+
+.list { width:100%; border-spacing:0 1em; 
+	tr { background:lighten(@bg, 10%);  border:solid 1px #666;
+		td { border-right:solid 1px @bg; }
+	}
+	.tableheader { background:none; text-shadow:1px 1px 1px #fff; text-align:center; 
+		p { margin-bottom:0; color:#333; font-weight:bold; }
+	}
+	a,a:active,a:visited { color:#C00; }
+}
+
+.dialog {
+	p { margin:0.5em;}
+}
+
+.ui-dialog { background:lighten(@bg, 10%); }

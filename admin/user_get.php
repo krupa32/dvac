@@ -2,10 +2,10 @@
 	include "../common/config.php";
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
-	$q = "select id,name from users";
+	$q = "select * from users where id='${_GET['id']}'";
 	$res = $db->query($q);
-	while ($row = $res->fetch_assoc())
-		$ret[] = $row;
+	$row = $res->fetch_assoc();
+	$ret = $row;
 
 	$res->close();
 

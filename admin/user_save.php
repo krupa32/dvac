@@ -1,17 +1,26 @@
 <?php
-	include "../config/config.php";
+	include "../common/config.php";
 
 	session_start();
 	if (!$_SESSION["user_id"])
 		header("location: /admin/login.php");
 
-	$password = crypt($_POST["password"]);
+	/* default password is "password".
+	 * default reporting officer id is "0".
+	 * default location is 1 (chennai)
+	 */
+	$password = crypt("password");
+	$rep_id = "0";
+	$location = 1;
+
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 	if ($_POST["action"] == "new")
-		$q = "insert into users values('${_POST['id']}', '${_POST['name']}', ${_POST['level']}, '$password', '${_POST['rep_id']}')";
+		$q = "insert into users values('${_POST['id']}', '${_POST['name']}', ${_POST['grade']}, '$password', '$rep_id', $location)";
+	else if ($_POST["action"] == "update")
+		$q = "update users set name='${_POST['name']}', grade=${_POST['grade']} where id='${_POST['id']}'";
 	else
-		$q = "update users set name='${_POST['name']}', level=${_POST['level']}, password='$password', " .
-			"reporting_officer_id='${_POST['rep_id']}' where id='${_POST['id']}'";
+		$q = "update users set password='$password' where id='${_POST['id']}'";
+
 	if (!$db->query($q))
 		$ret = $db->error;
 	else

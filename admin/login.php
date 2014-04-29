@@ -1,5 +1,5 @@
 <?php
-	include "../config/config.php";
+	include "../common/config.php";
 
 	session_start();
 	if ($_POST["password"]) {

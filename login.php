@@ -1,5 +1,5 @@
 <?php
-	include "config/config.php";
+	include "common/config.php";
 
 	session_start();
 
@@ -15,7 +15,7 @@
 			goto fail;
 
 		$_SESSION["user_id"] = $row["id"];
-		$_SESSION["name"] = $row["name"];
+		$_SESSION["user_name"] = $row["name"];
 
 		header("location: /");
 		exit(0);
