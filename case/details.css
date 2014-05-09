@@ -3,16 +3,23 @@
  * include less.js AFTER including this.
  */
 
-table#details { width:100%; margin:2em 0 0 0;
-	td { vertical-align:top; }
-	td#summary { width:30%; border:solid 1px #666; }
-}
+#page_details {
+	.caseid { font-size:2em; }
+	.title { margin:0.5em 0; color:#000;
+		a,a:visited { color:#00f; }
+	}
 
-table#proceedings { margin-top:1em;
-	td.date { width:15%; }
-	td.court{ width:25%; }
-	td.counsel { width:20%; }
-	td.remarks { width:40%; }
-}
+	.status { margin:1em 0 0 0; color:#090; }
+	.petitioner 	{ margin:1em 0 0 0; }
+	.respondent 	{ margin:1em 0 0 0; }
+	.io		{ margin:1em 0 0 0; }
+	.actions { margin:2em 0 4em 0; 
+		button { width:12em; }
+	}
+	.assigned { margin:1em 0 0 0; color:#c00; }
 
-div#addproceedings { margin:1em 0 4em 0; }
+	.text { margin:1em 0 0 4em; }
+	.activity { padding:1em 0; border-bottom:dotted 1px #666;
+		.extra { color:#666; }
+	}
+}

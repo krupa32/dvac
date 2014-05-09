@@ -1,3 +1,11 @@
-#tbl_casedetails {
-	textarea { height:4em; }
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+.form { width:50%; margin:0 auto;
+	td {  padding:0.5em; }
 }
+.field { width:30%; }
+.data { width:70%;  }
+

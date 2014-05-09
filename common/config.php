@@ -50,6 +50,7 @@
 	 */
 	$locations = array(
 			"Chennai"		=> 1,
-			"Madurai"		=> 2
+			"Madurai"		=> 2,
+			"Coimbatore"		=> 3
 			);
 ?>

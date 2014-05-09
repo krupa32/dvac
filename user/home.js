@@ -1,16 +1,28 @@
 var home = {
 	init: function() {
-		$.get('/user/get_details.php', null, function(data){
-			var resp = JSON.parse(data);
-			$('#user_name').val(resp.name);
-			$('#user_grade').val(resp.grade);
-			$('#user_rep_officer').val(resp.reporting_officer);
-			$('#user_rep_officer').data('id', resp.reporting_officer_id);
-			$('#user_location').val(resp.location);
+		/* get grades */
+		utils.dynamic_combo('#user_grade', '/common/get_grades.php', function(){
+			/* get locations */
+			utils.dynamic_combo('#user_location', '/common/get_locations.php', function(){
+				/* get user details and fill */
+				$.get('/user/get_details.php', null, function(data){
+					var resp = JSON.parse(data);
+					$('#user_name').val(resp.name);
+					$('#user_grade').val(resp.grade);
+					$('#user_rep_officer').val(resp.reporting_officer);
+					$('#user_rep_officer').data('id', resp.reporting_officer_id);
+					$('#user_location').val(resp.location);
+				});
+			});
+		});
+
+		$('#user_rep_officer').autocomplete({
+			source: '/common/get_user_autocomplete.php'
 		});
 
 		$('#btn_save').click(home.save);
 		$('#btn_changepassword').click(home.change_password);
+
 	},
 
 	save: function() {
