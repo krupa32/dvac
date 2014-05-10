@@ -10,7 +10,7 @@
 	$res = $db->query($q);
 	while ($row = $res->fetch_assoc()) {
 		$grade = array_search($row["grade"], $grades);
-		$entry["label"] = "${row['name']}, $grade (${row['id']})";
+		$entry["label"] = "${row['name']}, $grade";
 		$entry["value"] = $row['id'];
 		$ret[] = $entry;
 	}

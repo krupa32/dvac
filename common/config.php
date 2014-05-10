@@ -53,4 +53,26 @@
 			"Madurai"		=> 2,
 			"Coimbatore"		=> 3
 			);
+
+	/* categories
+	 * categories to which a court case can belong.
+	 */
+	$categories = array(
+			"Crl.OP"	=> 1,
+			"RC"		=> 2,
+			"CA"		=> 3,
+			"WP"		=> 4,
+			"WA"		=> 5
+			);
+
+	/* activities
+	 * list of activities for court cases.
+	 */
+	$activities = array(
+			"ADDCASE"		=> 1,
+			"ADDPROCEEDING"		=> 2,
+			"ADDCOMMENT"		=> 3,
+			"ASSIGN"		=> 4,
+			"CLOSE"			=> 5
+			);
 ?>

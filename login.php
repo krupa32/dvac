@@ -3,9 +3,9 @@
 
 	session_start();
 
-	if ($_POST && $_POST["user_id"]) {
+	if ($_POST && $_POST["login"]) {
 		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
-		$q = "select id,name,password from users where id='${_POST['user_id']}'";
+		$q = "select id,name,password from users where login='${_POST['login']}'";
 		$res = $db->query($q);
 		if ($res->num_rows == 0)
 			goto fail;
@@ -41,7 +41,7 @@ fail:
 <p id="error"><?php if ($error) print $error; ?></p>
 <form method="post" action="/login.php">
 <div>
-	<p>User Id<br><input type="text" name="user_id"></input></p>
+	<p>User Id<br><input type="text" name="login"></input></p>
 	<p>Password<br><input type="password" name="password"></input></p>
 	<p id="loginbutton"><input type="submit" value="Login"></input></p>
 </div>

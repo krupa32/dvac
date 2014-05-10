@@ -22,8 +22,8 @@
 <div id="users"></div>
 <div id="user_edit" class="dialog">
 <table>
-	<tr><td>Id</td><td><input type="text" id="user_id"></input></td></tr>
-	<tr><td>Title</td><td><select id="user_grade">
+	<tr><td>Login Id</td><td><input type="text" id="login"></input></td></tr>
+	<tr><td>Title</td><td><select id="grade">
 		<option value="10">Inspector</option>
 		<option value="20">DSP</option>
 		<option value="30">Additional SP</option>
@@ -32,8 +32,8 @@
 		<option value="60">Joint Director</option>
 		<option value="70">Director</option>
 		</select></td></tr>
-	<tr><td>Name</td><td><input type="text" id="user_name"></input></td></tr>
-	<tr><td>&nbsp;</td><td><button id="user_save">Save</button><button id="user_reset_password">Reset Password</button></td></tr>
+	<tr><td>Name</td><td><input type="text" id="name"></input></td></tr>
+	<tr><td>&nbsp;</td><td><button id="save">Save</button><button id="reset_password">Reset Password</button></td></tr>
 </table>
 </div> <!-- #edit_user -->
 </body>

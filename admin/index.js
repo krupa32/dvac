@@ -7,7 +7,8 @@ var app = {
 			modal: true,
 			open: app.user_edit_dlg_on_open,
 			title: 'Add/Edit User Information',
-			position: { my:'top', at:'top', of:'#listofusers'}
+			position: { my:'top', at:'top', of:'#listofusers'},
+			width: 400
 		});
 
 		app.user_list_update();
@@ -16,17 +17,18 @@ var app = {
 			$('div#user_edit').data('id',null).dialog('open');
 		});
 
-		$('button#user_save').click(function(){
+		$('button#save').click(function(){
 			app.user_save();
 		});
 
-		$('button#user_reset_password').click(function(){
+		$('button#reset_password').click(function(){
 			app.user_reset_password();
 		});
 	},
 
 	user_list_update: function() {
 		$.get('/admin/user_list.php', null, function(data) {
+			//console.log('user_list_update recv:' + data);
 			var resp = JSON.parse(data);
 			var div = $('div#users');
 			div.html('');
@@ -45,14 +47,16 @@ var app = {
 
 	user_save: function() {
 		var param = {};
-		if ($('#user_edit').data('id'))
+		if ($('#user_edit').data('id')) {
 			param.action = 'update';
-		else
+			param.id = $('#user_edit').data('id');
+		} else
 			param.action = 'new';
-		param.id = $('#user_id').val();
-		param.name = $('#user_name').val();
-		param.grade = $('#user_grade').val();
+		param.login = $('#login').val();
+		param.name = $('#name').val();
+		param.grade = $('#grade').val();
 		$.post('/admin/user_save.php', param, function(data){
+			//console.log('user_save recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp != 'ok') {
 				alert('Error:' + data);
@@ -66,8 +70,9 @@ var app = {
 	user_reset_password: function() {
 		var param = {};
 		param.action = 'reset';
-		param.id = $('#user_id').val();
+		param.id = $('#user_edit').data('id');
 		$.post('/admin/user_save.php', param, function(data){
+			//console.log('user_reset_password recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp != 'ok') {
 				alert('Error:' + data);
@@ -84,10 +89,11 @@ var app = {
 			var param = {};
 			param.id = id;
 			$.get('/admin/user_get.php', param, function(data){
+				//console.log('user_edit_dlg_on_open recv:' + data);
 				var resp = JSON.parse(data);
-				$('#user_id').val(resp.id);
-				$('#user_name').val(resp.name);
-				$('#user_grade').val(resp.grade);
+				$('#login').val(resp.login);
+				$('#name').val(resp.name);
+				$('#grade').val(resp.grade);
 			});
 		}
 	}

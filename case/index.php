@@ -18,6 +18,7 @@
 	<script type="text/javascript" src="/common/jquery.js"></script>
 	<script type="text/javascript" src="/common/jquery-ui.js"></script>
 	<script type="text/javascript" src="/common/less.js"></script>
+	<script type="text/javascript" src="/common/utils.js"></script>
 	<script type="text/javascript" src="/case/toolbar.js"></script>
 	<script type="text/javascript" src="/case/recent.js"></script>
 	<script type="text/javascript" src="/case/editcase.js"></script>
@@ -58,7 +59,7 @@
 
 	<div class="toolbarsearcharea">
 		<select>
-			<option>Case Id</option>
+			<option>Case Number</option>
 			<option>Petitioner</option>
 			<option>Respondent</option>
 			<option>IO</option>
@@ -123,38 +124,31 @@
 	</colgroup>
 	<tr>
 		<td>Category</td>
-		<td><select>
-			<option value="1">Crl. OP</option>
-			<option value="2">RC</option>
-			<option value="3">CA</option>
-			<option value="4">WP</option>
-			<option value="5">WA</option>
-			</select>
-		</td>
+		<td><select id="sel_category"></select></td>
 	</tr>
 	<tr>
-		<td><p>Case Id</p></td>
-		<td><p><input type="text"></input></p>
+		<td><p>Case Number</p></td>
+		<td><p><input type="text" id="txt_case_num" value="Crl.OP"></input></p>
 	</tr>
 	<tr>
 		<td><p>Investigating Officer</p></td>
-		<td><p><input type="text" class="fullwidth"></input></p>
+		<td><p><input type="text" class="fullwidth" id="txt_investigator"></input></p>
 	</tr>
 	<tr>
 		<td><p>Petitioner</p></td>
-		<td><p><textarea class="fullwidth"></textarea></p>
+		<td><p><textarea class="fullwidth" id="ta_petitioner"></textarea></p>
 	</tr>
 	<tr>
 		<td><p>Respondent</p></td>
-		<td><p><textarea class="fullwidth"></textarea></p>
+		<td><p><textarea class="fullwidth" id="ta_respondent"></textarea></p>
 	</tr>
 	<tr>
 		<td><p>Prayer</p></td>
-		<td><p><textarea class="fullwidth"></textarea></p></td>
+		<td><p><textarea class="fullwidth" id="ta_prayer"></textarea></p></td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
-		<td><p class="aligncenter"><button>Save</button></p></td>
+		<td><p class="aligncenter"><button id="btn_save_case">Save</button></p></td>
 	</tr>
 
 	</table>

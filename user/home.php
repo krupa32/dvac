@@ -26,7 +26,7 @@
 <div class="header">
 	<a class="hilite" href="/user/home.php">MY PROFILE</a>
 	<a href="">WEEKLY REPORTS</a>
-	<a href="/case/home.php">COURT CASES</a>
+	<a href="/case/">COURT CASES</a>
 	<a href="/logout.php">LOGOUT</a>
 </div>
 <div class="page">
@@ -35,7 +35,7 @@
 	<tr><td colspan="2" class="sectiontitle">Update User Information</td></tr>
 	<tr><td><p>Name</p></td><td><p><input type="text" id="user_name"></input></p></td></tr>
 	<tr><td><p>Title</p></td><td><p><select id="user_grade"></select></p></td></tr>
-	<tr><td><p>Reporting Officer Id</p></td><td><p>
+	<tr><td><p>Reporting Officer</p></td><td><p>
 		<input type="text" id="user_rep_officer"></input><br>
 		<span class="hint">Enter partial name to show a list</span><br>
 		</p></td></tr>

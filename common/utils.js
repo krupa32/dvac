@@ -5,7 +5,8 @@ var utils = {
 			for (i in resp)
 				$(sel).append('<option value="' + resp[i].value + '">' + resp[i].name + '</option>');
 
-			cb();
+			if (cb)
+				cb();
 		});
 	}
 };
