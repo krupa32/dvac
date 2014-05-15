@@ -18,14 +18,31 @@ var editcase = {
 
 	show: function(id) {
 		$('.page').hide();
-		$('#page_editcase').data('id', null).show();
+		$('#page_editcase').data('id', id).show();
+
+		$('#sel_category').attr('disabled', false);
 
 		// get case categories
 		utils.dynamic_combo('#sel_category', '/common/get_categories.php', null);
 
-		if (id) {
-			// get and fill in case details
-		}
+		if (!id)
+			return;
+
+		// get and fill in case details corresponding to id
+		var param = {};
+		param.id = id;
+		$.get('/case/get_details.php', param, function(data){
+			//console.log('editcase.show recv:' + data);
+			var resp = JSON.parse(data);
+			$('#txt_case_num').val(resp.case_num);
+			$('#txt_investigator').val(resp.investigator).data('id', resp.investigator_id);
+			$('#ta_petitioner').val(resp.petitioner);
+			$('#ta_respondent').val(resp.respondent);
+			$('#ta_prayer').val(resp.prayer);
+
+			$('#sel_category').attr('disabled', true);
+		});
+
 	},
 
 	save: function() {
@@ -37,14 +54,17 @@ var editcase = {
 		param.respondent = $('#ta_respondent').val();
 		param.prayer = $('#ta_prayer').val();
 		$.post('/case/save_case.php', param, function(data){
-			console.log('save_case recv:' + data);
+			//console.log('save_case recv:' + data);
 			var resp = JSON.parse(data);
 			if (typeof resp === 'string') {
 				alert('Error:' + resp);
 				return;
 			}
 
+			navigation.update_case_stats();
+
 			// open the case details with the new case id
+			details.show(resp);
 		});
 	}
 };

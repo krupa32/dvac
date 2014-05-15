@@ -13,8 +13,10 @@
 	.petitioner 	{ margin:1em 0 0 0; }
 	.respondent 	{ margin:1em 0 0 0; }
 	.io		{ margin:1em 0 0 0; }
+	.assigned_to	{ margin:1em 0 0 0; }
 	.actions { margin:2em 0 4em 0; 
 		button { width:12em; }
+		#details_close	{ background:#333; color:#ccc; text-shadow:1px 1px 1px #000; }
 	}
 	.assigned { margin:1em 0 0 0; color:#c00; }
 

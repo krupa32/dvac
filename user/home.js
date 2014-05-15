@@ -36,7 +36,7 @@ var home = {
 		param.reporting_to = $('#user_rep_officer').data('id');
 		param.location = $('#user_location').val();
 		$.post('/user/save.php', param, function(data){
-			console.log('save recv:' + data);
+			//console.log('save recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp != "ok") {
 				alert('Error: ' + resp);
@@ -53,7 +53,7 @@ var home = {
 		var param = {};
 		param.password = $('#user_password').val();
 		$.post('/user/change_password.php', param, function(data){
-			console.log('change_password recv:' + data);
+			//console.log('change_password recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp != "ok") {
 				alert('Error: ' + resp);

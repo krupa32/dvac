@@ -9,6 +9,12 @@
 	$db_password = "fossil27";
 	$db_name = "dvac";
 
+	/* num_recent_activities_per_fetch
+	 * this specifies the number of recent activities shown initially,
+	 * AND the number of activities fetched when 'more' button is clicked.
+	 */
+	$num_recent_activities_per_fetch = 20;
+
 	/* user grades
 	 * each user has a grade, which is a number corresponding
 	 * to his current designation. it is intentionally defined
@@ -70,9 +76,29 @@
 	 */
 	$activities = array(
 			"ADDCASE"		=> 1,
-			"ADDPROCEEDING"		=> 2,
-			"ADDCOMMENT"		=> 3,
-			"ASSIGN"		=> 4,
-			"CLOSE"			=> 5
+			"UPDATECASE"		=> 2,
+			"ADDPROCEEDING"		=> 3,
+			"ADDCOMMENT"		=> 4,
+			"ASSIGN"		=> 5,
+			"CLOSE"			=> 6
+			);
+
+	/* statuses
+	 * case statuses.
+	 */
+	$statuses = array(
+			"OPEN"		=> 1,
+			"CLOSED"	=> 2
+			);
+	
+	/* disposals.
+	 * court case disposals.
+	 */
+	$disposals = array(
+			"NONE"			=> 1,
+			"ADJOURNED"		=> 2,
+			"INTERIM ORDER PASSED"	=> 3,
+			"FINAL ORDER PASSED"	=> 4,
+			"OTHER"			=> 5
 			);
 ?>

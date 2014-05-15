@@ -1,7 +1,7 @@
 <?php
 	include "./config.php";
 
-	error_log("autocomplete term:" . $_GET['term']);
+	//error_log("autocomplete term:" . $_GET['term']);
 
 	$ret = array();
 
@@ -18,6 +18,6 @@
 	$res->close();
 	$db->close();
 
-	error_log("returning:" . json_encode($ret));
+	//error_log("returning:" . json_encode($ret));
 	print json_encode($ret);
 ?>

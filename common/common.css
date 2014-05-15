@@ -44,7 +44,7 @@ h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px
 
 
 .content 	{ border-top:solid 1px #fff; }
-.nav		{ float:left; width:15%; margin:1em 0 1em 4em; background:darken(@bg, 25%); border:solid 1px darken(@bg, 50%);
+.nav		{ float:left; width:15%; margin:1em 0 1em 4em; background:darken(@bg, 15%); border:solid 1px darken(@bg, 50%);
 		  p { padding:2em; border-bottom:dotted 1px @bg;}
 		  a,a:visited { color:#000; text-decoration:none; font-weight:normal; text-shadow:1px 1px 1px #ccc; }
 		  a:hover { text-decoration:underline; }
