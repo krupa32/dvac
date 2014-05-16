@@ -26,7 +26,7 @@ fail:
 <html>
 <head>
 <style type="text/css">
-	body { text-align:center; font: 12pt sans; background-color:#303040; color:#c0c0c0; text-shadow:1px 1px 1px #000; }
+	body { text-align:center; font: 12pt sans,verdana,arial; background-color:#303040; color:#c0c0c0; text-shadow:1px 1px 1px #000; }
 	h1 { margin:40px; }
 	div { width:400px; margin:auto; text-align:left; }
 	input[type=text], input[type=password] { width:100%; padding:8px; font: 12pt sans; background-color:#c0c0c0; color:#000; 

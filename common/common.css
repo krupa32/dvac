@@ -5,7 +5,7 @@
 
 /* less definitions */
 @bg: #ccd;
-@fg: #222;
+@fg: #000;
 @btnbg: #fb0;
 @btnfg: #000;
 .gradient(@c1,@c2) {
@@ -13,11 +13,12 @@
 	background:-moz-linear-gradient(top, @c1, @c2);
 }
 
-* 	{ margin:0; padding:0; font:10pt sans; }
+* 	{ margin:0; padding:0; font:10pt sans,verdana,arial; color:@fg; }
 /*	{ border:dotted 1px #f00; }*/
-body 	{ background:@bg; color:@fg; }
+body 	{ background:@bg; }
 input[type=text], input[type=password] { padding:0.5em; background: lighten(@bg, 20%); border:solid 1px #666; }
 button	{ padding:0.5em; background:@btnbg; color:@btnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(@btnbg, darken(@btnbg,10%)); }
+button:disabled	{ .gradient(#999, #666); }
 select 	{ padding:0.5em; }
 textarea{ height:6em; padding:0.5em; border:solid 1px #666; }
 table	{ width:100%; border-spacing:0; }
@@ -44,12 +45,12 @@ h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px
 
 
 .content 	{ border-top:solid 1px #fff; }
-.nav		{ float:left; width:15%; margin:1em 0 1em 4em; background:darken(@bg, 15%); border:solid 1px darken(@bg, 50%);
+.nav		{ float:left; width:15%; margin:2em 0 1em 4em; background:darken(@bg, 15%); border:solid 1px darken(@bg, 50%);
 		  p { padding:2em; border-bottom:dotted 1px @bg;}
 		  a,a:visited { color:#000; text-decoration:none; font-weight:normal; text-shadow:1px 1px 1px #ccc; }
 		  a:hover { text-decoration:underline; }
 		}
-.pagearea	{ margin:1em 4em 1em 25%; }
+.pagearea	{ margin:2em 4em 1em 25%; }
 
 .sectiontitle { border-bottom:dotted 1px #000; }
 .hint { font-size:12px; color:darken(@bg, 40%); }

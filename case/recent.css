@@ -4,7 +4,7 @@
  */
 
 .activity { padding:1em 0; border-bottom:dotted 1px #666;
-	.title { margin:0.5em 0; color:#000;
+	.title { margin:0.5em 0; color:#333; font-weight:bold;
 		a,a:visited { color:#00f; }
 	}
 	.extra { color:#666; }

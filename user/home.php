@@ -25,7 +25,7 @@
 <body>
 <div class="header">
 	<a class="hilite" href="/user/home.php">MY PROFILE</a>
-	<a href="">WEEKLY REPORTS</a>
+	<a>WEEKLY REPORTS</a>
 	<a href="/case/">COURT CASES</a>
 	<a href="/logout.php">LOGOUT</a>
 </div>

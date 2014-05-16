@@ -5,11 +5,10 @@
 
 #page_details {
 	.caseid { font-size:2em; }
-	.title { margin:0.5em 0; color:#000;
-		a,a:visited { color:#00f; }
-	}
 
-	.status { margin:1em 0 0 0; color:#090; }
+	.status { margin:1em 0 0 0;
+		span { color:#C00; font-weight:bold; }
+	}
 	.petitioner 	{ margin:1em 0 0 0; }
 	.respondent 	{ margin:1em 0 0 0; }
 	.io		{ margin:1em 0 0 0; }

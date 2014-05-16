@@ -38,6 +38,12 @@ var details = {
 
 			details.show_history(id);
 
+			/* if case is closed, all buttons are disabled */
+			if (resp.status == 'CLOSED')
+				$('#page_details button').attr('disabled', true);
+			else
+				$('#page_details button').attr('disabled', false);
+
 			$('#page_details').show();
 		});
 	},
