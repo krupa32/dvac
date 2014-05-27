@@ -57,7 +57,8 @@
 	$locations = array(
 			"Chennai"		=> 1,
 			"Madurai"		=> 2,
-			"Coimbatore"		=> 3
+			"Coimbatore"		=> 3,
+			"Tirunelveli"		=> 4
 			);
 
 	/* categories

@@ -17,7 +17,7 @@
 		$_SESSION["user_id"] = $row["id"];
 		$_SESSION["user_name"] = $row["name"];
 
-		header("location: /case/");
+		header("location: /case/index.php");
 		exit(0);
 fail:
 		$error = "Login failed. Please try again";

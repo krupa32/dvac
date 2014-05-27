@@ -1,0 +1,13 @@
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+.activity { padding:1em 0; border-bottom:dotted 1px #666;
+	.title { margin:0.5em 0; color:#333; font-weight:bold;
+		a,a:visited { color:#00f; }
+	}
+	.extra { color:#666; }
+	.text { margin:1em 0 0 4em; }
+}
+

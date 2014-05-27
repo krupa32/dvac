@@ -9,7 +9,7 @@
 
 	<link rel="stylesheet" href="/common/jquery-ui.css"></link>
 	<link rel="stylesheet/less" href="/common/common.css"></link>
-	<link rel="stylesheet/less" href="/case/recent.css"></link>
+	<link rel="stylesheet/less" href="/case/caselist.css"></link>
 	<link rel="stylesheet/less" href="/case/editcase.css"></link>
 	<link rel="stylesheet/less" href="/case/search.css"></link>
 	<link rel="stylesheet/less" href="/case/details.css"></link>
@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="/common/utils.js"></script>
 	<script type="text/javascript" src="/case/toolbar.js"></script>
 	<script type="text/javascript" src="/case/navigation.js"></script>
-	<script type="text/javascript" src="/case/recent.js"></script>
+	<script type="text/javascript" src="/case/caselist.js"></script>
 	<script type="text/javascript" src="/case/editcase.js"></script>
 	<script type="text/javascript" src="/case/search.js"></script>
 	<script type="text/javascript" src="/case/details.js"></script>
@@ -35,7 +35,7 @@
 
 			toolbar.init();
 			navigation.init();
-			recent.init();
+			caselist.init();
 			editcase.init();
 			search.init();
 			details.init();
@@ -44,7 +44,7 @@
 			closecase.init();
 			assign.init();
 
-			recent.show();
+			caselist.show();
 		});
 	</script>
 </head>
@@ -58,7 +58,7 @@
 
 <div class="toolbar">
 	<div class="toolbarbuttonarea">
-		<button id="btn_addcase">Add Case</button>
+		<button class="primary" id="btn_addcase">Add Case</button>
 	</div>
 
 	<div class="toolbarsearcharea">
@@ -70,59 +70,80 @@
 			<option value="assigned_to">Assigned</option>
 		</select>
 		<input type="text" id="toolbar_data"></input>
-		<button id="btn_search">Search</button></p></td>
+		<button class="primary" id="btn_search">Search</button></p></td>
 	</div>
 </div>
 
 <div class="content">
 	<div class="nav">
-		<p><a href="" id="nav_recent">Recent Activity</a></p>
-		<p><a href="" id="nav_open">Open Cases (<span id="nav_num_open_cases"></span>)</a></p>
-		<p><a href="" id="nav_my">My Cases (<span id="nav_num_my_cases">3</span>)</a></p>
+		<a href="/case/index.php" class="hilite">Recent Activity</a>
+		<p class="navsectiontitle">Case Summary</p>
+		<div class="count important" id="num_my_cases">3</div><a href="">My Cases</a>
+		<div class="count" id="num_pending_court">3</div><a href="">Pending in Court</a>
+		<div class="count important" id="num_pending_dvac">3</div><a href="">Pending with DVAC</a>
+		<p class="navsectiontitle">Hearings</p>
+		<div class="count" id="num_upcoming_hearings">3</div><a href="">Upcoming Hearings</a>
+		<p class="navsectiontitle">Cases by Category</p>
+		<div class="count" id="num_crlop">305</div><a href="">Crl.O.P</a>
+		<div class="count" id="num_wp">3</div><a href="">WP</a>
+		<div class="count" id="num_wa">3</div><a href="">WA</a>
 	</div>
-	<div class="pagearea">
-	</div>
-	<div class="clear"></div>
-</div>
 
-<div class="page" id="page_recent">
-	<p class="sectiontitle">RECENT ACTIVITY</p>
-	<div id="activityarea">
-		<!--
-		<div class="activity">
-			<p class="title floatright">Today</p>
-			<p class="title">Raj Narayan, DSP added case <a href="10">Crl.OP/2000/14</a></p>
-			<p class="extra">Filed by Tmt. Kanimozhi<br>
-				Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
+	<div class="pagearea"></div>
+
+	<div class="clear"></div>
+
+</div> <!-- content -->
+
+<div class="page" id="page_caselist">
+	<div id="caselist">
+		<div class="case">
+			<p><a href="14">Crl.OP.2003/43/4</a></p>	
+			<p class="extra">Filed by Tmt. Kanimozhi<br>Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
 			<p class="text">To disburse death cum retirement grtuity for my unblemished service within a stipulated
 				period fixed by the court.</p>
+			<div class="activityarea">
+				<div class="activity">
+					<p class="title floatright">Today</p>
+					<p class="title">Raj Narayan, DSP added a proceeding</p>
+					<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
+						ADJOURNED to Mar 04, 2014</p>
+					<p class="text">Court has directed to submit more documents</p>
+				</div>
+				<div class="activity">
+					<p class="title floatright">Today</p>
+					<p class="title">Raj Narayan, DSP added a proceeding</p>
+					<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
+						ADJOURNED to Mar 04, 2014</p>
+					<p class="text">Court has directed to submit more documents</p>
+				</div>
+			</div>
 		</div>
-		<div class="activity">
-			<p class="title floatright">Today</p>
-			<p class="title">Raj Narayan, DSP assigned case <a href="">Crl.OP/2000/14</a> to Shahul, SP</p>
-			<p class="extra">Filed by Tmt. Kanimozhi<br>
-			Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
-			<p class="text">Assigning to Shahul for filing in court</p>
+		<div class="case">
+			<p><a href="14">Crl.OP.2003/43/4</a></p>	
+			<p class="extra">Filed by Tmt. Kanimozhi<br>Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
+			<p class="text">To disburse death cum retirement grtuity for my unblemished service within a stipulated
+				period fixed by the court.</p>
+			<div class="activityarea">
+				<div class="activity">
+					<p class="title floatright">Today</p>
+					<p class="title">Raj Narayan, DSP added a proceeding</p>
+					<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
+						ADJOURNED to Mar 04, 2014</p>
+					<p class="text">Court has directed to submit more documents</p>
+				</div>
+				<div class="activity">
+					<p class="title floatright">Today</p>
+					<p class="title">Raj Narayan, DSP added a proceeding</p>
+					<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
+						ADJOURNED to Mar 04, 2014</p>
+					<p class="text">Court has directed to submit more documents</p>
+				</div>
+			</div>
 		</div>
-		<div class="activity">
-			<p class="title floatright">2 days ago</p>
-			<p class="title">Raj Narayan, DSP updated a proceeding for case <a href="">Crl.OP/2000/14</a></p>
-			<p class="extra">Filed by Tmt. Kanimozhi<br>
-			Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC<br>
-			At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu</p>
-			<p class="text">Court has directed to submit more documents</p>
-		</div>
-		<div class="activity">
-			<p class="title floatright">2 days ago</p>
-			<p class="title">Raj Narayan, DSP updated a proceeding for case <a href="">Crl.OP/2000/14</a></p>
-			<p class="extra">Filed by Tmt. Kanimozhi<br>
-				Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</br>
-				At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu</p>
-			<p class="text"></p>
-		</div>
-		-->
-	</div> <!-- activityarea -->
-</div> <!-- page_recent -->
+
+	</div> <!-- caselist -->
+</div> <!-- page_caselist -->
 
 <div class="page" id="page_editcase">
 	<table class="form">

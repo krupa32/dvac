@@ -4,27 +4,19 @@
  */
 
 /* less definitions */
-@bg: #ccd;
-@fg: #000;
-@btnbg: #fb0;
-@btnfg: #000;
+@bg: #f0f0f0;
+@fg: #333;
+@pbtnbg: #8099ff;
+@pbtnfg: #000;
 .gradient(@c1,@c2) {
 	background:-webkit-linear-gradient(top, @c1, @c2);
 	background:-moz-linear-gradient(top, @c1, @c2);
 }
+.shadow(@c) { text-shadow:1px 1px 1px @c; }
 
-* 	{ margin:0; padding:0; font:10pt sans,verdana,arial; color:@fg; }
-/*	{ border:dotted 1px #f00; }*/
-body 	{ background:@bg; }
-input[type=text], input[type=password] { padding:0.5em; background: lighten(@bg, 20%); border:solid 1px #666; }
-button	{ padding:0.5em; background:@btnbg; color:@btnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(@btnbg, darken(@btnbg,10%)); }
-button:disabled	{ .gradient(#999, #666); }
-select 	{ padding:0.5em; }
-textarea{ height:6em; padding:0.5em; border:solid 1px #666; }
-table	{ width:100%; border-spacing:0; }
-p	{ }
-h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
 
+
+/* common and useful classes */
 .alignright	{ text-align:right; }
 .aligncenter	{ text-align:center; }
 .box		{ background:lighten(@bg, 10%); }
@@ -32,25 +24,50 @@ h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px
 .floatright	{ float:right; }
 .clear		{ clear:both; }
 
-.header { padding:1em 4em; background:#304050; color:@bg; text-align:right; border-bottom:solid 1px #000;
+
+
+/* html element defaults */
+* 	{ margin:0; padding:0; font:10pt sans,verdana,arial; color:@fg; }
+/*	{ border:dotted 1px #f00; }*/
+body 	{ background:@bg; }
+input[type=text], input[type=password] { padding:0.5em; background: lighten(@bg, 20%); border:solid 1px #666; }
+select 	{ padding:0.5em; }
+textarea{ height:6em; padding:0.5em; border:solid 1px #666; }
+table	{ width:100%; border-spacing:0; }
+p	{ }
+h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
+button	{ padding:0.5em; }
+button:disabled	{ .gradient(#999, #666); }
+button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(@pbtnbg, darken(@pbtnbg,10%)); }
+
+
+
+
+.header { padding:1em 4em; background:#333; color:@bg; text-align:right; border-bottom:solid 1px #000;
 	a,a:active,a:visited { margin-left:4em; color: #777; font-size:10px; font-weight:bold; text-decoration:none; text-shadow:1px 1px 1px #000; }
 	a:hover,a.hilite { color:#ccc; }
 }
 
-.toolbar 		{ border-top:solid 1px #fff; border-bottom:solid 1px #000; }
-.toolbarbuttonarea 	{ float:left; margin:1em 0 1em 4em; }
-.toolbarsearcharea 	{ margin:1em 4em 1em 0; text-align:right; 
+.toolbar 		{ border-top:solid 1px #fff; border-bottom:solid 1px #666; }
+.toolbarbuttonarea 	{ float:left; margin:2em 0 2em 4em; }
+.toolbarsearcharea 	{ margin:2em 4em 2em 0; text-align:right; 
 	input[type=text] { width:24em; }
 }
 
 
 .content 	{ border-top:solid 1px #fff; }
-.nav		{ float:left; width:15%; margin:2em 0 1em 4em; background:darken(@bg, 15%); border:solid 1px darken(@bg, 50%);
-		  p { padding:2em; border-bottom:dotted 1px @bg;}
-		  a,a:visited { color:#000; text-decoration:none; font-weight:normal; text-shadow:1px 1px 1px #ccc; }
-		  a:hover { text-decoration:underline; }
+.nav		{ float:left; width:20%; margin:0 0 0 4em;
+		  a,a:visited { display:block; padding:0.5em; 
+		  	color:#333; text-decoration:none; font-weight:bold; .shadow(#fff); 
+			border-bottom:dotted 1px #666;
+		  }
+		  a:hover { background:#ccc; }
+		  .hilite { background:#ccc; }
+		  .count { float:right; margin:0.2em; padding:0.3em 0.5em; font-weight:bold; }
+		  .important { background:#f33; color:#fff; .shadow(#000); }
+		  .navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#999; .shadow(#fff); border-bottom:dotted 1px #666; font-weight:bold; }
 		}
-.pagearea	{ margin:2em 4em 1em 25%; }
+.pagearea	{ margin:2em 4em 1em 28%;  }
 
 .sectiontitle { border-bottom:dotted 1px #000; }
 .hint { font-size:12px; color:darken(@bg, 40%); }
