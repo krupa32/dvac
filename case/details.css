@@ -3,16 +3,19 @@
  * include less.js AFTER including this.
  */
 
-#page_details {
-	.caseid { font-size:2em; }
+.shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
 
-	.status { margin:1em 0 0 0;
-		span { color:#C00; font-weight:bold; }
+#page_details {
+	.casenum { font-size:2em; }
+
+	.status { margin:2em 0 0.5em 0;
+		span { padding:0.5em; color:#fff; background:#f33; .shadow(#000); }
+		a,a:visited { color:#00f; }
 	}
-	.petitioner 	{ margin:1em 0 0 0; }
-	.respondent 	{ margin:1em 0 0 0; }
-	.io		{ margin:1em 0 0 0; }
-	.assigned_to	{ margin:1em 0 0 0; }
+	.petitioner 	{ margin:2em 2em 2em 0; }
+	.respondent 	{ margin:2em 2em 2em 0; }
+	.io		{ margin:2em 2em 2em 0; }
+	.assigned_to	{ margin:2em 2em 2em 0; }
 	.actions { margin:2em 0 4em 0; 
 		button { width:12em; }
 		#details_close	{ background:#333; color:#ccc; text-shadow:1px 1px 1px #000; }

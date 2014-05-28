@@ -3,11 +3,23 @@
  * include less.js AFTER including this.
  */
 
-.activity { padding:1em 0; border-bottom:dotted 1px #666;
-	.title { margin:0.5em 0; color:#333; font-weight:bold;
-		a,a:visited { color:#00f; }
+.shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
+
+.caselist {
+	.case { padding:0 0 2em 0;
+		.casenum {
+			a,a:visited 	{ color:#00f; font-size:1.2em; }
+		}
+		.extra 		{ margin:0.5em 0; line-height:1.3em; }
+		.text		{ margin:0 4em;	}
+		.activityarea 	{ margin:1em 0 1em 4em; background:#e0e0e0; border:solid 1px #999;
+			.activity { padding:1em; border-bottom:dotted 1px #999;
+				.title	{ font-weight:bold; color:#333; .shadow(); 	}
+				.extra 	{ margin:0.5em 0; line-height:1.3em; 	}
+				.text 	{ margin:0 4em; 	}
+			}
+		}
 	}
-	.extra { color:#666; }
-	.text { margin:1em 0 0 4em; }
 }
+
 

@@ -12,7 +12,7 @@
 	background:-webkit-linear-gradient(top, @c1, @c2);
 	background:-moz-linear-gradient(top, @c1, @c2);
 }
-.shadow(@c) { text-shadow:1px 1px 1px @c; }
+.shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
 
 
 
@@ -21,6 +21,7 @@
 .aligncenter	{ text-align:center; }
 .box		{ background:lighten(@bg, 10%); }
 .fullwidth	{ width:100%; }
+.floatleft	{ float:left; }
 .floatright	{ float:right; }
 .clear		{ clear:both; }
 
@@ -56,7 +57,7 @@ button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-
 
 
 .content 	{ border-top:solid 1px #fff; }
-.nav		{ float:left; width:20%; margin:0 0 0 4em;
+.nav		{ float:left; width:20%; height:100%; padding:2em 1em 0 4em; border-right:solid 1px #666;
 		  a,a:visited { display:block; padding:0.5em; 
 		  	color:#333; text-decoration:none; font-weight:bold; .shadow(#fff); 
 			border-bottom:dotted 1px #666;

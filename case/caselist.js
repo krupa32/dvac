@@ -1,5 +1,9 @@
 var caselist = {
 	init: function() {
+		$('#page_caselist a').click(function(e){
+			details.show($(this).attr('href'));
+			e.preventDefault();
+		});
 	},
 
 	show: function() {
@@ -8,6 +12,7 @@ var caselist = {
 		$('#page_caselist').show();
 		//$('#activityarea').html('');
 		return;
+
 		var param = {};
 		$.get('/case/recent.php', param, function(data){
 			//console.log('recent.show recv:' + data);

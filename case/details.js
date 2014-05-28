@@ -22,6 +22,9 @@ var details = {
 	show: function(id) {
 		$('.page').hide();
 		$('#page_details').data('id', id);
+		$('#page_details').show();
+		history.pushState('', '', '#details/' + id);
+		return;
 
 		var param = {};
 		param.id = id;

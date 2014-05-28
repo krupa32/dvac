@@ -96,9 +96,9 @@
 </div> <!-- content -->
 
 <div class="page" id="page_caselist">
-	<div id="caselist">
+	<div class="caselist" id="caselistarea">
 		<div class="case">
-			<p><a href="14">Crl.OP.2003/43/4</a></p>	
+			<p class="casenum"><a href="14">Crl.OP.2003/43/4</a></p>	
 			<p class="extra">Filed by Tmt. Kanimozhi<br>Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
 			<p class="text">To disburse death cum retirement grtuity for my unblemished service within a stipulated
 				period fixed by the court.</p>
@@ -120,7 +120,7 @@
 			</div>
 		</div>
 		<div class="case">
-			<p><a href="14">Crl.OP.2003/43/4</a></p>	
+			<p class="casenum"><a href="14">Crl.OP.2003/43/4</a></p>	
 			<p class="extra">Filed by Tmt. Kanimozhi<br>Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
 			<p class="text">To disburse death cum retirement grtuity for my unblemished service within a stipulated
 				period fixed by the court.</p>
@@ -217,13 +217,16 @@
 </div> <!-- page_search -->
 
 <div class="page" id="page_details">
-	<p class="caseid" id="details_case_num"></p>
-	<p class="status"><span id="details_status"></span></p>
-	<p class="petitioner">Petitioner<br><span id="details_petitioner"></span></p>
-	<p class="respondent">Respondent<br><span id="details_respondent"></span></p>
-	<p class="io">Investigated by<br><span id="details_io"></span></p>
-	<p class="assigned_to">Assigned to<br><span id="details_assigned_to"></span></p>
-	<p class="text" id="details_prayer"></p>
+	<p class="floatright"><button class="primary">Edit</button></p>
+	<p class="casenum" id="details_case_num">Crl.OP.2003/14</p>
+	<p class="status"><span id="details_status">PENDING IN COURT</span> <a href="">Change</a></p>
+	<table><tr>
+		<td><p class="petitioner ">Petitioner<br><span id="details_petitioner">Tmt. Kanimozhi</span></p></td>
+		<td><p class="respondent ">Respondent<br><span id="details_respondent">Raj Narayan, DSP, DVAC</span></p></td>
+		<td><p class="io ">Investigated by<br><span id="details_io">Raj Narayan, DVAC</span></p></td>
+		<td><p class="assigned_to ">Assigned to<br><span id="details_assigned_to">Shahul, SP, DVAC</span></p></td>
+	</tr></table>
+	<p class="text" id="details_prayer">To get pension</p>
 	<p class="actions aligncenter">
 		<button id="details_update">Update</button>
 		<button id="details_close">Close</button>
