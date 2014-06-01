@@ -4,10 +4,13 @@ var addproceeding = {
 			autoOpen: false,
 			position: { my:'bottom', at:'top-20px', of:'#btn_addcomment' },
 			modal: true,
-			title: 'Add Proceeding'
+			title: 'Add Proceeding',
+			width:400
 		});
 
 		$('#btn_save_proceeding').click(addproceeding.save);
+
+		$('#proc_hearing').datepicker({ dateFormat:'M d, yy' });
 	},
 
 	show: function(case_id) {
@@ -24,6 +27,7 @@ var addproceeding = {
 		param.judge = $('#proc_judge').val();
 		param.counsel = $('#proc_counsel').val();
 		param.disposal = $('#proc_disposal').val();
+		param.hearing = $('#proc_hearing').val();
 		param.comment = $('#proc_remarks').val();
 		$.post('/case/save_proceeding.php', param, function(data){
 			var resp = JSON.parse(data);
@@ -32,7 +36,7 @@ var addproceeding = {
 				return;
 			}
 			$('#dlg_addproceeding').dialog('close');
-			details.show(case_id);
+			details.show(case_id, false);
 		});
 	}
 };

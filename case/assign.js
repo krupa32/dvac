@@ -39,7 +39,7 @@ var assign = {
 
 			navigation.update_case_stats();
 
-			details.show(param.case_id);
+			details.show(param.case_id, false);
 		});
 	}
 };

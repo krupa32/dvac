@@ -1,6 +1,6 @@
 #tbl_proceeding { width:100%;
 	td { padding:0.25em; }
-	.field { width:25%; }
-	.data { width:75%; }
+	.field { width:30%; }
+	.data { width:70%; }
 	textarea { height:4em; }
 }

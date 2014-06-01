@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	if (!$_SESSION["user_id"])
+	if (!$_SESSION["user_id"] || $_SESSION["user_id"] == "admin")
 		header("location: /login.php");
 ?>
 <html>
@@ -19,12 +19,14 @@
 	<script type="text/javascript" src="/common/jquery-ui.js"></script>
 	<script type="text/javascript" src="/common/less.js"></script>
 	<script type="text/javascript" src="/common/utils.js"></script>
+	<script type="text/javascript" src="/case/app.js"></script>
 	<script type="text/javascript" src="/case/toolbar.js"></script>
 	<script type="text/javascript" src="/case/navigation.js"></script>
 	<script type="text/javascript" src="/case/caselist.js"></script>
 	<script type="text/javascript" src="/case/editcase.js"></script>
 	<script type="text/javascript" src="/case/search.js"></script>
 	<script type="text/javascript" src="/case/details.js"></script>
+	<script type="text/javascript" src="/case/changestatus.js"></script>
 	<script type="text/javascript" src="/case/addproceeding.js"></script>
 	<script type="text/javascript" src="/case/addcomment.js"></script>
 	<script type="text/javascript" src="/case/closecase.js"></script>
@@ -33,18 +35,22 @@
 		$(document).ready(function(){
 			$('.page').detach().appendTo('.pagearea').hide();
 
+			app.init();
 			toolbar.init();
 			navigation.init();
 			caselist.init();
 			editcase.init();
 			search.init();
 			details.init();
+			changestatus.init();
 			addproceeding.init();
 			addcomment.init();
 			closecase.init();
 			assign.init();
 
-			caselist.show();
+			var arg = { type:'recent' };
+			caselist.show(arg, false);
+			history.replaceState({ page:'caselist', arg:arg }, '', '#caselist?recent');
 		});
 	</script>
 </head>
@@ -58,11 +64,11 @@
 
 <div class="toolbar">
 	<div class="toolbarbuttonarea">
-		<button class="primary" id="btn_addcase">Add Case</button>
+		<button class="primary" id="toolbar_addcase">Add Case</button>
 	</div>
 
 	<div class="toolbarsearcharea">
-		<select id="toolbar_category">
+		<select id="toolbar_field">
 			<option value="case_num">Case Number</option>
 			<option value="petitioner">Petitioner</option>
 			<option value="respondent">Respondent</option>
@@ -70,35 +76,38 @@
 			<option value="assigned_to">Assigned</option>
 		</select>
 		<input type="text" id="toolbar_data"></input>
-		<button class="primary" id="btn_search">Search</button></p></td>
+		<button class="primary" id="toolbar_search">Search</button></p></td>
 	</div>
 </div>
 
 <div class="content">
-	<div class="nav">
-		<a href="/case/index.php" class="hilite">Recent Activity</a>
-		<p class="navsectiontitle">Case Summary</p>
-		<div class="count important" id="num_my_cases">3</div><a href="">My Cases</a>
-		<div class="count" id="num_pending_court">3</div><a href="">Pending in Court</a>
-		<div class="count important" id="num_pending_dvac">3</div><a href="">Pending with DVAC</a>
-		<p class="navsectiontitle">Hearings</p>
-		<div class="count" id="num_upcoming_hearings">3</div><a href="">Upcoming Hearings</a>
-		<p class="navsectiontitle">Cases by Category</p>
-		<div class="count" id="num_crlop">305</div><a href="">Crl.O.P</a>
-		<div class="count" id="num_wp">3</div><a href="">WP</a>
-		<div class="count" id="num_wa">3</div><a href="">WA</a>
-	</div>
+	<table><tr>
+		<td class="nav">
+			<a href="" class="hilite" id="nav_recent">RECENT ACTIVITY</a>
+			<p class="navsectiontitle">CASE SUMMARY</p>
+			<div class="count important" id="num_my_cases">3</div><a href="" id="nav_my">MY CASES</a>
+			<div class="count" id="num_pending_court">3</div><a href="" id="nav_pending_court">PENDING IN COURT</a>
+			<div class="count important" id="num_pending_dvac">3</div><a href="" id="nav_pending_dvac">PENDING WITH DVAC</a>
+			<p class="navsectiontitle">HEARINGS</p>
+			<div class="count" id="num_upcoming_hearings">3</div><a href="" id="nav_hearings">UPCOMING HEARINGS</a>
+			<p class="navsectiontitle">CASES BY CATEGORY</p>
+			<div class="count" id="num_crlop">305</div><a href="" id="nav_category_crlop">Crl.O.P</a>
+			<div class="count" id="num_wp">3</div><a href="" id="nav_category_wp">WP</a>
+			<div class="count" id="num_wa">3</div><a href="" id="nav_category_wa">WA</a>
+			<div class="count" id="num_rc">3</div><a href="" id="nav_category_rc">RC</a>
+			<div class="count" id="num_ca">3</div><a href="" id="nav_category_ca">CA</a>
+		</td>
 
-	<div class="pagearea"></div>
+		<td class="pagearea"></td>
 
-	<div class="clear"></div>
+	</tr></table>
 
 </div> <!-- content -->
 
 <div class="page" id="page_caselist">
 	<div class="caselist" id="caselistarea">
 		<div class="case">
-			<p class="casenum"><a href="14">Crl.OP.2003/43/4</a></p>	
+			<p class="casenum"><a href="2">Crl.OP.2003/43/4</a></p>	
 			<p class="extra">Filed by Tmt. Kanimozhi<br>Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
 			<p class="text">To disburse death cum retirement grtuity for my unblemished service within a stipulated
 				period fixed by the court.</p>
@@ -153,31 +162,31 @@
 	</colgroup>
 	<tr>
 		<td>Category</td>
-		<td><select id="sel_category"></select></td>
+		<td><select id="editcase_category"></select></td>
 	</tr>
 	<tr>
 		<td><p>Case Number</p></td>
-		<td><p><input type="text" id="txt_case_num" value="Crl.OP"></input></p>
+		<td><p><input type="text" id="editcase_case_num" value="Crl.OP"></input></p>
 	</tr>
 	<tr>
 		<td><p>Investigating Officer</p></td>
-		<td><p><input type="text" class="fullwidth" id="txt_investigator"></input></p>
+		<td><p><input type="text" class="fullwidth" id="editcase_investigator"></input></p>
 	</tr>
 	<tr>
 		<td><p>Petitioner</p></td>
-		<td><p><textarea class="fullwidth" id="ta_petitioner"></textarea></p>
+		<td><p><textarea class="fullwidth" id="editcase_petitioner"></textarea></p>
 	</tr>
 	<tr>
 		<td><p>Respondent</p></td>
-		<td><p><textarea class="fullwidth" id="ta_respondent"></textarea></p>
+		<td><p><textarea class="fullwidth" id="editcase_respondent"></textarea></p>
 	</tr>
 	<tr>
 		<td><p>Prayer</p></td>
-		<td><p><textarea class="fullwidth" id="ta_prayer"></textarea></p></td>
+		<td><p><textarea class="fullwidth" id="editcase_prayer"></textarea></p></td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
-		<td><p class="aligncenter"><button id="btn_save_case">Save</button></p></td>
+		<td><p class="aligncenter"><button class="primary" id="editcase_save">Save</button></p></td>
 	</tr>
 
 	</table>
@@ -217,20 +226,17 @@
 </div> <!-- page_search -->
 
 <div class="page" id="page_details">
-	<p class="floatright"><button class="primary">Edit</button></p>
-	<p class="casenum" id="details_case_num">Crl.OP.2003/14</p>
-	<p class="status"><span id="details_status">PENDING IN COURT</span> <a href="">Change</a></p>
-	<table><tr>
-		<td><p class="petitioner ">Petitioner<br><span id="details_petitioner">Tmt. Kanimozhi</span></p></td>
-		<td><p class="respondent ">Respondent<br><span id="details_respondent">Raj Narayan, DSP, DVAC</span></p></td>
-		<td><p class="io ">Investigated by<br><span id="details_io">Raj Narayan, DVAC</span></p></td>
-		<td><p class="assigned_to ">Assigned to<br><span id="details_assigned_to">Shahul, SP, DVAC</span></p></td>
-	</tr></table>
-	<p class="text" id="details_prayer">To get pension</p>
-	<p class="actions aligncenter">
-		<button id="details_update">Update</button>
-		<button id="details_close">Close</button>
-	</p>
+	<div class="details">
+		<p class="floatright"><button class="primary" id="details_edit">Edit</button></p>
+		<p class="casenum" id="details_case_num"></p>
+		<p class="status"><span id="details_status"></span> &nbsp;<a href="" id="details_change">Change</a></p>
+		<p class="petitioner ">Petitioner<br><span id="details_petitioner"></span></p>
+		<p class="respondent ">Respondent<br><span id="details_respondent"></span></p>
+		<p class="io ">Investigated by<br><span id="details_io"></span></p>
+		<p class="assigned_to ">Assigned to<br><span id="details_assigned_to"></span></p>
+		<p class="assigned_to ">Next hearing on<br><span id="details_next_hearing"></span></p>
+		<p class="text" id="details_prayer"></p>
+	</div>
 
 	<p class="sectiontitle">CASE HISTORY</p>
 	<div id="historyarea">
@@ -260,12 +266,16 @@
 		-->
 	</div>
 	<p class="actions aligncenter">
-		<button id="btn_addproceeding">Add Proceeding</button>
-		<button id="btn_addcomment">Add Comment</button>
-		<button id="btn_assign">Assign</button>
+		<button class="primary" id="btn_addproceeding">Add Proceeding</button>
+		<button class="primary" id="btn_addcomment">Add Comment</button>
+		<button class="primary" id="btn_assign">Assign</button>
 	</p>
 
 </div> <!-- page_details -->
+
+<div class="dialog" id="dlg_changestatus">
+	<p><select id="changestatus_status"></select> &nbsp;<button class="primary" id="changestatus_save">Save</button></p>
+</div> <!-- dlg_changestatus -->
 
 <div class="dialog" id="dlg_addproceeding">
 	<table id="tbl_proceeding">
@@ -289,26 +299,21 @@
 		<option value="4">Final Order</option>
 		<option value="5">Other</option>
 		</select></td></tr>
+	<tr><td>Next Hearing<br>(if applicable)</td><td><input type="text" id="proc_hearing"></input></td></tr>
 	<tr><td>Remarks</td><td><textarea class="fullwidth" id="proc_remarks"></textarea></tr>
-	<tr><td>&nbsp;</td><td class="alignright"><button id="btn_save_proceeding">Save</button></td></tr>
+	<tr><td>&nbsp;</td><td class="alignright"><button class="primary" id="btn_save_proceeding">Save</button></td></tr>
 	</table>
 </div> <!-- dlg_addproceeding -->
 
 <div class="dialog" id="dlg_addcomment">
 	<p><textarea class="fullwidth" id="comment_text"></textarea></p>
-	<p class="alignright"><button id="btn_save_comment">Save</button></p>
+	<p class="alignright"><button class="primary" id="btn_save_comment">Save</button></p>
 </div> <!-- dlg_addcomment -->
-
-<div class="dialog" id="dlg_closecase">
-	<p>Enter a comment<br>
-		<textarea class="fullwidth" id="close_text"></textarea></p>
-	<p class="alignright"><button id="btn_close_case">Save and Close</button></p>
-</div> <!-- dlg_closecase -->
 
 <div class="dialog" id="dlg_assign">
 	<p>Assign to<br><input type="text" class="fullwidth" id="assign_to"></input></p>
 	<p>Remarks<br><textarea class="fullwidth" id="assign_comment"></textarea></p>
-	<p class="alignright"><button id="btn_save_assignment">Save</button></p>
+	<p class="alignright"><button class="primary" id="btn_save_assignment">Save</button></p>
 </div> <!-- dlg_addcomment -->
 
 </body>

@@ -9,11 +9,25 @@
 	$db_password = "fossil27";
 	$db_name = "dvac";
 
-	/* num_recent_activities_per_fetch
-	 * this specifies the number of recent activities shown initially,
-	 * AND the number of activities fetched when 'more' button is clicked.
+	/* num_cases_with_recent_activity
+	 * this specifies the number of cases with recent activity,
+	 * AND the number of cases fetched when 'more' button is clicked.
 	 */
-	$num_recent_activities_per_fetch = 20;
+	$num_cases_with_recent_activity = 20;
+
+	/* num_recent_activities_per_case
+	 * this specifies the number of recent activities listed per case
+	 * in the 'recent activity' page.
+	 */
+	$num_recent_activities_per_case = 3;
+
+	/* num_days_upcoming_hearings
+	 * this specifies the number of days to be considered to decide an
+	 * 'upcoming' hearing. for eg, if this value is 5, a hearing is
+	 * considered upcoming if it is in the next 5 days, and not considered
+	 * upcoming if it is scheduled beyond 5 days.
+	 */
+	$num_days_upcoming_hearings = 5;
 
 	/* user grades
 	 * each user has a grade, which is a number corresponding
@@ -81,16 +95,18 @@
 			"ADDPROCEEDING"		=> 3,
 			"ADDCOMMENT"		=> 4,
 			"ASSIGN"		=> 5,
-			"CLOSE"			=> 6
+			"CHANGESTATUS"		=> 6,
+			"CLOSE"			=> 7
 			);
 
 	/* statuses
 	 * case statuses.
 	 */
 	$statuses = array(
-			"OPEN"		=> 1,
-			"CLOSED"	=> 2
-			);
+		"PENDING_IN_COURT"		=> 10,
+		"PENDING_WITH_DVAC"		=> 20,
+		"CLOSED"			=> 30
+	);
 	
 	/* disposals.
 	 * court case disposals.

@@ -7,7 +7,7 @@
 		header("location: /login.php");
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
-	$q = "select count(*) from cases where status=${statuses['OPEN']}";
+	$q = "select count(*) from cases where status=${statuses['PENDING_IN_COURT']}";
 	$res = $db->query($q);
 	$row = $res->fetch_row();
 	$ret["open"] = $row[0];

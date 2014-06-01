@@ -10,11 +10,11 @@ var toolbar = {
 			}
 		});
 
-		$('#btn_addcase').click(function(){
-			editcase.show(null);
+		$('#toolbar_addcase').click(function(){
+			editcase.show(null, true);
 		});
 
-		$('#toolbar_category').change(function(){
+		$('#toolbar_field').change(function(){
 			var cur = $(this).val();
 			if (cur == 'investigator' || cur == 'assigned_to')
 				$('#toolbar_data').autocomplete('enable');
@@ -22,8 +22,16 @@ var toolbar = {
 				$('#toolbar_data').autocomplete('disable');
 		});
 
-		$('#btn_search').click(function(){
-			search.show('search');
+		$('#toolbar_search').click(function(){
+			var f = $('#toolbar_field').val();
+			var d = $('#toolbar_data').val();
+
+			/* special case where user id is queried */
+			if (f == 'investigator' || f == 'assigned_to')
+				d = $('#toolbar_data').data('id');
+
+			var arg = { type:'search', field:f, data:d };
+			caselist.show(arg, true);
 		});
 	}
 };

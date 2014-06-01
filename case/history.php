@@ -6,7 +6,7 @@
 	{
 		global $courts, $counsels, $disposals;
 
-		$q = "select court,hall,judge,counsel,disposal,comment " . 
+		$q = "select court,hall,judge,counsel,disposal,next_hearing,comment " . 
 			"from proceedings where proceedings.id=$proc_id";
 		$res = $db->query($q);
 		$row = $res->fetch_assoc();
@@ -14,6 +14,10 @@
 		$row["court"] = array_search($row["court"], $courts);
 		$row["counsel"] = array_search($row["counsel"], $counsels);
 		$row["disposal"] = array_search($row["disposal"], $disposals);
+		if ($row["next_hearing"]) {
+			$dt = date("M d, Y", $row["next_hearing"]);
+			$row["next_hearing"] = $dt; // Mar 04, 2014
+		}
 		return $row;
 	}
 
@@ -36,6 +40,12 @@
 		return $row;
 	}
 
+	function get_status_details($db, $status)
+	{
+		global $statuses;
+		$ret["status"] = array_search($status, $statuses);
+		return $ret;
+	}
 
 
 	session_start();
@@ -63,6 +73,9 @@
 			break;
 		case $activities["ASSIGN"]:
 			$entry["details"] = get_assignment_details($db, $row["object"]);
+			break;
+		case $activities["CHANGESTATUS"]:
+			$entry["details"] = get_status_details($db, $row["object"]);
 			break;
 		}
 

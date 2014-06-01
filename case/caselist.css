@@ -11,12 +11,12 @@
 			a,a:visited 	{ color:#00f; font-size:1.2em; }
 		}
 		.extra 		{ margin:0.5em 0; line-height:1.3em; }
-		.text		{ margin:0 4em;	}
-		.activityarea 	{ margin:1em 0 1em 4em; background:#e0e0e0; border:solid 1px #999;
+		.text		{ margin:1em 0 0 4em;	}
+		.activityarea 	{ margin:1em 0 1em 0; background:#e0e0f0; border:solid 1px #999;
 			.activity { padding:1em; border-bottom:dotted 1px #999;
 				.title	{ font-weight:bold; color:#333; .shadow(); 	}
 				.extra 	{ margin:0.5em 0; line-height:1.3em; 	}
-				.text 	{ margin:0 4em; 	}
+				.text 	{ margin:1em 0 0 4em; 	}
 			}
 		}
 	}

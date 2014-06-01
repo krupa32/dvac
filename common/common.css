@@ -28,12 +28,12 @@
 
 
 /* html element defaults */
-* 	{ margin:0; padding:0; font:10pt sans,verdana,arial; color:@fg; }
+* 	{ margin:0; padding:0; font:10pt sans,verdana,arial; color:@fg; line-height:1.3em; }
 /*	{ border:dotted 1px #f00; }*/
 body 	{ background:@bg; }
-input[type=text], input[type=password] { padding:0.5em; background: lighten(@bg, 20%); border:solid 1px #666; }
+input[type=text], input[type=password] { padding:0.5em; background: lighten(@bg, 20%); border:solid 1px #999; }
 select 	{ padding:0.5em; }
-textarea{ height:6em; padding:0.5em; border:solid 1px #666; }
+textarea{ height:6em; padding:0.5em; border:solid 1px #999; }
 table	{ width:100%; border-spacing:0; }
 p	{ }
 h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
@@ -57,20 +57,20 @@ button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-
 
 
 .content 	{ border-top:solid 1px #fff; }
-.nav		{ float:left; width:20%; height:100%; padding:2em 1em 0 4em; border-right:solid 1px #666;
+.nav		{ width:20%; padding:2em 1em 0 4em; border-right:solid 1px #666; vertical-align:top;
 		  a,a:visited { display:block; padding:0.5em; 
-		  	color:#333; text-decoration:none; font-weight:bold; .shadow(#fff); 
+		  	color:#000; text-decoration:none; letter-spacing:0px; .shadow(#fff); 
 			border-bottom:dotted 1px #666;
 		  }
-		  a:hover { background:#ccc; }
-		  .hilite { background:#ccc; }
+		  a:hover { background:#d0e0ff; }
+		  .hilite { background:#d0e0ff; }
 		  .count { float:right; margin:0.2em; padding:0.3em 0.5em; font-weight:bold; }
 		  .important { background:#f33; color:#fff; .shadow(#000); }
-		  .navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#999; .shadow(#fff); border-bottom:dotted 1px #666; font-weight:bold; }
+		  .navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#666; .shadow(#fff); border-bottom:dotted 1px #666; }
 		}
-.pagearea	{ margin:2em 4em 1em 28%;  }
+.pagearea	{ padding:2em 4em; vertical-align:top; }
 
-.sectiontitle { border-bottom:dotted 1px #000; }
+.sectiontitle { border-bottom:solid 1px #666; }
 .hint { font-size:12px; color:darken(@bg, 40%); }
 
 .list { width:100%; border-spacing:0 1em; 

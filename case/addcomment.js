@@ -27,7 +27,7 @@ var addcomment = {
 				return;
 			}
 			$('#dlg_addcomment').dialog('close');
-			details.show(case_id);
+			details.show(case_id, false);
 		});
 	}
 };

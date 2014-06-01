@@ -9,27 +9,31 @@ var details = {
 		$('#btn_assign').click(function(){
 			assign.show($('#page_details').data('id'));
 		});
-		$('#details_update').click(function(){
-			editcase.show($('#page_details').data('id'));
+		$('#details_edit').click(function(){
+			editcase.show($('#page_details').data('id'), true);
 		});
 		$('#details_close').click(function(){
 			if (!confirm('Do you really want to close this case?'))
 				return;
 			closecase.show($('#page_details').data('id'));
 		});
+		$('#details_change').click(function(e){
+			changestatus.show($('#page_details').data('id'));
+			e.preventDefault();
+		});
 	},
 
-	show: function(id) {
+	show: function(id, push) {
 		$('.page').hide();
 		$('#page_details').data('id', id);
-		$('#page_details').show();
-		history.pushState('', '', '#details/' + id);
-		return;
+
+		if (push)
+			history.pushState({ page:'details', id:id }, '', '#details/' + id);
 
 		var param = {};
 		param.id = id;
 		$.get('/case/get_details.php', param, function(data){
-			//console.log('details.show recv:' + data);
+			console.log('details.show recv:' + data);
 			var resp = JSON.parse(data);
 			$('#details_case_num').text(resp.case_num);
 			$('#details_status').text(resp.status);
@@ -38,6 +42,19 @@ var details = {
 			$('#details_petitioner').text(resp.petitioner);
 			$('#details_respondent').text(resp.respondent);
 			$('#details_prayer').text(resp.prayer);
+			if (resp.next_hearing)
+				$('#details_next_hearing').text(resp.next_hearing);
+			else
+				$('#details_next_hearing').text('NA');
+
+			// set back color of status
+			$('#details_status').removeClass('red green gray');
+			if (resp.status == 'PENDING_IN_COURT')
+				$('#details_status').addClass('green');
+			else if (resp.status == 'PENDING_WITH_DVAC')
+				$('#details_status').addClass('red');
+			else 
+				$('#details_status').addClass('gray');
 
 			details.show_history(id);
 
@@ -79,6 +96,9 @@ var details = {
 				case "ASSIGN":
 					details.add_assignment_activity(resp[i]);
 					break;
+				case "CHANGESTATUS":
+					details.add_change_status_activity(resp[i]);
+					break;
 				}
 			}
 
@@ -116,10 +136,14 @@ var details = {
 		var div = $('<div class="activity"></div>').appendTo('#historyarea');
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
 		div.append('<p class="title">' + resp.doer + ' updated a proceeding for case</p>');
-		div.append('<p class="extra">' + 
+		var extra = '<p class="extra">' + 
 			'At Hall ' + resp.details.hall + ', ' + resp.details.court + ' by Judge ' + resp.details.judge + '<br>' + 
 			'Counsel ' + resp.details.counsel + ' appeared<br>' + 
-			'Disposal ' + resp.details.disposal + '</p>');
+			'Disposal ' + resp.details.disposal + '<br>';
+		if (resp.details.next_hearing)
+			extra += 'Next hearing on ' + resp.details.next_hearing;
+		extra += '</p>';
+		div.append(extra);
 		div.append('<p class="text">' + resp.details.comment + '</p>');
 	},
 
@@ -128,6 +152,12 @@ var details = {
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
 		div.append('<p class="title">' + resp.doer + ' assigned case to ' + resp.details.target + '</p>');
 		div.append('<p class="text">' + resp.details.comment + '</p>');
+	},
+
+	add_change_status_activity: function(resp) {
+		var div = $('<div class="activity"></div>').appendTo('#historyarea');
+		div.append('<p class="title floatright">' + resp.ts + '</p>');
+		div.append('<p class="title">' + resp.doer + ' changed case status to ' + resp.details.status + '</p>');
 	}
 
 };

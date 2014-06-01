@@ -9,8 +9,7 @@
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 	$q = "select * from cases where id=${_GET['id']}";
 	$res = $db->query($q);
-	$row = $res->fetch_assoc();
-	$ret = $row;
+	$ret = $res->fetch_assoc();
 	$res->close();
 
 	$ret["status"] = array_search($ret["status"], $statuses);
@@ -18,9 +17,13 @@
 	$ret["investigator_id"] = $ret["investigator"];
 	$ret["investigator"] = get_name_grade($ret["investigator"]);
 
-	if ($row["assigned_to"] != 0)
+	if ($ret["assigned_to"] != 0)
 		$ret["assigned_to"] = get_name_grade($ret["assigned_to"]);
 
+	if ($ret["next_hearing"]) {
+		$dt = date("M d, Y", $ret["next_hearing"]);
+		$ret["next_hearing"] = $dt; // Mar 04, 2014
+	}
 out:
 	print json_encode($ret);
 ?>
