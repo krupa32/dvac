@@ -4,6 +4,7 @@
  */
 
 .shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
+.rounded()	{ border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px; }
 
 .caselist {
 	.case { padding:0 0 2em 0;
@@ -12,9 +13,11 @@
 		}
 		.extra 		{ margin:0.5em 0; line-height:1.3em; }
 		.text		{ margin:1em 0 0 4em;	}
-		.activityarea 	{ margin:1em 0 1em 0; background:#e0e0f0; border:solid 1px #999;
+		.activityarea 	{ margin:1em 0 1em 0; background:#d0e0f0; border:solid 1px #999; .rounded();
 			.activity { padding:1em; border-bottom:dotted 1px #999;
-				.title	{ font-weight:bold; color:#333; .shadow(); 	}
+				.title	{ font-weight:bold; color:#333; .shadow(); 
+					a { font-weight:bold; color:#900; }
+				}
 				.extra 	{ margin:0.5em 0; line-height:1.3em; 	}
 				.text 	{ margin:1em 0 0 4em; 	}
 			}

@@ -1,52 +1,72 @@
 var navigation = {
 	init: function() {
 		$('#nav_recent').click(function(e){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'recent' };
 			caselist.show(arg, true);
 			e.preventDefault();
 		});
 
 		$('#nav_my').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'my' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_pending_court').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'pending_court' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_pending_dvac').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'pending_dvac' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_category_crlop').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'crlop' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_category_wp').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'wp' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_category_wa').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'wa' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_category_rc').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'rc' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_category_ca').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'ca' };
 			caselist.show(arg, true);
 			return false;
 		});
 		$('#nav_hearings').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
 			var arg = { type:'upcoming_hearings' };
 			caselist.show(arg, true);
 			return false;

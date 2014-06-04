@@ -51,11 +51,13 @@
 
 	function get_attachment_details($db, $attachment_id)
 	{
+		global $upload_dir;
+
 		$q = "select name from attachments where id=$attachment_id";
 		$res = $db->query($q);
 		$row = $res->fetch_assoc();
 		$ext = pathinfo($row["name"], PATHINFO_EXTENSION);
-		$row["link"] = "/uploads/$attachment_id.$ext";
+		$row["link"] = "$upload_dir/$attachment_id.$ext";
 		$res->close();
 		return $row;
 	}

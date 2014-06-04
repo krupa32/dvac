@@ -7,9 +7,10 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-	/* check if uploads dir exists */
-	if (!is_dir("/uploads")) {
-		$ret = "/uploads directory not found";
+	/* check if uploads path exists */
+	$upload_path = $_SERVER["DOCUMENT_ROOT"] . $upload_dir;
+	if (!is_dir($upload_path)) {
+		$ret = "$upload_path directory not found";
 		goto out;
 	}
 
@@ -41,7 +42,7 @@
 	/* move attachment tmp file to /uploads */
 	$src = $_FILES["attachment"]["tmp_name"];
 	$ext = pathinfo($_FILES["attachment"]["name"], PATHINFO_EXTENSION);
-	$dst = "/uploads/$attachment_id.$ext"; 
+	$dst = "$upload_path/$attachment_id.$ext"; 
 	if (!move_uploaded_file($src, $dst)) {
 		$ret = "Error moving uploaded file";
 		goto out;

@@ -3,17 +3,18 @@
  * include less.js AFTER including this.
  */
 
-.shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
+.shadow(@c:#fff) 	{ text-shadow:1px 1px 1px @c; }
+.rounded(@r:4px)	{ border-radius:@r; -webkit-border-radius:@r; -moz-border-radius:@r; }
 
 .details {
 	button { width:12em; }
 	.casenum { font-size:2em; }
 
 	.status { margin:2em 0 0.5em 0;
-		span { padding:0.5em 1em; color:#fff; .shadow(#000); }
+		span { padding:0.5em 1em; color:#fff; .shadow(#000); .rounded(1em); }
 		a,a:visited { color:#00f; }
 	}
-	.red		{ background:#f66; }
+	.red		{ background:#c00; }
 	.green		{ background:#696; }
 	.gray		{ background:#666; }
 	.petitioner 	{ margin:2em 0 0 0; }
@@ -24,9 +25,11 @@
 	.text { margin:2em 0 4em 4em; }
 }
 
-#historyarea {
-	.title { font-weight:bold; .shadow(); }
-	.activity { padding:1em 0; border-bottom:dotted 1px #666;
+#historyarea { margin:1em 0 0 0; background:#d0e0f0; border:solid 1px #999; .rounded();
+	.title { font-weight:bold; .shadow();
+		a { font-weight:bold; color:#900; }
+	}
+	.activity { padding:1em; border-bottom:dotted 1px #666;
 		.extra { margin-top:0.5em; }
 		.text { margin:1em 0 0 4em; }
 	}

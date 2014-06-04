@@ -238,7 +238,7 @@
 		<p class="text" id="details_prayer"></p>
 	</div>
 
-	<p class="sectiontitle">CASE HISTORY</p>
+	<p>CASE HISTORY</p>
 	<div id="historyarea">
 		<!--
 		<div class="activity">

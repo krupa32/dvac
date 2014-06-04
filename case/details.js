@@ -38,6 +38,9 @@ var details = {
 				contentType: false,
 				success: function(data) {
 					console.log('save_attachment recv:' + data);
+					var resp = JSON.parse(data);
+					if (resp != 'ok')
+						alert('Error:' + resp);
 				}
 			});
 		});
@@ -80,9 +83,9 @@ var details = {
 
 			/* if case is closed, all buttons are disabled */
 			if (resp.status == 'CLOSED')
-				$('#page_details button').attr('disabled', true);
+				$('#page_details button').attr('disabled', true).removeClass('primary');
 			else
-				$('#page_details button').attr('disabled', false);
+				$('#page_details button').attr('disabled', false).addClass('primary');
 
 			$('#page_details').show();
 		});

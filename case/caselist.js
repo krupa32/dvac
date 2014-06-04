@@ -24,7 +24,7 @@ var caselist = {
 			for (i in resp)
 				caselist.add_case(resp[i]);
 
-			$('#page_caselist a').click(function(e){
+			$('#page_caselist a.caselink').click(function(e){
 				details.show($(this).attr('href'), true);
 				e.preventDefault();
 			});
@@ -36,7 +36,7 @@ var caselist = {
 	add_case: function(c) {
 
 		var divcase = $('<div class="case"></div>').appendTo('#caselistarea');
-		divcase.append('<p class="casenum"><a href="' + c.id + '">' + c.case_num + '</a></p>');
+		divcase.append('<p class="casenum"><a class="caselink" href="' + c.id + '">' + c.case_num + '</a></p>');
 		var extra = '<p class="extra">Petitioner ' + c.petitioner + '<br>Respondent ' + c.respondent + '<br>';
 		extra += 'Next hearing ' + c.next_hearing;
 		extra += '</p>';
