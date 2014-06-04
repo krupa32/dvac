@@ -14,9 +14,11 @@
 		$row["court"] = array_search($row["court"], $courts);
 		$row["counsel"] = array_search($row["counsel"], $counsels);
 		$row["disposal"] = array_search($row["disposal"], $disposals);
-		if ($row["next_hearing"]) {
+		if ($row["next_hearing"] != "0") {
 			$dt = date("M d, Y", $row["next_hearing"]);
 			$row["next_hearing"] = $dt; // Mar 04, 2014
+		} else {
+			$row["next_hearing"] = "None";
 		}
 		return $row;
 	}
@@ -45,6 +47,17 @@
 		global $statuses;
 		$ret["status"] = array_search($status, $statuses);
 		return $ret;
+	}
+
+	function get_attachment_details($db, $attachment_id)
+	{
+		$q = "select name from attachments where id=$attachment_id";
+		$res = $db->query($q);
+		$row = $res->fetch_assoc();
+		$ext = pathinfo($row["name"], PATHINFO_EXTENSION);
+		$row["link"] = "/uploads/$attachment_id.$ext";
+		$res->close();
+		return $row;
 	}
 
 
@@ -76,6 +89,9 @@
 			break;
 		case $activities["CHANGESTATUS"]:
 			$entry["details"] = get_status_details($db, $row["object"]);
+			break;
+		case $activities["ATTACH"]:
+			$entry["details"] = get_attachment_details($db, $row["object"]);
 			break;
 		}
 

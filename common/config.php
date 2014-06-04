@@ -9,11 +9,10 @@
 	$db_password = "fossil27";
 	$db_name = "dvac";
 
-	/* num_cases_with_recent_activity
-	 * this specifies the number of cases with recent activity,
-	 * AND the number of cases fetched when 'more' button is clicked.
+	/* num_days_recent_activity
+	 * this specifies the number of days considered for recent activity.
 	 */
-	$num_cases_with_recent_activity = 20;
+	$num_days_recent_activity = 5;
 
 	/* num_recent_activities_per_case
 	 * this specifies the number of recent activities listed per case
@@ -96,7 +95,8 @@
 			"ADDCOMMENT"		=> 4,
 			"ASSIGN"		=> 5,
 			"CHANGESTATUS"		=> 6,
-			"CLOSE"			=> 7
+			"CLOSE"			=> 7,
+			"ATTACH"		=> 8
 			);
 
 	/* statuses

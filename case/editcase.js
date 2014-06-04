@@ -61,6 +61,8 @@ var editcase = {
 				return;
 			}
 
+			navigation.update_case_stats();
+
 			// open the case details with the new case id
 			details.show(resp, true);
 		});

@@ -57,13 +57,18 @@ var navigation = {
 	},
 
 	update_case_stats: function() {
-		/*
 		$.get('/case/get_case_stats.php', null, function(data){
-			//console.log('nav.init recv:' + data);
+			console.log('nav.update_case_stats recv:' + data);
 			var resp = JSON.parse(data);
-			$('#nav_num_open_cases').text(resp.open);
-			$('#nav_num_my_cases').text(resp.my);
+			$('#num_my').text(resp.my);
+			$('#num_pending_court').text(resp.pending_court);
+			$('#num_pending_dvac').text(resp.pending_dvac);
+			$('#num_hearings').text(resp.hearings);
+			$('#num_crlop').text(resp.crlop);
+			$('#num_wp').text(resp.wp);
+			$('#num_wa').text(resp.wa);
+			$('#num_rc').text(resp.rc);
+			$('#num_ca').text(resp.ca);
 		});
-		*/
 	}
 };

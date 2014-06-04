@@ -27,7 +27,10 @@ var changestatus = {
 				alert('Error:' + resp);
 				return;
 			}
+			
 			$('#dlg_changestatus').dialog('close');
+			navigation.update_case_stats();
+
 			details.show(case_id, false);
 		});
 	}

@@ -26,6 +26,7 @@ var addcomment = {
 				alert('Error:' + resp);
 				return;
 			}
+
 			$('#dlg_addcomment').dialog('close');
 			details.show(case_id, false);
 		});

@@ -32,4 +32,6 @@
 	}
 }
 
-.actions { margin:2em 0; }
+.actions { margin:2em 0;
+	#details_attachment { display:none; }
+}

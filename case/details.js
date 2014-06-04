@@ -21,6 +21,26 @@ var details = {
 			changestatus.show($('#page_details').data('id'));
 			e.preventDefault();
 		});
+		$('#btn_attach').click(function(){
+			$('#details_attachment').click();
+		});
+		$('#details_attachment').change(function(){
+			var file = $('#details_attachment').get(0).files[0];
+			var fd = new FormData();
+			fd.append('attachment', file);
+			fd.append('case_id', $('#page_details').data('id'));
+
+			$.ajax({
+				url: '/case/save_attachment.php',
+				type: 'POST',
+				data: fd,
+				processData: false,
+				contentType: false,
+				success: function(data) {
+					console.log('save_attachment recv:' + data);
+				}
+			});
+		});
 	},
 
 	show: function(id, push) {
@@ -73,7 +93,7 @@ var details = {
 		var param = {};
 		param.id = id;
 		$.get('/case/history.php', param, function(data){
-			//console.log('show_history recv:' + data);
+			console.log('show_history recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp.length == 0) {
 				$('#historyarea').append('No history');
@@ -98,6 +118,9 @@ var details = {
 					break;
 				case "CHANGESTATUS":
 					details.add_change_status_activity(resp[i]);
+					break;
+				case "ATTACH":
+					details.add_attachment_activity(resp[i]);
 					break;
 				}
 			}
@@ -140,8 +163,7 @@ var details = {
 			'At Hall ' + resp.details.hall + ', ' + resp.details.court + ' by Judge ' + resp.details.judge + '<br>' + 
 			'Counsel ' + resp.details.counsel + ' appeared<br>' + 
 			'Disposal ' + resp.details.disposal + '<br>';
-		if (resp.details.next_hearing)
-			extra += 'Next hearing on ' + resp.details.next_hearing;
+		extra += 'Next hearing ' + resp.details.next_hearing;
 		extra += '</p>';
 		div.append(extra);
 		div.append('<p class="text">' + resp.details.comment + '</p>');
@@ -158,6 +180,14 @@ var details = {
 		var div = $('<div class="activity"></div>').appendTo('#historyarea');
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
 		div.append('<p class="title">' + resp.doer + ' changed case status to ' + resp.details.status + '</p>');
+	},
+
+	add_attachment_activity: function(resp) {
+		var div = $('<div class="activity"></div>').appendTo('#historyarea');
+		div.append('<p class="title floatright">' + resp.ts + '</p>');
+		div.append('<p class="title">' + resp.doer + ' added an attachment ' + 
+				'<a href="' + resp.details.link + '">' + resp.details.name + '</a></p>');
 	}
+
 
 };

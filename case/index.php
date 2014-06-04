@@ -85,11 +85,11 @@
 		<td class="nav">
 			<a href="" class="hilite" id="nav_recent">RECENT ACTIVITY</a>
 			<p class="navsectiontitle">CASE SUMMARY</p>
-			<div class="count important" id="num_my_cases">3</div><a href="" id="nav_my">MY CASES</a>
+			<div class="count important" id="num_my">3</div><a href="" id="nav_my">MY CASES</a>
 			<div class="count" id="num_pending_court">3</div><a href="" id="nav_pending_court">PENDING IN COURT</a>
 			<div class="count important" id="num_pending_dvac">3</div><a href="" id="nav_pending_dvac">PENDING WITH DVAC</a>
 			<p class="navsectiontitle">HEARINGS</p>
-			<div class="count" id="num_upcoming_hearings">3</div><a href="" id="nav_hearings">UPCOMING HEARINGS</a>
+			<div class="count" id="num_hearings">3</div><a href="" id="nav_hearings">UPCOMING HEARINGS</a>
 			<p class="navsectiontitle">CASES BY CATEGORY</p>
 			<div class="count" id="num_crlop">305</div><a href="" id="nav_category_crlop">Crl.O.P</a>
 			<div class="count" id="num_wp">3</div><a href="" id="nav_category_wp">WP</a>
@@ -234,7 +234,7 @@
 		<p class="respondent ">Respondent<br><span id="details_respondent"></span></p>
 		<p class="io ">Investigated by<br><span id="details_io"></span></p>
 		<p class="assigned_to ">Assigned to<br><span id="details_assigned_to"></span></p>
-		<p class="assigned_to ">Next hearing on<br><span id="details_next_hearing"></span></p>
+		<p class="assigned_to ">Next hearing<br><span id="details_next_hearing"></span></p>
 		<p class="text" id="details_prayer"></p>
 	</div>
 
@@ -266,8 +266,10 @@
 		-->
 	</div>
 	<p class="actions aligncenter">
+		<input type="file" name="attachment" id="details_attachment"></input>
+		<button class="primary" id="btn_attach">Attach</button>
 		<button class="primary" id="btn_addproceeding">Add Proceeding</button>
-		<button class="primary" id="btn_addcomment">Add Comment</button>
+		<button class="primary" id="btn_addcomment">Comment</button>
 		<button class="primary" id="btn_assign">Assign</button>
 	</p>
 
@@ -300,7 +302,8 @@
 		<option value="5">Other</option>
 		</select></td></tr>
 	<tr><td>Next Hearing<br>(if applicable)</td><td><input type="text" id="proc_hearing"></input></td></tr>
-	<tr><td>Remarks</td><td><textarea class="fullwidth" id="proc_remarks"></textarea></tr>
+	<tr><td>Remarks</td><td><textarea class="fullwidth" id="proc_remarks"></textarea></td></tr>
+	<tr><td>Attachment<br>(Optional)</td><td><input type="file" id="proc_attachment"></input></td></tr>
 	<tr><td>&nbsp;</td><td class="alignright"><button class="primary" id="btn_save_proceeding">Save</button></td></tr>
 	</table>
 </div> <!-- dlg_addproceeding -->

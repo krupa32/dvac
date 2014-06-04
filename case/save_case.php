@@ -18,7 +18,7 @@
 	else
 		$q = "insert into cases values(null, '${_POST['case_num']}', ${_POST['category']}, ${_SESSION['user_id']}, null, " .
 			"$status, $assigned_to, ${_POST['investigator']}, " . 
-			"'${_POST['petitioner']}', '${_POST['respondent']}', '${_POST['prayer']}')";
+			"'${_POST['petitioner']}', '${_POST['respondent']}', '${_POST['prayer']}', null)";
 
 	if (!$db->query($q)) {
 		$ret = $db->error;

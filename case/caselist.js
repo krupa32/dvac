@@ -38,8 +38,7 @@ var caselist = {
 		var divcase = $('<div class="case"></div>').appendTo('#caselistarea');
 		divcase.append('<p class="casenum"><a href="' + c.id + '">' + c.case_num + '</a></p>');
 		var extra = '<p class="extra">Petitioner ' + c.petitioner + '<br>Respondent ' + c.respondent + '<br>';
-		if (c.next_hearing)
-			extra += 'Next hearing on ' + c.next_hearing;
+		extra += 'Next hearing ' + c.next_hearing;
 		extra += '</p>';
 		divcase.append(extra);
 		divcase.append('<p class="text">' + c.prayer + '</p>');
@@ -68,6 +67,9 @@ var caselist = {
 			break;
 		case "CHANGESTATUS":
 			caselist.add_change_status_activity(divact, a);
+			break;
+		case "ATTACH":
+			caselist.add_attachment_activity(divact, a);
 			break;
 		}
 
@@ -108,8 +110,7 @@ var caselist = {
 			'At Hall ' + a.details.hall + ', ' + a.details.court + ' by Judge ' + a.details.judge + '<br>' + 
 			'Counsel ' + a.details.counsel + ' appeared<br>' + 
 			'Disposal ' + a.details.disposal + '<br>';
-		if (a.details.next_hearing)
-			extra += 'Next hearing on ' + a.details.next_hearing;
+		extra += 'Next hearing ' + a.details.next_hearing;
 		extra += '</p>';
 		div.append(extra);
 		div.append('<p class="text">' + a.details.comment + '</p>');
@@ -126,7 +127,16 @@ var caselist = {
 		var div = $('<div class="activity"></div>').appendTo(divact);
 		div.append('<p class="title floatright">' + a.ts + '</p>');
 		div.append('<p class="title">' + a.doer + ' changed case status to ' + a.details.status + '</p>');
+	},
+
+	add_attachment_activity: function(divact, a) {
+		var div = $('<div class="activity"></div>').appendTo(divact);
+		div.append('<p class="title floatright">' + a.ts + '</p>');
+		div.append('<p class="title">' + a.doer + ' added an attachment ' + 
+				'<a href="' + a.details.link + '">' + a.details.name + '</a></p>');
 	}
+
+
 
 
 

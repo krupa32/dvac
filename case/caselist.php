@@ -16,6 +16,8 @@
 		if ($row["next_hearing"]) {
 			$dt = date("M d, Y", $row["next_hearing"]);
 			$row["next_hearing"] = $dt; // Mar 04, 2014
+		} else {
+			$row["next_hearing"] = "None";
 		}
 		return $row;
 	}
@@ -48,6 +50,18 @@
 		return $ret;
 	}
 
+	function get_attachment_details($db, $attachment_id)
+	{
+		$q = "select name from attachments where id=$attachment_id";
+		$res = $db->query($q);
+		$row = $res->fetch_assoc();
+		$ext = pathinfo($row["name"], PATHINFO_EXTENSION);
+		$row["link"] = "/uploads/$attachment_id.$ext";
+		$res->close();
+		return $row;
+	}
+
+
 
 	function get_activity_details($db, $type, $object)
 	{
@@ -63,6 +77,9 @@
 			break;
 		case "CHANGESTATUS":
 			$details = get_status_details($db, $object);
+			break;
+		case "ATTACH":
+			$details = get_attachment_details($db, $object);
 			break;
 		}
 
@@ -82,7 +99,7 @@
 	 */
 	switch ($_GET["type"]) {
 	case "recent":
-		$q = "select distinct case_id from activities order by ts desc limit $num_cases_with_recent_activity";
+		$q = "select case_id from activities where datediff(now(), ts) < $num_days_recent_activity order by ts desc";
 		break;
 	case "search":
 		$field = $_GET["field"];
@@ -129,13 +146,27 @@
 
 		$caseid = $row[0];
 
+		/* ignore if caseid is already added.
+		 * the 'recent' type returns duplicate case ids.
+		 */
+		$added = 0;
+		foreach ($ret as $case) {
+			if ($case["id"] == $caseid) {
+				$added = 1;
+				break;
+			}
+		}
+
+		if ($added)
+			continue;
+
 		/* get case details */
 		$q = "select id,case_num,petitioner,respondent,prayer,next_hearing from cases where id=$caseid";
 		$res2 = $db->query($q);
 		$case = $res2->fetch_assoc();
 		if ($case["next_hearing"] < mktime()) {
 			/* ignore hearing dates which have elapsed */
-			$case["next_hearing"] = 0;
+			$case["next_hearing"] = "None";
 		} else {
 			$dt = date("M d, Y", $case["next_hearing"]);
 			$case["next_hearing"] = $dt; // Mar 04, 2014

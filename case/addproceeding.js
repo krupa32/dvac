@@ -5,7 +5,7 @@ var addproceeding = {
 			position: { my:'bottom', at:'top-20px', of:'#btn_addcomment' },
 			modal: true,
 			title: 'Add Proceeding',
-			width:400
+			width:500
 		});
 
 		$('#btn_save_proceeding').click(addproceeding.save);
@@ -19,24 +19,33 @@ var addproceeding = {
 
 	save: function() {
 		var case_id = $('#dlg_addproceeding').data('case_id');
-		var param = {};
-		param.case_id = case_id;
-		param.court = $('#proc_court').val();
-		param.hall = $('#proc_hall').val();
-		param.item = $('#proc_item').val();
-		param.judge = $('#proc_judge').val();
-		param.counsel = $('#proc_counsel').val();
-		param.disposal = $('#proc_disposal').val();
-		param.hearing = $('#proc_hearing').val();
-		param.comment = $('#proc_remarks').val();
-		$.post('/case/save_proceeding.php', param, function(data){
-			var resp = JSON.parse(data);
-			if (resp != "ok") {
-				alert('Error:' + resp);
-				return;
+		var param = new FormData();
+		param.append('case_id', case_id);
+		param.append('court', $('#proc_court').val());
+		param.append('hall', $('#proc_hall').val());
+		param.append('item', $('#proc_item').val());
+		param.append('judge', $('#proc_judge').val());
+		param.append('counsel', $('#proc_counsel').val());
+		param.append('disposal', $('#proc_disposal').val());
+		param.append('hearing', $('#proc_hearing').val());
+		param.append('comment', $('#proc_remarks').val());
+		console.log('file:' + $('#proc_attachment').val());
+		$.ajax({
+			url: '/case/save_proceeding.php',
+			type: 'POST',
+			data: param,
+			processData: false,
+			contentType: false,
+			success: function(data){
+				var resp = JSON.parse(data);
+				if (resp != "ok") {
+					alert('Error:' + resp);
+					return;
+				}
+				$('#dlg_addproceeding').dialog('close');
+				navigation.update_case_stats();
+				details.show(case_id, false);
 			}
-			$('#dlg_addproceeding').dialog('close');
-			details.show(case_id, false);
 		});
 	}
 };
