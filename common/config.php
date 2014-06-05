@@ -9,6 +9,9 @@
 	$db_password = "fossil27";
 	$db_name = "dvac";
 
+	/* upload directory */
+	$upload_dir = "/case/uploads/";
+
 	/* num_days_recent_activity
 	 * this specifies the number of days considered for recent activity.
 	 */

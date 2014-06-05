@@ -20,12 +20,12 @@
 	if ($ret["assigned_to"] != 0)
 		$ret["assigned_to"] = get_name_grade($ret["assigned_to"]);
 
-	if ($ret["next_hearing"] >= mktime()) {
-		$dt = date("M d, Y", $ret["next_hearing"]);
-		$ret["next_hearing"] = $dt; // Mar 04, 2014
-	} else {
+	if ($ret["next_hearing"] < (mktime() - 24*60*60)) {
 		//hearing date has elapsed
 		$ret["next_hearing"] = "None";
+	} else {
+		$dt = date("M d, Y", $ret["next_hearing"]);
+		$ret["next_hearing"] = $dt; // Mar 04, 2014
 	}
 out:
 	print json_encode($ret);

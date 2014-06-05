@@ -135,9 +135,9 @@
 		$q = "select id from cases where category=${categories['CA']}";
 		break;
 	case "upcoming_hearings":
-		$from = mktime();
+		$from = mktime() - 24*60*60;
 		$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
-		$q = "select id from cases where next_hearing >= $from and next_hearing <= $to";
+		$q = "select id from cases where next_hearing >= $from and next_hearing <= $to order by next_hearing";
 		break;
 	}
 
@@ -166,7 +166,7 @@
 		$q = "select id,case_num,petitioner,respondent,prayer,next_hearing from cases where id=$caseid";
 		$res2 = $db->query($q);
 		$case = $res2->fetch_assoc();
-		if ($case["next_hearing"] < mktime()) {
+		if ($case["next_hearing"] < (mktime() - 24*60*60)) {
 			/* ignore hearing dates which have elapsed */
 			$case["next_hearing"] = "None";
 		} else {

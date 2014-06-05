@@ -13,6 +13,7 @@
 	background:-moz-linear-gradient(top, @c1, @c2);
 }
 .shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
+.rounded()	{ border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px; }
 
 
 
@@ -38,13 +39,13 @@ textarea{ height:6em; padding:0.5em; border:solid 1px #999; }
 table	{ width:100%; border-spacing:0; }
 p	{ }
 h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
-button	{ padding:0.5em; }
-button:disabled	{ .gradient(#999, #666); }
+button	{ padding:0.5em; .rounded(); }
+button:disabled	{ border:solid 1px #666; .gradient(#999, #666); }
 button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(@pbtnbg, darken(@pbtnbg,10%)); }
 
 
 
-
+.current_user { margin:1em 4em; color:#999; }
 .header { padding:1em 4em; background:#333; color:@bg; text-align:right; border-bottom:solid 1px #000;
 	a,a:active,a:visited { margin-left:4em; color: #777; font-size:10px; font-weight:bold; text-decoration:none; text-shadow:1px 1px 1px #000; }
 	a:hover,a.hilite { color:#ccc; }
@@ -59,14 +60,14 @@ button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-
 
 .content 	{ border-top:solid 1px #fff; }
 .nav		{ width:20%; padding:2em 1em 0 4em; border-right:solid 1px #666; vertical-align:top;
-		  a,a:visited { display:block; padding:0.5em; 
+		  a,a:visited { display:block; padding:0.5em;
 		  	color:#000; text-decoration:none; letter-spacing:0px; .shadow(#fff); 
 			border-bottom:dotted 1px #666;
 		  }
-		  a:hover { background:#d0e0ff; }
-		  .hilite { background:#d0e0ff; }
+		  a:hover { background:#8099ff; }
+		  .hilite { background:#8099ff; }
 		  .count { float:right; margin:0.2em; padding:0.3em 0.5em; font-weight:bold; }
-		  .important { background:#f33; color:#fff; .shadow(#000); }
+		  .important { background:#c00; color:#fff; .shadow(#000); .rounded(); }
 		  .navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#666; .shadow(#fff); border-bottom:dotted 1px #666; }
 		}
 .pagearea	{ padding:2em 4em; vertical-align:top; }

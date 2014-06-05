@@ -30,6 +30,7 @@ var details = {
 			fd.append('attachment', file);
 			fd.append('case_id', $('#page_details').data('id'));
 
+			console.log('Starting file upload');
 			$.ajax({
 				url: '/case/save_attachment.php',
 				type: 'POST',
@@ -39,8 +40,15 @@ var details = {
 				success: function(data) {
 					console.log('save_attachment recv:' + data);
 					var resp = JSON.parse(data);
-					if (resp != 'ok')
+					if (resp != 'ok') {
 						alert('Error:' + resp);
+						return;
+					}
+
+					details.show($('#page_details').data('id'), false);
+				},
+				error: function(o, status, e) {
+					alert('Error:' + status);
 				}
 			});
 		});

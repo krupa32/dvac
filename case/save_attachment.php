@@ -15,7 +15,7 @@
 	}
 
 	if ($_FILES["attachment"]["error"] != UPLOAD_ERR_OK) {
-		$ret = "Error occured while uploading attachment";
+		$ret = "Error occured while uploading attachment:" . $_FILES["attachment"]["error"] ;
 		goto out;
 	}
 

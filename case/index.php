@@ -48,13 +48,19 @@
 			closecase.init();
 			assign.init();
 
-			var arg = { type:'recent' };
-			caselist.show(arg, false);
-			history.replaceState({ page:'caselist', arg:arg }, '', '#caselist?recent');
+			console.log('document.ready state:' + JSON.stringify(history.state));
+			if (history.state)
+				app.popstate(history.state);
+			else
+				caselist.show({ type:'recent' }, true);
 		});
 	</script>
 </head>
 <body>
+<div class="current_user floatleft">
+Welcome <?php print $_SESSION["user_name"]; ?>
+</div>
+
 <div class="header">
 	<a href="/user/home.php">MY PROFILE</a>
 	<a>WEEKLY REPORTS</a>
@@ -303,7 +309,6 @@
 		</select></td></tr>
 	<tr><td>Next Hearing<br>(if applicable)</td><td><input type="text" id="proc_hearing"></input></td></tr>
 	<tr><td>Remarks</td><td><textarea class="fullwidth" id="proc_remarks"></textarea></td></tr>
-	<tr><td>Attachment<br>(Optional)</td><td><input type="file" id="proc_attachment"></input></td></tr>
 	<tr><td>&nbsp;</td><td class="alignright"><button class="primary" id="btn_save_proceeding">Save</button></td></tr>
 	</table>
 </div> <!-- dlg_addproceeding -->

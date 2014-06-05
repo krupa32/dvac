@@ -40,12 +40,12 @@
 		<span class="hint">Enter partial name to show a list</span><br>
 		</p></td></tr>
 	<tr><td><p>Location</p></td><td><p><select id="user_location"></select></p></td></tr>
-	<tr><td>&nbsp;</td><td><p><button id="btn_save">Save</button></p></td></tr>
+	<tr><td>&nbsp;</td><td><p><button class="primary" id="btn_save">Save</button></p></td></tr>
 
 	<tr><td colspan="2" class="sectiontitle"><br><br><br>Change Password</td></tr>
 	<tr><td><p>Password</p></td><td><p><input type="password" id="user_password"></input></p></td></tr>
 	<tr><td><p>Confirm Password</p></td><td><p><input type="password" id="user_confirm"></input></p></td></tr>
-	<tr><td>&nbsp;</td><td><p><button id="btn_changepassword">Change Password</button></p></td></tr>
+	<tr><td>&nbsp;</td><td><p><button class="primary" id="btn_changepassword">Change Password</button></p></td></tr>
 </table>
 </div> <!-- page -->
 </body>

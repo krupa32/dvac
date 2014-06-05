@@ -1,16 +1,19 @@
 var app = {
 	init: function() {
-		window.onpopstate = function(e) {
-			console.log('popstate:' + JSON.stringify(e.state));
-			if (!e.state)
-				return;
-
-			if (e.state.page == 'caselist')
-				caselist.show(e.state.arg, false);
-			else if (e.state.page == 'editcase')
-				editcase.show(e.state.id, false);
-			else if (e.state.page == 'details')
-				details.show(e.state.id, false);
+		window.onpopstate = function(h) {
+			if (h.state)
+				app.popstate(h.state);
 		};
+	},
+	
+	popstate: function(state) {
+		console.log('popstate:' + JSON.stringify(state));
+
+		if (state.page == 'caselist')
+			caselist.show(state.arg, false);
+		else if (state.page == 'editcase')
+			editcase.show(state.id, false);
+		else if (state.page == 'details')
+			details.show(state.id, false);
 	}
 };

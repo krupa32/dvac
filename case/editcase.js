@@ -22,6 +22,8 @@ var editcase = {
 	show: function(id, push) {
 		$('.page').hide();
 		$('#page_editcase').data('id', id).show();
+		editcase.reset();
+
 		if (push)
 			history.pushState({ page:'editcase', id:id }, '', '#editcase/' + id);
 
@@ -45,6 +47,13 @@ var editcase = {
 	},
 
 	save: function() {
+
+		var err;
+		if (err = editcase.validate()) {
+			alert(err);
+			return;
+		}
+
 		var param = {};
 		param.id = $('#page_editcase').data('id');
 		param.case_num = $('#editcase_case_num').val();
@@ -66,5 +75,19 @@ var editcase = {
 			// open the case details with the new case id
 			details.show(resp, true);
 		});
+	},
+
+	reset: function() {
+		$('#editcase_category').val('1');
+		$('#editcase_case_num').val('Crl.OP');
+		$('#editcase_investigator').val('').data('id', null);
+		$('#editcase_petitioner, #editcase_respondent, #editcase_prayer').val('');
+	},
+
+	validate: function() {
+		if ($('#editcase_case_num').val().trim() == '')
+			return 'Case number cannot be empty';
+		if (!$('#editcase_investigator').data('id'))
+			return 'Invalid Investigator specified';
 	}
 };
