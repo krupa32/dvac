@@ -48,7 +48,7 @@
 			closecase.init();
 			assign.init();
 
-			console.log('document.ready state:' + JSON.stringify(history.state));
+			//console.log('document.ready state:' + JSON.stringify(history.state));
 			if (history.state)
 				app.popstate(history.state);
 			else
@@ -57,6 +57,11 @@
 	</script>
 </head>
 <body>
+
+<div class="ajaxstatus">
+	Loading...
+</div>
+
 <div class="current_user floatleft">
 Welcome <?php print $_SESSION["user_name"]; ?>
 </div>

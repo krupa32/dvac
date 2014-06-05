@@ -78,7 +78,7 @@ var navigation = {
 
 	update_case_stats: function() {
 		$.get('/case/get_case_stats.php', null, function(data){
-			console.log('nav.update_case_stats recv:' + data);
+			//console.log('nav.update_case_stats recv:' + data);
 			var resp = JSON.parse(data);
 			$('#num_my').text(resp.my);
 			$('#num_pending_court').text(resp.pending_court);

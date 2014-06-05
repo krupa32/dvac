@@ -29,7 +29,6 @@ var addproceeding = {
 		param.append('disposal', $('#proc_disposal').val());
 		param.append('hearing', $('#proc_hearing').val());
 		param.append('comment', $('#proc_remarks').val());
-		console.log('file:' + $('#proc_attachment').val());
 		$.ajax({
 			url: '/case/save_proceeding.php',
 			type: 'POST',

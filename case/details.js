@@ -22,6 +22,7 @@ var details = {
 			e.preventDefault();
 		});
 		$('#btn_attach').click(function(){
+			$('#details_attachment').val('');
 			$('#details_attachment').click();
 		});
 		$('#details_attachment').change(function(){
@@ -30,7 +31,8 @@ var details = {
 			fd.append('attachment', file);
 			fd.append('case_id', $('#page_details').data('id'));
 
-			console.log('Starting file upload');
+			//console.log('Starting file upload');
+			$('.ajaxstatus').text('Uploading...').fadeIn();
 			$.ajax({
 				url: '/case/save_attachment.php',
 				type: 'POST',
@@ -38,17 +40,19 @@ var details = {
 				processData: false,
 				contentType: false,
 				success: function(data) {
-					console.log('save_attachment recv:' + data);
+					//console.log('save_attachment recv:' + data);
 					var resp = JSON.parse(data);
 					if (resp != 'ok') {
 						alert('Error:' + resp);
 						return;
 					}
-
 					details.show($('#page_details').data('id'), false);
 				},
 				error: function(o, status, e) {
 					alert('Error:' + status);
+				},
+				complete: function() {
+					$('.ajaxstatus').fadeOut();
 				}
 			});
 		});
@@ -64,7 +68,7 @@ var details = {
 		var param = {};
 		param.id = id;
 		$.get('/case/get_details.php', param, function(data){
-			console.log('details.show recv:' + data);
+			//console.log('details.show recv:' + data);
 			var resp = JSON.parse(data);
 			$('#details_case_num').text(resp.case_num);
 			$('#details_status').text(resp.status);
@@ -104,7 +108,7 @@ var details = {
 		var param = {};
 		param.id = id;
 		$.get('/case/history.php', param, function(data){
-			console.log('show_history recv:' + data);
+			//console.log('show_history recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp.length == 0) {
 				$('#historyarea').append('No history');

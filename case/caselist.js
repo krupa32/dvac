@@ -3,7 +3,7 @@ var caselist = {
 	},
 
 	show: function(arg, push) {
-		console.log('caselist.show arg:' + JSON.stringify(arg));
+		//console.log('caselist.show arg:' + JSON.stringify(arg));
 
 		$('.page').hide();
 
@@ -11,7 +11,7 @@ var caselist = {
 			history.pushState({ page:'caselist', arg:arg }, '', '#caselist?' + arg.type);
 
 		$.get('/case/caselist.php', arg, function(data){
-			console.log('caselist.show recv:' + data);
+			//console.log('caselist.show recv:' + data);
 			$('#caselistarea').html('');
 
 			var resp = JSON.parse(data);
