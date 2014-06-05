@@ -54,7 +54,21 @@ CREATE TABLE `assignments` (
   `target` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `attachments`
+--
+
+DROP TABLE IF EXISTS `attachments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attachments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +81,7 @@ DROP TABLE IF EXISTS `cases`;
 CREATE TABLE `cases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `case_num` varchar(32) DEFAULT NULL,
+  `category` tinyint(4) DEFAULT NULL,
   `creator` int(11) DEFAULT NULL,
   `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` tinyint(4) DEFAULT NULL,
@@ -75,9 +90,10 @@ CREATE TABLE `cases` (
   `petitioner` text,
   `respondent` text,
   `prayer` text,
+  `next_hearing` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `case_num` (`case_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +108,7 @@ CREATE TABLE `comments` (
   `case_id` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,9 +129,10 @@ CREATE TABLE `proceedings` (
   `judge` varchar(32) DEFAULT NULL,
   `counsel` tinyint(4) DEFAULT NULL,
   `disposal` tinyint(4) DEFAULT NULL,
+  `next_hearing` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +152,7 @@ CREATE TABLE `users` (
   `location` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -147,4 +164,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-28 11:02:23
+-- Dump completed on 2014-06-05 17:32:12
