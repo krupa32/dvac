@@ -1,10 +1,16 @@
 <?php
 	function get_count($db, $q)
 	{
+		$count = 0;
+
 		$res = $db->query($q);
-		$row = $res->fetch_row();
-		$res->close();
-		return $row[0];
+		if ($res && $res->num_rows > 0) {
+			$row = $res->fetch_row();
+			$count = $row[0];
+			$res->close();
+		}
+		
+		return $count;
 	}
 
 	include "../common/config.php";
