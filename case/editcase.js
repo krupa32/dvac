@@ -89,5 +89,6 @@ var editcase = {
 			return 'Case number cannot be empty';
 		if (!$('#editcase_investigator').data('id'))
 			return 'Invalid Investigator specified';
+		return null;
 	}
 };

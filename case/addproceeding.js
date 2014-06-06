@@ -15,9 +15,17 @@ var addproceeding = {
 
 	show: function(case_id) {
 		$('#dlg_addproceeding').data('case_id', case_id).dialog('open');
+		addproceeding.reset();
 	},
 
 	save: function() {
+
+		var err;
+		if (err = addproceeding.validate()) {
+			alert(err);
+			return;
+		}
+
 		var case_id = $('#dlg_addproceeding').data('case_id');
 		var param = new FormData();
 		param.append('case_id', case_id);
@@ -46,5 +54,14 @@ var addproceeding = {
 				details.show(case_id, false);
 			}
 		});
+	},
+
+	reset: function() {
+		$('#proc_court, #proc_disposal, #proc_disposal').val('1');
+		$('#proc_hall, #proc_item, #proc_judge, #proc_hearing, #proc_remarks').val('');
+	},
+
+	validate: function() {
+		return null;
 	}
 };

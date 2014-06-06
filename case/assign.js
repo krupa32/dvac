@@ -20,9 +20,16 @@ var assign = {
 
 	show: function(case_id) {
 		$('#dlg_assign').data('case_id', case_id).dialog('open');
+		assign.reset();
 	},
 
 	save: function() {
+		var err;
+		if (err = assign.validate()) {
+			alert(err);
+			return;
+		}
+
 		var param = {};
 		param.case_id = $('#dlg_assign').data('case_id');
 		param.target = $('#assign_to').data('id');
@@ -41,5 +48,15 @@ var assign = {
 
 			details.show(param.case_id, false);
 		});
+	},
+
+	reset: function() {
+		$('#assign_to').val('').data('id', null);
+	},
+
+	validate: function() {
+		if (!$('#assign_to').data('id'))
+			return 'Invalid officer specified';
+		return null;
 	}
 };

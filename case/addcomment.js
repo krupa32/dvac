@@ -12,9 +12,16 @@ var addcomment = {
 
 	show: function(case_id) {
 		$('#dlg_addcomment').data('case_id', case_id).dialog('open');
+		addcomment.reset();
 	},
 
 	save: function() {
+		var err;
+		if (err = addcomment.validate()) {
+			alert(err);
+			return;
+		}
+
 		var case_id = $('#dlg_addcomment').data('case_id');
 		var param = {};
 		param.case_id = case_id;
@@ -30,5 +37,13 @@ var addcomment = {
 			$('#dlg_addcomment').dialog('close');
 			details.show(case_id, false);
 		});
+	},
+
+	reset: function() {
+		$('#comment_text').val('');
+	},
+
+	validate: function() {
+		return null;
 	}
 };
