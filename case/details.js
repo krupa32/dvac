@@ -66,7 +66,7 @@ var details = {
 			history.pushState({ page:'details', id:id }, '', '#details/' + id);
 
 		console.log('user grade = ' + user_grade);
-		if (user_grade == 70)
+		if (user_grade == 70 || user_grade == 60) // only director or joint director
 			$('#details_change').show();
 		else
 			$('#details_change').hide();

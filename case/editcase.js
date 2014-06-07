@@ -63,6 +63,14 @@ var editcase = {
 			$('#editcase_petitioner').val(resp.petitioner);
 			$('#editcase_respondent').val(resp.respondent);
 			$('#editcase_prayer').val(resp.prayer);
+
+			//  parse the case number and year from case_num
+			var num_index = resp.case_num.lastIndexOf(".") + 1;
+			var year_index = resp.case_num.lastIndexOf("/") + 1;
+			var num = resp.case_num.substring(num_index, year_index - 1)
+			var year = resp.case_num.substr(year_index)
+			$('#editcase_no').val(num);
+			$('#editcase_year').val(year);
 		});
 
 	},
