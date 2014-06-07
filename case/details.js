@@ -65,6 +65,12 @@ var details = {
 		if (push)
 			history.pushState({ page:'details', id:id }, '', '#details/' + id);
 
+		console.log('user grade = ' + user_grade);
+		if (user_grade == 70)
+			$('#details_change').show();
+		else
+			$('#details_change').hide();
+
 		var param = {};
 		param.id = id;
 		$.get('/case/get_details.php', param, function(data){
@@ -104,11 +110,11 @@ var details = {
 	},
 
 	show_history: function(id) {
-		$('#historyarea').html('');
 		var param = {};
 		param.id = id;
 		$.get('/case/history.php', param, function(data){
 			//console.log('show_history recv:' + data);
+			$('#historyarea').html('');
 			var resp = JSON.parse(data);
 			if (resp.length == 0) {
 				$('#historyarea').append('No history');

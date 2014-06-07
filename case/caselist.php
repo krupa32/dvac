@@ -109,6 +109,8 @@
 		$q = "select id from cases where $field like '%$data%'";
 		if ($field == "assigned_to" || $field == "investigator") /* special cases where data contains id */
 			$q = "select id from cases where $field=$data";
+		if ($field == "location")
+			$q = "select cases.id from cases,users where cases.investigator=users.id and users.location=$data";
 		break;
 	case "my":
 		$q = "select id from cases where assigned_to=${_SESSION['user_id']}";
@@ -119,25 +121,17 @@
 	case "pending_dvac":
 		$q = "select id from cases where status=${statuses['PENDING_WITH_DVAC']}";
 		break;
-	case "crlop":
-		$q = "select id from cases where category=${categories['Crl.OP']}";
-		break;
-	case "wp":
-		$q = "select id from cases where category=${categories['WP']}";
-		break;
-	case "wa":
-		$q = "select id from cases where category=${categories['WA']}";
-		break;
-	case "rc":
-		$q = "select id from cases where category=${categories['RC']}";
-		break;
-	case "ca":
-		$q = "select id from cases where category=${categories['CA']}";
+	case "category":
+		$name = $_GET["name"];
+		$q = "select id from cases where category=${categories[$name]}";
 		break;
 	case "upcoming_hearings":
 		$from = mktime() - 24*60*60;
 		$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
 		$q = "select id from cases where next_hearing >= $from and next_hearing <= $to order by next_hearing";
+		break;
+	case "no_hearings":
+		$q = "select id from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']}";
 		break;
 	}
 

@@ -10,7 +10,7 @@ var app = {
 	},
 	
 	popstate: function(state) {
-		//console.log('popstate:' + JSON.stringify(state));
+		console.log('popstate:' + JSON.stringify(state));
 
 		if (state.page == 'caselist')
 			caselist.show(state.arg, false);

@@ -40,30 +40,22 @@
 	$q = "select count(id) from cases where next_hearing >= $from and next_hearing <= $to";
 	$ret["hearings"] = get_count($db, $q);
 
-	/* Crl.OP */
-	$q = "select count(*) from cases where category=${categories['Crl.OP']} and " .
-		"status != ${statuses['CLOSED']}";
-	$ret["crlop"] = get_count($db, $q);
+	/* nohearings */
+	$q = "select count(id) from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']}";
+	$ret["nohearings"] = get_count($db, $q);
 
-	/* WP */
-	$q = "select count(*) from cases where category=${categories['WP']} and " .
-		"status != ${statuses['CLOSED']}";
-	$ret["wp"] = get_count($db, $q);
-
-	/* WA */
-	$q = "select count(*) from cases where category=${categories['WA']} and " .
-		"status != ${statuses['CLOSED']}";
-	$ret["wa"] = get_count($db, $q);
-
-	/* RC */
-	$q = "select count(*) from cases where category=${categories['RC']} and " .
-		"status != ${statuses['CLOSED']}";
-	$ret["rc"] = get_count($db, $q);
-
-	/* CA */
-	$q = "select count(*) from cases where category=${categories['CA']} and " .
-		"status != ${statuses['CLOSED']}";
-	$ret["ca"] = get_count($db, $q);
+	/* get cases stats by category */
+	$ret["categories"] = array();
+	foreach ($categories as $name => $value) {
+		$q = "select count(*) from cases where category=$value and " .
+			"status != ${statuses['CLOSED']}";
+		/* key is derived by removing space,/,. and converting to lower */
+		$key = strtolower(strtr($name, array(" " => "", "/" => "", "." => "")));
+		$entry["name"] = $name;
+		$entry["key"] = $key;
+		$entry["count"] = get_count($db, $q);
+		$ret["categories"][] = $entry;
+	}
 
 out:
 	$db->close();

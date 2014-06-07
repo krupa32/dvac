@@ -21,7 +21,6 @@
 
 	/* add an attachment record in db */
 	$name = $_FILES["attachment"]["name"];
-	error_log("filename=$name");
 	$q = "insert into attachments values(null, '$name')";
 	if (!$db->query($q)) {
 		$ret = $db->error;

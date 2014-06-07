@@ -81,11 +81,15 @@
 	 * categories to which a court case can belong.
 	 */
 	$categories = array(
-			"Crl.OP"	=> 1,
-			"RC"		=> 2,
-			"CA"		=> 3,
-			"WP"		=> 4,
-			"WA"		=> 5
+			"Crl.OP"		=> 1,
+			"Crl.RC"		=> 2,
+			"CA"			=> 3,
+			"WP"			=> 4,
+			"WA"			=> 5,
+			"Contempt Petition"	=> 6,
+			"Contempt Appeal"	=> 7,
+			"SR.No"			=> 8,
+			"Misc"			=> 9
 			);
 
 	/* activities

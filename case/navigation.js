@@ -29,45 +29,17 @@ var navigation = {
 			caselist.show(arg, true);
 			return false;
 		});
-		$('#nav_category_crlop').click(function(){
-			$('.nav a').removeClass('hilite');
-			$(this).addClass('hilite');
-			var arg = { type:'crlop' };
-			caselist.show(arg, true);
-			return false;
-		});
-		$('#nav_category_wp').click(function(){
-			$('.nav a').removeClass('hilite');
-			$(this).addClass('hilite');
-			var arg = { type:'wp' };
-			caselist.show(arg, true);
-			return false;
-		});
-		$('#nav_category_wa').click(function(){
-			$('.nav a').removeClass('hilite');
-			$(this).addClass('hilite');
-			var arg = { type:'wa' };
-			caselist.show(arg, true);
-			return false;
-		});
-		$('#nav_category_rc').click(function(){
-			$('.nav a').removeClass('hilite');
-			$(this).addClass('hilite');
-			var arg = { type:'rc' };
-			caselist.show(arg, true);
-			return false;
-		});
-		$('#nav_category_ca').click(function(){
-			$('.nav a').removeClass('hilite');
-			$(this).addClass('hilite');
-			var arg = { type:'ca' };
-			caselist.show(arg, true);
-			return false;
-		});
 		$('#nav_hearings').click(function(){
 			$('.nav a').removeClass('hilite');
 			$(this).addClass('hilite');
 			var arg = { type:'upcoming_hearings' };
+			caselist.show(arg, true);
+			return false;
+		});
+		$('#nav_nohearings').click(function(){
+			$('.nav a').removeClass('hilite');
+			$(this).addClass('hilite');
+			var arg = { type:'no_hearings' };
 			caselist.show(arg, true);
 			return false;
 		});
@@ -84,11 +56,25 @@ var navigation = {
 			$('#num_pending_court').text(resp.pending_court);
 			$('#num_pending_dvac').text(resp.pending_dvac);
 			$('#num_hearings').text(resp.hearings);
-			$('#num_crlop').text(resp.crlop);
-			$('#num_wp').text(resp.wp);
-			$('#num_wa').text(resp.wa);
-			$('#num_rc').text(resp.rc);
-			$('#num_ca').text(resp.ca);
+			$('#num_nohearings').text(resp.nohearings);
+
+			var i, name, key, count, div = $('#categorylist');
+			div.html('');
+			for (i in resp.categories) {
+				name = resp.categories[i].name;
+				key = resp.categories[i].key;
+				count = resp.categories[i].count;
+				div.append('<div class="count" id="num_' + key + '">' + count + 
+					'</div><a href="' + name + '" id="nav_' + key + '">' + name + '</a>');
+			}
+
+			$('#categorylist a').click(function(){
+				$('.nav a').removeClass('hilite');
+				$(this).addClass('hilite');
+				var arg = { type:'category', name:$(this).attr('href') };
+				caselist.show(arg, true);
+				return false;
+			});
 		});
 	}
 };

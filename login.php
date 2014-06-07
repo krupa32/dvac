@@ -5,7 +5,7 @@
 
 	if ($_POST && $_POST["login"]) {
 		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
-		$q = "select id,name,password from users where login='${_POST['login']}'";
+		$q = "select id,name,grade,password from users where login='${_POST['login']}'";
 		$res = $db->query($q);
 		if ($res->num_rows == 0)
 			goto fail;
@@ -16,6 +16,7 @@
 
 		$_SESSION["user_id"] = $row["id"];
 		$_SESSION["user_name"] = $row["name"];
+		$_SESSION["user_grade"] = $row["grade"];
 
 		header("location: /case/index.php");
 		exit(0);

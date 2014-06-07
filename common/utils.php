@@ -17,7 +17,7 @@
 	function relative_time($timestamp)
 	{
 		$now = new DateTime(date(DATE_W3C));
-		error_log("ts=$timestamp");
+		//error_log("ts=$timestamp");
 		$dt = new DateTime($timestamp);
 		$diff = $dt->diff($now);
 	

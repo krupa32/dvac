@@ -10,7 +10,8 @@ var addproceeding = {
 
 		$('#btn_save_proceeding').click(addproceeding.save);
 
-		$('#proc_hearing').datepicker({ dateFormat:'M d, yy' });
+		//$('#proc_hearing').datepicker({ changeYear:true, dateFormat:'M d, yy' });
+		$('#proc_hearing').datepicker({ changeYear:true, dateFormat:'yy' });
 	},
 
 	show: function(case_id) {

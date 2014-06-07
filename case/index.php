@@ -32,8 +32,14 @@
 	<script type="text/javascript" src="/case/closecase.js"></script>
 	<script type="text/javascript" src="/case/assign.js"></script>
 	<script type="text/javascript">
+		<?php
+			print "var user_id = ${_SESSION['user_id']};\n";
+			print "var user_name = '${_SESSION['user_name']}';\n";
+			print "var user_grade = ${_SESSION['user_grade']};\n";
+		?>
 		$(document).ready(function(){
 			$('.page').detach().appendTo('.pagearea').hide();
+
 
 			app.init();
 			toolbar.init();
@@ -85,6 +91,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<option value="respondent">Respondent</option>
 			<option value="investigator">IO</option>
 			<option value="assigned_to">Assigned</option>
+			<option value="location">Detachment</option>
 		</select>
 		<input type="text" id="toolbar_data"></input>
 		<button class="primary" id="toolbar_search">Search</button></p></td>
@@ -101,12 +108,20 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<div class="count important" id="num_pending_dvac">3</div><a href="" id="nav_pending_dvac">PENDING WITH DVAC</a>
 			<p class="navsectiontitle">HEARINGS</p>
 			<div class="count" id="num_hearings">3</div><a href="" id="nav_hearings">UPCOMING HEARINGS</a>
+			<div class="count" id="num_nohearings">3</div><a href="" id="nav_nohearings">NOT SPECIFIED</a>
 			<p class="navsectiontitle">CASES BY CATEGORY</p>
-			<div class="count" id="num_crlop">305</div><a href="" id="nav_category_crlop">Crl.O.P</a>
+			<div id="categorylist">
+			<!--
+			<div class="count" id="num_crlop">305</div><a href="" id="nav_category_crlop">Crl.OP</a>
+			<div class="count" id="num_rc">3</div><a href="" id="nav_category_rc">Crl.RC</a>
 			<div class="count" id="num_wp">3</div><a href="" id="nav_category_wp">WP</a>
 			<div class="count" id="num_wa">3</div><a href="" id="nav_category_wa">WA</a>
-			<div class="count" id="num_rc">3</div><a href="" id="nav_category_rc">RC</a>
 			<div class="count" id="num_ca">3</div><a href="" id="nav_category_ca">CA</a>
+			<div class="count" id="num_contemptpetition">3</div><a href="" id="nav_category_contemptpetition">Contempt Petition</a>
+			<div class="count" id="num_contemptappeal">3</div><a href="" id="nav_category_contemptappeal">Contempt Appeal</a>
+			<div class="count" id="num_srno">3</div><a href="" id="nav_category_srno">SR.No</a>
+			-->
+			</div>
 		</td>
 
 		<td class="pagearea"></td>
@@ -172,12 +187,16 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<col class="data"></col>
 	</colgroup>
 	<tr>
-		<td>Category</td>
-		<td><select id="editcase_category"></select></td>
+		<td>Category, No., Year</td>
+		<td>
+			<select id="editcase_category"></select>
+			<input type="text" id="editcase_no"></input>
+			<input type="text" id="editcase_year"></input>
+		</td>
 	</tr>
 	<tr>
 		<td><p>Case Number</p></td>
-		<td><p><input type="text" id="editcase_case_num" value="Crl.OP"></input></p>
+		<td><p><span id="editcase_case_num"></span></p>
 	</tr>
 	<tr>
 		<td><p>Investigating Officer</p></td>

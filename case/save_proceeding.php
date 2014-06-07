@@ -23,12 +23,10 @@
 	$proc_id = $db->insert_id;
 
 	/* update next hearing date, if applicable */
-	if ($hearing) {
-		$q = "update cases set next_hearing=$hearing where id=${_POST['case_id']}";
-		if (!$db->query($q)) {
-			$ret = $db->error;
-			goto out;
-		}
+	$q = "update cases set next_hearing=$hearing where id=${_POST['case_id']}";
+	if (!$db->query($q)) {
+		$ret = $db->error;
+		goto out;
 	}
 
 	$type = $activities["ADDPROCEEDING"];
