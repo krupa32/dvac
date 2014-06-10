@@ -11,6 +11,8 @@ var addproceeding = {
 		$('#btn_save_proceeding').click(addproceeding.save);
 
 		$('#proc_hearing').datepicker({ dateFormat:'M d, yy' });
+
+		utils.dynamic_combo('#proc_court', '/common/get_courts.php', null);
 	},
 
 	show: function(case_id) {

@@ -4,7 +4,7 @@ var navigation = {
 			$('.nav a').removeClass('hilite');
 			$(this).addClass('hilite');
 			var arg = { type:'recent' };
-			caselist.show(arg, true);
+			caselist.show(arg, false, true);
 			e.preventDefault();
 		});
 
@@ -12,35 +12,35 @@ var navigation = {
 			$('.nav a').removeClass('hilite');
 			$(this).addClass('hilite');
 			var arg = { type:'my' };
-			caselist.show(arg, true);
+			caselist.show(arg, false, true);
 			return false;
 		});
 		$('#nav_pending_court').click(function(){
 			$('.nav a').removeClass('hilite');
 			$(this).addClass('hilite');
 			var arg = { type:'pending_court' };
-			caselist.show(arg, true);
+			caselist.show(arg, false, true);
 			return false;
 		});
 		$('#nav_pending_dvac').click(function(){
 			$('.nav a').removeClass('hilite');
 			$(this).addClass('hilite');
 			var arg = { type:'pending_dvac' };
-			caselist.show(arg, true);
+			caselist.show(arg, false, true);
 			return false;
 		});
 		$('#nav_hearings').click(function(){
 			$('.nav a').removeClass('hilite');
 			$(this).addClass('hilite');
 			var arg = { type:'upcoming_hearings' };
-			caselist.show(arg, true);
+			caselist.show(arg, false, true);
 			return false;
 		});
 		$('#nav_nohearings').click(function(){
 			$('.nav a').removeClass('hilite');
 			$(this).addClass('hilite');
 			var arg = { type:'no_hearings' };
-			caselist.show(arg, true);
+			caselist.show(arg, false, true);
 			return false;
 		});
 
@@ -72,7 +72,7 @@ var navigation = {
 				$('.nav a').removeClass('hilite');
 				$(this).addClass('hilite');
 				var arg = { type:'category', name:$(this).attr('href') };
-				caselist.show(arg, true);
+				caselist.show(arg, false, true);
 				return false;
 			});
 		});

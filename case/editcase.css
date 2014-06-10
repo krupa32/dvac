@@ -9,5 +9,6 @@
 .field { width:30%; }
 .data { width:70%;  }
 
+#editcase_category { width:6em; }
 #editcase_no { width:10em; }
 #editcase_year { width:4em; }

@@ -92,6 +92,9 @@
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
 
+	$start = $_GET["start_item"];
+	$rows = $num_items_per_fetch;
+
 	$ret = array();
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
@@ -106,55 +109,53 @@
 	case "search":
 		$field = $_GET["field"];
 		$data = $_GET["data"];
-		$q = "select id from cases where $field like '%$data%'";
+		$q = "select id from cases where $field like '%$data%' limit $start,$rows";
 		if ($field == "assigned_to" || $field == "investigator") /* special cases where data contains id */
-			$q = "select id from cases where $field=$data";
+			$q = "select id from cases where $field=$data limit $start,$rows";
 		if ($field == "location")
-			$q = "select cases.id from cases,users where cases.investigator=users.id and users.location=$data";
+			$q = "select cases.id from cases,users where cases.investigator=users.id and users.location=$data limit $start,$rows";
 		break;
 	case "my":
-		$q = "select id from cases where assigned_to=${_SESSION['user_id']}";
+		$q = "select id from cases where assigned_to=${_SESSION['user_id']} limit $start,$rows";
 		break;
 	case "pending_court":
-		$q = "select id from cases where status=${statuses['PENDING_IN_COURT']}";
+		$q = "select id from cases where status=${statuses['PENDING_IN_COURT']} limit $start,$rows";
 		break;
 	case "pending_dvac":
-		$q = "select id from cases where status=${statuses['PENDING_WITH_DVAC']}";
+		$q = "select id from cases where status=${statuses['PENDING_WITH_DVAC']} limit $start,$rows";
 		break;
 	case "category":
 		$name = $_GET["name"];
-		$q = "select id from cases where category=${categories[$name]}";
+		$q = "select id from cases where category=${categories[$name]} limit $start,$rows";
 		break;
 	case "upcoming_hearings":
 		$from = mktime() - 24*60*60;
 		$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
-		$q = "select id from cases where next_hearing >= $from and next_hearing <= $to order by next_hearing";
+		$q = "select id from cases where next_hearing >= $from and next_hearing <= $to order by next_hearing limit $start,$rows";
 		break;
 	case "no_hearings":
-		$q = "select id from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']}";
+		$q = "select id from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']} limit $start,$rows";
 		break;
 	}
 
 	$res = $db->query($q);
 
+	/* form a list of caseids from the query result */
+	while ($row = $res->fetch_row())
+		$caseids[] = $row[0];
+
+	/* The query for 'recent' type will return duplicate caseids.
+	 * Also, the caseids are not limited to $start and $rows.
+	 * So, make the caseids unique and restrict the result to
+	 * $start, $rows.
+	 */
+	if ($_GET["type"] == "recent") {
+		$caseids = array_unique($caseids);
+		$caseids = array_slice($caseids, $start, $rows);
+	}
+
 	/* for each case selected, get the details and activities */
-	while ($row = $res->fetch_row()) {
-
-		$caseid = $row[0];
-
-		/* ignore if caseid is already added.
-		 * the 'recent' type returns duplicate case ids.
-		 */
-		$added = 0;
-		foreach ($ret as $case) {
-			if ($case["id"] == $caseid) {
-				$added = 1;
-				break;
-			}
-		}
-
-		if ($added)
-			continue;
+	foreach ($caseids as $caseid) {
 
 		/* get case details */
 		$q = "select id,case_num,petitioner,respondent,prayer,next_hearing from cases where id=$caseid";

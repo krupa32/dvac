@@ -12,6 +12,13 @@
 	/* upload directory */
 	$upload_dir = "/case/uploads/";
 
+	/* num_items_per_fetch
+	 * specifies the number of items (cases) fetched and displayed
+	 * per request for a case list. Remaining items can be displayed
+	 * using the 'Show More' button.
+	 */
+	$num_items_per_fetch = 3;
+
 	/* num_days_recent_activity
 	 * this specifies the number of days considered for recent activity.
 	 */
@@ -50,8 +57,8 @@
 	 * court locations where DVAC cases/proceedings happen.
 	 */
 	$courts = array(
-			"Chennai HC"	=> 1,
-			"Madurai HC"	=> 2
+			"Chennai"	=> 1,
+			"Madurai"	=> 2
 			);
 
 	/* counsels

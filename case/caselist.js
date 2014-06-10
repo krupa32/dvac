@@ -1,35 +1,56 @@
 var caselist = {
+
+	/* starting item for next fetch.
+	 * during each fetch, the number of items specified
+	 * in config.php is returned. this value is incremented
+	 * by the num items returned by the server.
+	 */
+	start_item: 0,
+
 	init: function() {
+		$('#caselist_more').click(function(){
+			caselist.show(history.state.arg, true, false);
+		});
 	},
 
-	show: function(arg, push) {
+	show: function(arg, more, push) {
 		//console.log('caselist.show arg:' + JSON.stringify(arg));
 
-		$('.page').hide();
+		if (!more) {
+			caselist.start_item = 0;
+			$('.page').hide();
+			$('#page_caselist').show();
+			$('#caselist_more').show();
+		}
 
 		if (push)
 			history.pushState({ page:'caselist', arg:arg }, '', '#caselist?' + arg.type);
 
+		/* append start_item onto 'arg' before sending it */
+		arg.start_item = caselist.start_item;
+
 		$.get('/case/caselist.php', arg, function(data){
 			//console.log('caselist.show recv:' + data);
-			$('#caselistarea').html('');
+			if (!more)
+				$('#caselistarea').html('');
 
 			var resp = JSON.parse(data);
 			if (resp.length == 0) {
-				$('#caselistarea').append('No items found');
-				$('#page_caselist').show();
+				$('#caselistarea').append('<div class="aligncenter">No more items found</div>');
+				$('#caselist_more').hide();
 				return;
 			}
 
 			for (i in resp)
 				caselist.add_case(resp[i]);
 
+			caselist.start_item += resp.length;
+
 			$('#page_caselist a.caselink').click(function(e){
 				details.show($(this).attr('href'), true);
 				e.preventDefault();
 			});
 
-			$('#page_caselist').show();
 		});
 	},
 
@@ -107,7 +128,7 @@ var caselist = {
 		div.append('<p class="title floatright">' + a.ts + '</p>');
 		div.append('<p class="title">' + a.doer + ' updated a proceeding for case</p>');
 		extra = '<p class="extra">' + 
-			'At Hall ' + a.details.hall + ', ' + a.details.court + ' by Judge ' + a.details.judge + '<br>' + 
+			'At Hall ' + a.details.hall + ', ' + a.details.court + 'High Court by Judge ' + a.details.judge + '<br>' + 
 			'Counsel ' + a.details.counsel + ' appeared<br>' + 
 			'Disposal ' + a.details.disposal + '<br>';
 		extra += 'Next hearing ' + a.details.next_hearing;

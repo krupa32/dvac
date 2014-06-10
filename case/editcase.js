@@ -1,9 +1,11 @@
 var editcase = {
 	init: function() {
-		// get case categories
+		// get case categories and courts
 		utils.dynamic_combo('#editcase_category', '/common/get_categories.php', null);
+		utils.dynamic_combo('#editcase_court', '/common/get_courts.php', null);
 
 		$('#editcase_category').change(editcase.update_case_num);
+		$('#editcase_court').change(editcase.update_case_num);
 		$('#editcase_no, #editcase_year').keyup(editcase.update_case_num);
 
 		$('#editcase_no').focus(function(){
@@ -35,7 +37,9 @@ var editcase = {
 	},
 
 	update_case_num: function() {
-		var case_num = $('#editcase_category option:selected').text() + '.' + 
+		var court_spec, case_num;
+		court_spec = ($('#editcase_court option:selected').text() == 'Madurai') ? '(MD)' : '';
+		case_num = $('#editcase_category option:selected').text() + '.' + court_spec +
 				 $('#editcase_no').val() + '/' + $('#editcase_year').val();
 		 $('#editcase_case_num').text(case_num);
 	},
@@ -64,8 +68,13 @@ var editcase = {
 			$('#editcase_respondent').val(resp.respondent);
 			$('#editcase_prayer').val(resp.prayer);
 
+			if (resp.case_num.indexOf('(MD)') != -1)
+				$('#editcase_court').val(2);
+
 			//  parse the case number and year from case_num
 			var num_index = resp.case_num.lastIndexOf(".") + 1;
+			if (resp.case_num.charAt(num_index) == '(') // if court other than chennai, skip court spec
+				num_index += 4;
 			var year_index = resp.case_num.lastIndexOf("/") + 1;
 			var num = resp.case_num.substring(num_index, year_index - 1)
 			var year = resp.case_num.substr(year_index)
@@ -108,6 +117,7 @@ var editcase = {
 
 	reset: function() {
 		$('#editcase_category').val('1').get(0).selectedIndex = 0;
+		$('#editcase_court').val('1').get(0).selectedIndex = 0;
 		$('#editcase_no').val('Number');
 		$('#editcase_year').val('Year');
 		editcase.update_case_num();

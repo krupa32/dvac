@@ -132,6 +132,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 <div class="page" id="page_caselist">
 	<div class="caselist" id="caselistarea">
+		<!--
 		<div class="case">
 			<p class="casenum"><a href="2">Crl.OP.2003/43/4</a></p>	
 			<p class="extra">Filed by Tmt. Kanimozhi<br>Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
@@ -154,30 +155,11 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 				</div>
 			</div>
 		</div>
-		<div class="case">
-			<p class="casenum"><a href="14">Crl.OP.2003/43/4</a></p>	
-			<p class="extra">Filed by Tmt. Kanimozhi<br>Respondent Raj Narayan, DSP, DVAC, Shahul, SP, DVAC</p>
-			<p class="text">To disburse death cum retirement grtuity for my unblemished service within a stipulated
-				period fixed by the court.</p>
-			<div class="activityarea">
-				<div class="activity">
-					<p class="title floatright">Today</p>
-					<p class="title">Raj Narayan, DSP added a proceeding</p>
-					<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
-						ADJOURNED to Mar 04, 2014</p>
-					<p class="text">Court has directed to submit more documents</p>
-				</div>
-				<div class="activity">
-					<p class="title floatright">Today</p>
-					<p class="title">Raj Narayan, DSP added a proceeding</p>
-					<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
-						ADJOURNED to Mar 04, 2014</p>
-					<p class="text">Court has directed to submit more documents</p>
-				</div>
-			</div>
-		</div>
-
+		-->
 	</div> <!-- caselist -->
+
+	<div class="aligncenter"><button class="primary" id="caselist_more">Show More</button></div>
+
 </div> <!-- page_caselist -->
 
 <div class="page" id="page_editcase">
@@ -187,9 +169,10 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<col class="data"></col>
 	</colgroup>
 	<tr>
-		<td>Category, No., Year</td>
+		<td>Category, Court, No., Year</td>
 		<td>
 			<select id="editcase_category"></select>
+			<select id="editcase_court"></select>
 			<input type="text" id="editcase_no"></input>
 			<input type="text" id="editcase_year"></input>
 		</td>
@@ -311,7 +294,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 <div class="dialog" id="dlg_addproceeding">
 	<table id="tbl_proceeding">
-	<tr><td>Court</td><td><select id="proc_court"><option value="1">Chennai</option><option value="2">Madurai</option></select></td></tr>
+	<tr><td>Court</td><td><select id="proc_court"></select></td></tr>
 	<tr><td class="field">Hall No.</td><td class="data"><input type="text" id="proc_hall"></input></td></tr>
 	<tr><td>Item No.</td><td><input type="text" id="proc_item"></input></tr>
 	<tr><td>Judge</td><td><input type="text" class="fullwidth" id="proc_judge"></input></tr>

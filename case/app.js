@@ -13,7 +13,7 @@ var app = {
 		console.log('popstate:' + JSON.stringify(state));
 
 		if (state.page == 'caselist')
-			caselist.show(state.arg, false);
+			caselist.show(state.arg, false, false);
 		else if (state.page == 'editcase')
 			editcase.show(state.id, false);
 		else if (state.page == 'details')
