@@ -13,4 +13,5 @@
 	#editcase_category { width:6em; }
 	#editcase_no { width:10em; }
 	#editcase_year { width:4em; }
+	#editcase_case_num { padding:2em 0; color:#ccc; }
 }

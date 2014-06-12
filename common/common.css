@@ -4,9 +4,9 @@
  */
 
 /* less definitions */
-@bg: #f0f0f0;
+@bg: #304050;
 @fg: #333;
-@pbtnbg: #8099ff;
+@pbtnbg: #fc0;
 @pbtnfg: #000;
 .gradient(@c1,@c2) {
 	background:-webkit-linear-gradient(top, @c1, @c2);
@@ -29,11 +29,11 @@
 
 
 /* html element defaults */
-* 	{ margin:0; padding:0; font:10pt sans,verdana,arial; color:@fg; line-height:1.3em; }
+* 	{ margin:0; padding:0; font:10pt sans,arial; line-height:1.3em; }
 /*	{ border:dotted 1px #f00; }*/
 html	{ overflow-y:scroll; }
 body 	{ background:@bg; }
-input[type=text], input[type=password]  { padding:0.5em; background: lighten(@bg, 20%); border:solid 1px #999; }
+input[type=text], input[type=password]  { padding:0.5em; border:solid 1px #999; }
 select 	{ padding:0.5em; }
 textarea{ height:6em; padding:0.5em; border:solid 1px #999; }
 table	{ width:100%; border-spacing:0; }
@@ -41,7 +41,7 @@ p	{ }
 h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
 button	{ padding:0.5em; .rounded(); }
 button:disabled	{ border:solid 1px #666; .gradient(#999, #666); }
-button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(@pbtnbg, darken(@pbtnbg,10%)); }
+button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(#fc0, #c60); }
 
 
 .ajaxstatus { display:none; position:fixed; width:50%; top:25px; padding:1em; background:#ff0; border:solid 2px #999; text-align:center; }
@@ -51,29 +51,32 @@ button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-
 	a:hover,a.hilite { color:#ccc; }
 }
 
-.toolbar 		{ border-top:solid 1px #fff; border-bottom:solid 1px #666; }
+.toolbar 		{ border-top:solid 1px #666; border-bottom:solid 1px #000; }
 .toolbarbuttonarea 	{ float:left; margin:2em 0 2em 4em; }
 .toolbarsearcharea 	{ margin:2em 4em 2em 0; text-align:right; 
 	input[type=text] { width:24em; }
 }
 
 
-.content 	{ border-top:solid 1px #fff; }
-.nav		{ width:20%; padding:2em 1em 0 4em; border-right:solid 1px #666; vertical-align:top;
-		  a,a:visited { display:block; padding:0.5em;
-		  	color:#000; text-decoration:none; letter-spacing:0px; .shadow(#fff); 
-			border-bottom:dotted 1px #666;
-		  }
-		  a:hover { background:#8099ff; }
-		  .hilite { background:#8099ff; }
-		  .count { float:right; margin:0.2em; padding:0.3em 0.5em; font-weight:bold; }
-		  .important { background:#c00; color:#fff; .shadow(#000); .rounded(); }
-		  .navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#666; .shadow(#fff); border-bottom:dotted 1px #666; }
-		}
+.content 	{ border-top:solid 1px #666; }
+
+.nav { width:20%; padding:2em 1em 0 4em; vertical-align:top;
+	a,a:visited { display:block; padding:0.5em;
+	  	color:#ccc; text-decoration:none; letter-spacing:0px; .shadow(#000); 
+		border-bottom:dotted 1px #666;
+	}
+	a:hover { background:#567; }
+	.hilite { background:#567; }
+	.count { float:right; margin:0.2em; padding:0.3em 0.5em; color:#ccc; font-weight:bold; .shadow(#000); }
+	.important { background:#c00; color:#fff; .shadow(#000); .rounded(); }
+	.navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#666; border-bottom:dotted 1px #666; }
+}
+
+
 .pagearea	{ padding:2em 4em; vertical-align:top; }
 
 .sectiontitle { border-bottom:solid 1px #666; }
-.hint { font-size:12px; color:darken(@bg, 40%); }
+.hint { font-size:12px; color:#999; }
 
 .list { width:100%; border-spacing:0 1em; 
 	tr { background:lighten(@bg, 10%); 
@@ -90,7 +93,7 @@ button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-
 	p { margin:0.5em;}
 }
 
-.ui-dialog { background:lighten(@bg, 10%); }
+.ui-dialog { background:#ddd; }
 
 .ui-widget input, .ui-widget select, .ui-widget button, .ui-widget textarea {
 	font:10pt sans;
