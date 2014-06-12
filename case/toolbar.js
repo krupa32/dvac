@@ -33,12 +33,13 @@ var toolbar = {
 			var f = $('#toolbar_field').val();
 			var d = $('#toolbar_data').val();
 
+			console.log('search called');
 			/* special case where user id is queried */
 			if (f == 'investigator' || f == 'assigned_to' || f == 'location')
 				d = $('#toolbar_data').data('id');
 
 			var arg = { type:'search', field:f, data:d };
-			caselist.show(arg, true);
+			caselist.show(arg, false, true);
 		});
 	}
 };

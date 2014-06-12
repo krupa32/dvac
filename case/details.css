@@ -6,7 +6,7 @@
 .shadow(@c:#fff) 	{ text-shadow:1px 1px 1px @c; }
 .rounded(@r:4px)	{ border-radius:@r; -webkit-border-radius:@r; -moz-border-radius:@r; }
 
-.details {
+.details { background:#ddd; padding:1em; .rounded();
 	button { width:12em; }
 	.casenum { font-size:2em; }
 
@@ -23,16 +23,18 @@
 	.assigned_to	{ margin:0.5em 0 0 0; }
 	.assigned { margin:1em 0 0 0; color:#c00; }
 	.text { margin:2em 0 4em 4em; }
-}
+	
+	#historyarea { margin:1em 0 0 0; background:#bcd; border:solid 1px #999; .rounded();
+		.title { font-weight:bold; .shadow();
+			a { font-weight:bold; color:#900; }
+		}
+		.activity { padding:1em; border-bottom:dotted 1px #666;
+			.extra { margin-top:0.5em; }
+			.text { margin:1em 0 0 4em; }
+		}
+	}
 
-#historyarea { margin:1em 0 0 0; background:#d0e0f0; border:solid 1px #999; .rounded();
-	.title { font-weight:bold; .shadow();
-		a { font-weight:bold; color:#900; }
-	}
-	.activity { padding:1em; border-bottom:dotted 1px #666;
-		.extra { margin-top:0.5em; }
-		.text { margin:1em 0 0 4em; }
-	}
+
 }
 
 .actions { margin:2em 0;

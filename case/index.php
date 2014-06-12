@@ -58,7 +58,7 @@
 			if (history.state)
 				app.popstate(history.state);
 			else
-				caselist.show({ type:'recent' }, true);
+				caselist.show({ type:'recent' }, false, true);
 		});
 	</script>
 </head>
@@ -158,7 +158,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		-->
 	</div> <!-- caselist -->
 
-	<div class="aligncenter"><button class="primary" id="caselist_more">Show More</button></div>
+	<div class="aligncenter action"><button class="primary" id="caselist_more">Show More</button></div>
 
 </div> <!-- page_caselist -->
 
@@ -169,7 +169,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<col class="data"></col>
 	</colgroup>
 	<tr>
-		<td>Category, Court, No., Year</td>
+		<td class="field">Category, Court, No., Year</td>
 		<td>
 			<select id="editcase_category"></select>
 			<select id="editcase_court"></select>
@@ -178,23 +178,23 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		</td>
 	</tr>
 	<tr>
-		<td><p>Case Number</p></td>
+		<td class="field"><p>Case Number</p></td>
 		<td><p><span id="editcase_case_num"></span></p>
 	</tr>
 	<tr>
-		<td><p>Investigating Officer</p></td>
+		<td class="field"><p>Investigating Officer</p></td>
 		<td><p><input type="text" class="fullwidth" id="editcase_investigator"></input></p>
 	</tr>
 	<tr>
-		<td><p>Petitioner</p></td>
+		<td class="field"><p>Petitioner</p></td>
 		<td><p><textarea class="fullwidth" id="editcase_petitioner"></textarea></p>
 	</tr>
 	<tr>
-		<td><p>Respondent</p></td>
+		<td class="field"><p>Respondent</p></td>
 		<td><p><textarea class="fullwidth" id="editcase_respondent"></textarea></p>
 	</tr>
 	<tr>
-		<td><p>Prayer</p></td>
+		<td class="field"><p>Prayer</p></td>
 		<td><p><textarea class="fullwidth" id="editcase_prayer"></textarea></p></td>
 	</tr>
 	<tr>
@@ -249,35 +249,36 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<p class="assigned_to ">Assigned to<br><span id="details_assigned_to"></span></p>
 		<p class="assigned_to ">Next hearing<br><span id="details_next_hearing"></span></p>
 		<p class="text" id="details_prayer"></p>
+		<p>CASE HISTORY</p>
+		<div id="historyarea">
+			<!--
+			<div class="activity">
+				<p class="title floatright">Mar 04, 2014</p>
+				<p class="title">Raj Narayan, DSP added case</p>
+			</div>
+			<div class="activity">
+				<p class="title floatright">Mar 04, 2014</p>
+				<p class="title">Raj Narayan, DSP assigned case to Shahul, SP</p>
+				<p class="text">Assigning to Shahul for filing in court</p>
+			</div>
+			<div class="activity">
+				<p class="title floatright">Mar 04, 2014</p>
+				<p class="title">Raj Narayan, DSP updated a proceeding for case</p>
+				<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu</p>
+				<p class="text"></p>
+			</div>
+			<div class="activity">
+				<p class="title floatright">Mar 04, 2014</p>
+				<p class="title">Raj Narayan, DSP updated a proceeding for case<p>
+				<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
+					Counsel Advocate General appeared</p>
+				<p class="text">Court has directed to submit more documents</p>
+			</div>
+			-->
+		</div> <!-- historyarea -->
+
 	</div>
 
-	<p>CASE HISTORY</p>
-	<div id="historyarea">
-		<!--
-		<div class="activity">
-			<p class="title floatright">Mar 04, 2014</p>
-			<p class="title">Raj Narayan, DSP added case</p>
-		</div>
-		<div class="activity">
-			<p class="title floatright">Mar 04, 2014</p>
-			<p class="title">Raj Narayan, DSP assigned case to Shahul, SP</p>
-			<p class="text">Assigning to Shahul for filing in court</p>
-		</div>
-		<div class="activity">
-			<p class="title floatright">Mar 04, 2014</p>
-			<p class="title">Raj Narayan, DSP updated a proceeding for case</p>
-			<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu</p>
-			<p class="text"></p>
-		</div>
-		<div class="activity">
-			<p class="title floatright">Mar 04, 2014</p>
-			<p class="title">Raj Narayan, DSP updated a proceeding for case<p>
-			<p class="extra">At Hall 13, Madurai HC, by Hon'ble Judge Mr. Nagamuthu<br>
-				Counsel Advocate General appeared</p>
-			<p class="text">Court has directed to submit more documents</p>
-		</div>
-		-->
-	</div>
 	<p class="actions aligncenter">
 		<input type="file" name="attachment" id="details_attachment"></input>
 		<button class="primary" id="btn_attach">Attach</button>

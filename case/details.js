@@ -181,7 +181,7 @@ var details = {
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
 		div.append('<p class="title">' + resp.doer + ' updated a proceeding for case</p>');
 		var extra = '<p class="extra">' + 
-			'At Hall ' + resp.details.hall + ', ' + resp.details.court + 'High Court by Judge ' + resp.details.judge + '<br>' + 
+			'At Hall ' + resp.details.hall + ', ' + resp.details.court + ' High Court by Judge ' + resp.details.judge + '<br>' + 
 			'Counsel ' + resp.details.counsel + ' appeared<br>' + 
 			'Disposal ' + resp.details.disposal + '<br>';
 		extra += 'Next hearing ' + resp.details.next_hearing;

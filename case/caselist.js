@@ -36,7 +36,7 @@ var caselist = {
 
 			var resp = JSON.parse(data);
 			if (resp.length == 0) {
-				$('#caselistarea').append('<div class="aligncenter">No more items found</div>');
+				$('#caselistarea').append('<div class="aligncenter nomore">No more items found</div>');
 				$('#caselist_more').hide();
 				return;
 			}
@@ -128,7 +128,7 @@ var caselist = {
 		div.append('<p class="title floatright">' + a.ts + '</p>');
 		div.append('<p class="title">' + a.doer + ' updated a proceeding for case</p>');
 		extra = '<p class="extra">' + 
-			'At Hall ' + a.details.hall + ', ' + a.details.court + 'High Court by Judge ' + a.details.judge + '<br>' + 
+			'At Hall ' + a.details.hall + ', ' + a.details.court + ' High Court by Judge ' + a.details.judge + '<br>' + 
 			'Counsel ' + a.details.counsel + ' appeared<br>' + 
 			'Disposal ' + a.details.disposal + '<br>';
 		extra += 'Next hearing ' + a.details.next_hearing;
