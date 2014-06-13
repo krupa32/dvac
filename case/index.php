@@ -91,7 +91,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<option value="respondent">Respondent</option>
 			<option value="investigator">IO</option>
 			<option value="assigned_to">Assigned</option>
-			<option value="location">Detachment</option>
+			<!-- <option value="location">Detachment</option> -->
 		</select>
 		<input type="text" id="toolbar_data"></input>
 		<button class="primary" id="toolbar_search">Search</button></p></td>

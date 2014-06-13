@@ -130,8 +130,9 @@
 		break;
 	case "upcoming_hearings":
 		$from = mktime() - 24*60*60;
-		$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
-		$q = "select id from cases where next_hearing >= $from and next_hearing <= $to order by next_hearing limit $start,$rows";
+		//$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
+		//$q = "select id from cases where next_hearing >= $from and next_hearing <= $to order by next_hearing limit $start,$rows";
+		$q = "select id from cases where next_hearing >= $from order by next_hearing limit $start,$rows";
 		break;
 	case "no_hearings":
 		$q = "select id from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']} limit $start,$rows";
@@ -161,8 +162,7 @@
 		$q = "select id,case_num,petitioner,respondent,prayer,next_hearing from cases where id=$caseid";
 		$res2 = $db->query($q);
 		$case = $res2->fetch_assoc();
-		if ($case["next_hearing"] < (mktime() - 24*60*60)) {
-			/* ignore hearing dates which have elapsed */
+		if ($case["next_hearing"] == 0) {
 			$case["next_hearing"] = "None";
 		} else {
 			$dt = date("M d, Y", $case["next_hearing"]);

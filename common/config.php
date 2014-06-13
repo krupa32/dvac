@@ -17,12 +17,12 @@
 	 * per request for a case list. Remaining items can be displayed
 	 * using the 'Show More' button.
 	 */
-	$num_items_per_fetch = 3;
+	$num_items_per_fetch = 10;
 
 	/* num_days_recent_activity
 	 * this specifies the number of days considered for recent activity.
 	 */
-	$num_days_recent_activity = 5;
+	$num_days_recent_activity = 30;
 
 	/* num_recent_activities_per_case
 	 * this specifies the number of recent activities listed per case
@@ -35,6 +35,7 @@
 	 * 'upcoming' hearing. for eg, if this value is 5, a hearing is
 	 * considered upcoming if it is in the next 5 days, and not considered
 	 * upcoming if it is scheduled beyond 5 days.
+	 * WARNING: This is obsolete now. All upcoming hearings are listed now.
 	 */
 	$num_days_upcoming_hearings = 5;
 

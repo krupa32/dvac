@@ -20,8 +20,7 @@
 	if ($ret["assigned_to"] != 0)
 		$ret["assigned_to"] = get_name_grade($ret["assigned_to"]);
 
-	if ($ret["next_hearing"] < (mktime() - 24*60*60)) {
-		//hearing date has elapsed
+	if ($ret["next_hearing"] == 0) {
 		$ret["next_hearing"] = "None";
 	} else {
 		$dt = date("M d, Y", $ret["next_hearing"]);

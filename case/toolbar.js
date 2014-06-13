@@ -20,10 +20,10 @@ var toolbar = {
 				$('#toolbar_data').autocomplete({
 					source: '/common/get_user_autocomplete.php' 
 				}).autocomplete('enable');
-			} else if (cur == 'location') {
-				$('#toolbar_data').autocomplete({
-					source: '/common/get_location_autocomplete.php' 
-				}).autocomplete('enable');
+			//} else if (cur == 'location') {
+			//	$('#toolbar_data').autocomplete({
+			//		source: '/common/get_location_autocomplete.php' 
+			//	}).autocomplete('enable');
 			} else {
 				$('#toolbar_data').autocomplete('disable');
 			}
@@ -35,7 +35,7 @@ var toolbar = {
 
 			console.log('search called');
 			/* special case where user id is queried */
-			if (f == 'investigator' || f == 'assigned_to' || f == 'location')
+			if (f == 'investigator' || f == 'assigned_to') // || f == 'location')
 				d = $('#toolbar_data').data('id');
 
 			var arg = { type:'search', field:f, data:d };

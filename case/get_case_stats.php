@@ -36,8 +36,9 @@
 
 	/* hearings */
 	$from = mktime() - 24*60*60;;
-	$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
-	$q = "select count(id) from cases where next_hearing >= $from and next_hearing <= $to";
+	//$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
+	//$q = "select count(id) from cases where next_hearing >= $from and next_hearing <= $to";
+	$q = "select count(id) from cases where next_hearing >= $from";
 	$ret["hearings"] = get_count($db, $q);
 
 	/* nohearings */

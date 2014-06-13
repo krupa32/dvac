@@ -83,10 +83,7 @@ var details = {
 			$('#details_petitioner').text(resp.petitioner);
 			$('#details_respondent').text(resp.respondent);
 			$('#details_prayer').text(resp.prayer);
-			if (resp.next_hearing)
-				$('#details_next_hearing').text(resp.next_hearing);
-			else
-				$('#details_next_hearing').text('NA');
+			$('#details_next_hearing').text(resp.next_hearing);
 
 			// set back color of status
 			$('#details_status').removeClass('red green gray');

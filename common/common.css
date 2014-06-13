@@ -4,7 +4,7 @@
  */
 
 /* less definitions */
-@bg: #304050;
+@bg: #567;
 @fg: #333;
 @pbtnbg: #fc0;
 @pbtnfg: #000;
@@ -41,7 +41,7 @@ p	{ }
 h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
 button	{ padding:0.5em; .rounded(); }
 button:disabled	{ border:solid 1px #666; .gradient(#999, #666); }
-button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-shadow:1px 1px 1px #eee; .gradient(#fc0, #c60); }
+button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(#fc0, #c60); }
 
 
 .ajaxstatus { display:none; position:fixed; width:50%; top:25px; padding:1em; background:#ff0; border:solid 2px #999; text-align:center; }
@@ -51,25 +51,25 @@ button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #666; text-
 	a:hover,a.hilite { color:#ccc; }
 }
 
-.toolbar 		{ border-top:solid 1px #666; border-bottom:solid 1px #000; }
+.toolbar 		{ border-top:solid 1px #666; border-bottom:solid 1px #000; background:#345; }
 .toolbarbuttonarea 	{ float:left; margin:2em 0 2em 4em; }
 .toolbarsearcharea 	{ margin:2em 4em 2em 0; text-align:right; 
 	input[type=text] { width:24em; }
 }
 
 
-.content 	{ border-top:solid 1px #666; }
+.content 	{ border-top:solid 1px #888; }
 
 .nav { width:20%; padding:2em 1em 0 4em; vertical-align:top;
 	a,a:visited { display:block; padding:0.5em;
-	  	color:#ccc; text-decoration:none; letter-spacing:0px; .shadow(#000); 
-		border-bottom:dotted 1px #666;
+	  	color:#ddd; text-decoration:none; letter-spacing:0px; .shadow(#000); 
+		border-bottom:dotted 1px #999;
 	}
-	a:hover { background:#567; }
-	.hilite { background:#567; }
+	a:hover { background:#789; }
+	.hilite { background:#789; }
 	.count { float:right; margin:0.2em; padding:0.3em 0.5em; color:#ccc; font-weight:bold; .shadow(#000); }
 	.important { background:#c00; color:#fff; .shadow(#000); .rounded(); }
-	.navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#666; border-bottom:dotted 1px #666; }
+	.navsectiontitle { margin:2em 0 0 0; padding:0.5em; color:#999; border-bottom:dotted 1px #999; }
 }
 
 
