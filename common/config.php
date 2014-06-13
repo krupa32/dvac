@@ -16,6 +16,10 @@
 	 * specifies the number of items (cases) fetched and displayed
 	 * per request for a case list. Remaining items can be displayed
 	 * using the 'Show More' button.
+	 * 
+	 * NOTE: If this number is changed, do not forget to update
+	 * caselist.js, which hardcodes this number to decide whether the
+	 * 'more' button is displayed.
 	 */
 	$num_items_per_fetch = 10;
 

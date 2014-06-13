@@ -34,12 +34,12 @@
 	$q = "select count(*) from cases where status=${statuses['PENDING_WITH_DVAC']}";
 	$ret["pending_dvac"] = get_count($db, $q);
 
-	/* hearings */
+	/* upcoming_hearings */
 	$from = mktime() - 24*60*60;;
 	//$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
 	//$q = "select count(id) from cases where next_hearing >= $from and next_hearing <= $to";
 	$q = "select count(id) from cases where next_hearing >= $from";
-	$ret["hearings"] = get_count($db, $q);
+	$ret["upcoming_hearings"] = get_count($db, $q);
 
 	/* nohearings */
 	$q = "select count(id) from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']}";

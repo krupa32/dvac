@@ -107,7 +107,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<div class="count" id="num_pending_court">3</div><a href="" id="nav_pending_court">PENDING IN COURT</a>
 			<div class="count important" id="num_pending_dvac">3</div><a href="" id="nav_pending_dvac">PENDING WITH DVAC</a>
 			<p class="navsectiontitle">HEARINGS</p>
-			<div class="count" id="num_hearings">3</div><a href="" id="nav_hearings">UPCOMING HEARINGS</a>
+			<div class="count" id="num_upcoming_hearings">3</div><a href="" id="nav_upcoming_hearings">UPCOMING HEARINGS</a>
 			<div class="count" id="num_nohearings">3</div><a href="" id="nav_nohearings">NOT SPECIFIED</a>
 			<p class="navsectiontitle">CASES BY CATEGORY</p>
 			<div id="categorylist">

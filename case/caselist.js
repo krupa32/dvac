@@ -21,6 +21,7 @@ var caselist = {
 			$('.page').hide();
 			$('#page_caselist').show();
 			$('#caselist_more').show();
+			navigation.update_hilite(arg);
 		}
 
 		if (push)
@@ -39,6 +40,14 @@ var caselist = {
 				$('#caselistarea').append('<div class="aligncenter nomore">No more items found</div>');
 				$('#caselist_more').hide();
 				return;
+			}
+
+			if (resp.length < 10) {
+				/* WARNING: currently this number is hard-coded.
+				 * If num_items_per_fetch is changed in config.php,
+				 * this number should also be updated.
+				 */
+				$('#caselist_more').hide();
 			}
 
 			for (i in resp)

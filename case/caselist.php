@@ -134,7 +134,7 @@
 		//$q = "select id from cases where next_hearing >= $from and next_hearing <= $to order by next_hearing limit $start,$rows";
 		$q = "select id from cases where next_hearing >= $from order by next_hearing limit $start,$rows";
 		break;
-	case "no_hearings":
+	case "nohearings":
 		$q = "select id from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']} limit $start,$rows";
 		break;
 	}
