@@ -62,8 +62,9 @@
 	 * court locations where DVAC cases/proceedings happen.
 	 */
 	$courts = array(
-			"Chennai"	=> 1,
-			"Madurai"	=> 2
+			"Madras"	=> 1,
+			"Madurai"	=> 2,
+			"Supreme Court"	=> 3
 			);
 
 	/* counsels
@@ -76,7 +77,9 @@
 			"Addl. Public Prosecutor"	=> 4,
 			"Government Pleader"		=> 5,
 			"Addl. Government Pleader"	=> 6,
-			"Spl. Public Prosecutor"	=> 7
+			"Spl. Public Prosecutor"	=> 7,
+			"Spl. Government Pleader"	=> 8,
+			"Government Advocate"		=> 9
 			);
 
 	/* locations
@@ -95,13 +98,17 @@
 	$categories = array(
 			"Crl.OP"		=> 1,
 			"Crl.RC"		=> 2,
-			"CA"			=> 3,
+			"Crl.Appeal"		=> 3,
 			"WP"			=> 4,
 			"WA"			=> 5,
 			"Contempt Petition"	=> 6,
 			"Contempt Appeal"	=> 7,
 			"SR.No"			=> 8,
-			"Misc"			=> 9
+			"Misc"			=> 9,
+			"Crl.MP"		=> 10,
+			"SLP(Civil)"		=> 11,
+			"SLP(Criminal)"		=> 12,
+			"Diary No"		=> 13
 			);
 
 	/* activities
