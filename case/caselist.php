@@ -96,6 +96,7 @@
 	$rows = $num_items_per_fetch;
 
 	$ret = array();
+	$cases = array();
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
@@ -138,6 +139,8 @@
 		$q = "select id from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']} limit $start,$rows";
 		break;
 	}
+
+	$before = gettimeofday(true);
 
 	$res = $db->query($q);
 
@@ -185,11 +188,16 @@
 		}
 		$res2->close();
 
-		$ret[] = $case;
+		$cases[] = $case;
 	}
 
 	$res->close();
 	$db->close();
+
+	$after = gettimeofday(true);
+
+	$ret["cases"] = $cases;
+	$ret["latency"] = ($after - $before) * 1000; // in millisec
 
 out:
 	print json_encode($ret);

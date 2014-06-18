@@ -249,7 +249,6 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<p class="assigned_to ">Assigned to<br><span id="details_assigned_to"></span></p>
 		<p class="assigned_to ">Next hearing<br><span id="details_next_hearing"></span></p>
 		<p class="text" id="details_prayer"></p>
-		<p>CASE HISTORY</p>
 		<div id="historyarea">
 			<!--
 			<div class="activity">

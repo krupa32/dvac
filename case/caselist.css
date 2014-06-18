@@ -7,19 +7,18 @@
 .rounded()	{ border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px; }
 
 .caselist {
-	.case { margin:0 0 1em 0; padding:1em; background:#ddd; .rounded();
+	.case { margin:0 0 1em 0; padding:1em; background:#ddd; .rounded(); border-bottom: solid 2px #444;
 		.casenum {
 			a,a:visited 	{ color:#00f; font-size:1.2em; }
 		}
-		.extra 		{ margin:0.5em 0; line-height:1.3em; }
-		.text		{ margin:1em 0 0 4em;	}
+		.extra 		{ color:#666; }
 		.activityarea 	{ margin:1em 0 0 0; background:#bcd; border:solid 1px #999; .rounded();
-			.activity { padding:1em; border-bottom:dotted 1px #999;
-				.title	{ font-weight:bold; color:#333; .shadow(); 
-					a { font-weight:bold; color:#900; }
+			.activity { padding:0.5em; border-bottom:dotted 1px #999;
+				.title	{ color:#006; 
+					a { color:#900; }
 				}
-				.extra 	{ margin:0.5em 0; line-height:1.3em; 	}
-				.text 	{ margin:1em 0 0 4em; 	}
+				.extra 	{ width:80%; font-size:10pt; color:#333; }
+				.text 	{ width:75%; font-size:10pt; color:#333; }
 			}
 		}
 	}

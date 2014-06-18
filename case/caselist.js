@@ -31,18 +31,20 @@ var caselist = {
 		arg.start_item = caselist.start_item;
 
 		$.get('/case/caselist.php', arg, function(data){
-			//console.log('caselist.show recv:' + data);
 			if (!more)
 				$('#caselistarea').html('');
 
 			var resp = JSON.parse(data);
-			if (resp.length == 0) {
+			var cases = resp.cases;
+			console.log('caselist.show recv ' + data.length + 'b, query took ' + resp.latency + ' ms');
+
+			if (cases.length == 0) {
 				$('#caselistarea').append('<div class="aligncenter nomore">No more items found</div>');
 				$('#caselist_more').hide();
 				return;
 			}
 
-			if (resp.length < 10) {
+			if (cases.length < 10) {
 				/* WARNING: currently this number is hard-coded.
 				 * If num_items_per_fetch is changed in config.php,
 				 * this number should also be updated.
@@ -50,10 +52,10 @@ var caselist = {
 				$('#caselist_more').hide();
 			}
 
-			for (i in resp)
-				caselist.add_case(resp[i]);
+			for (i in cases)
+				caselist.add_case(cases[i]);
 
-			caselist.start_item += resp.length;
+			caselist.start_item += cases.length;
 
 			$('#page_caselist a.caselink').click(function(e){
 				details.show($(this).attr('href'), true);
@@ -64,14 +66,19 @@ var caselist = {
 	},
 
 	add_case: function(c) {
+		// trim the petitioner, respondent
+		if (c.petitioner.length > 60)
+			c.petitioner = c.petitioner.substr(0, 60) + '...';
+		if (c.respondent.length > 60)
+			c.respondent = c.respondent.substr(0, 60) + '...';
 
 		var divcase = $('<div class="case"></div>').appendTo('#caselistarea');
 		divcase.append('<p class="casenum"><a class="caselink" href="' + c.id + '">' + c.case_num + '</a></p>');
-		var extra = '<p class="extra">Petitioner ' + c.petitioner + '<br>Respondent ' + c.respondent + '<br>';
+		var extra = '<p class="extra">Petitioner - ' + c.petitioner + ', Respondent - ' + c.respondent + '<br>';
 		extra += 'Next hearing ' + c.next_hearing;
 		extra += '</p>';
 		divcase.append(extra);
-		divcase.append('<p class="text">' + c.prayer + '</p>');
+		//divcase.append('<p class="text">' + c.prayer + '</p>');
 
 		var divact = $('<div class="activityarea"></div>').appendTo(divcase);
 		for (i in c.activities)
@@ -137,13 +144,14 @@ var caselist = {
 		div.append('<p class="title floatright">' + a.ts + '</p>');
 		div.append('<p class="title">' + a.doer + ' updated a proceeding for case</p>');
 		extra = '<p class="extra">' + 
-			'At Hall ' + a.details.hall + ', ' + a.details.court + ' High Court by Judge ' + a.details.judge + '<br>' + 
-			'Counsel ' + a.details.counsel + ' appeared<br>' + 
-			'Disposal ' + a.details.disposal + '<br>';
-		extra += 'Next hearing ' + a.details.next_hearing;
+			'At Hall ' + a.details.hall + ', ' + a.details.court + ' High Court, by Judge ' + a.details.judge + 
+			', Counsel ' + a.details.counsel + ' appeared, <br>' + 
+			'Disposal ' + a.details.disposal + ', Next hearing ' + a.details.next_hearing;
+		if (a.details.comment.length > 0)
+			extra += ', ' + a.details.comment;
 		extra += '</p>';
 		div.append(extra);
-		div.append('<p class="text">' + a.details.comment + '</p>');
+		//div.append('<p class="text">' + a.details.comment + '</p>');
 	},
 
 	add_assignment_activity: function(divact, a) {
