@@ -9,6 +9,7 @@
 
 	<link rel="stylesheet" href="/common/jquery-ui.css"></link>
 	<link rel="stylesheet/less" href="/common/common.css"></link>
+	<link rel="stylesheet/less" href="/case/recent.css"></link>
 	<link rel="stylesheet/less" href="/case/caselist.css"></link>
 	<link rel="stylesheet/less" href="/case/editcase.css"></link>
 	<link rel="stylesheet/less" href="/case/search.css"></link>
@@ -22,6 +23,7 @@
 	<script type="text/javascript" src="/case/app.js"></script>
 	<script type="text/javascript" src="/case/toolbar.js"></script>
 	<script type="text/javascript" src="/case/navigation.js"></script>
+	<script type="text/javascript" src="/case/recent.js"></script>
 	<script type="text/javascript" src="/case/caselist.js"></script>
 	<script type="text/javascript" src="/case/editcase.js"></script>
 	<script type="text/javascript" src="/case/search.js"></script>
@@ -44,6 +46,7 @@
 			app.init();
 			toolbar.init();
 			navigation.init();
+			recent.init();
 			caselist.init();
 			editcase.init();
 			search.init();
@@ -58,7 +61,7 @@
 			if (history.state)
 				app.popstate(history.state);
 			else
-				caselist.show({ type:'recent' }, false, true);
+				recent.show(false, true);
 		});
 	</script>
 </head>
@@ -102,16 +105,14 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<table><tr>
 		<td class="nav">
 			<a href="" class="hilite" id="nav_recent">RECENT ACTIVITY</a>
-			<p class="navsectiontitle">CASE SUMMARY</p>
-			<div class="count important" id="num_my">3</div><a href="" id="nav_my">MY CASES</a>
-			<div class="count" id="num_pending_court">3</div><a href="" id="nav_pending_court">PENDING IN COURT</a>
-			<div class="count important" id="num_pending_dvac">3</div><a href="" id="nav_pending_dvac">PENDING WITH DVAC</a>
+			<p class="navsectiontitle">CASES</p>
+			<div class="count important" id="num_my">3</div><a href="" id="nav_my">ASSIGNED TO ME</a>
 			<p class="navsectiontitle">HEARINGS</p>
 			<div class="count" id="num_upcoming_hearings">3</div><a href="" id="nav_upcoming_hearings">UPCOMING HEARINGS</a>
+			<!--
 			<div class="count" id="num_nohearings">3</div><a href="" id="nav_nohearings">NOT SPECIFIED</a>
 			<p class="navsectiontitle">CASES BY CATEGORY</p>
 			<div id="categorylist">
-			<!--
 			<div class="count" id="num_crlop">305</div><a href="" id="nav_category_crlop">Crl.OP</a>
 			<div class="count" id="num_rc">3</div><a href="" id="nav_category_rc">Crl.RC</a>
 			<div class="count" id="num_wp">3</div><a href="" id="nav_category_wp">WP</a>
@@ -130,8 +131,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 </div> <!-- content -->
 
-<div class="page" id="page_caselist">
-	<div class="caselist" id="caselistarea">
+<div class="page" id="page_recent">
+	<div class="recent" id="recentarea">
 		<!--
 		<div class="case">
 			<p class="casenum"><a href="2">Crl.OP.2003/43/4</a></p>	
@@ -156,8 +157,40 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			</div>
 		</div>
 		-->
-	</div> <!-- caselist -->
+	</div> <!-- recentarea -->
 
+	<div class="aligncenter action"><button class="primary" id="recent_more">Show More</button></div>
+
+</div> <!-- page_recent -->
+
+<div class="page" id="page_caselist">
+	<div class="cl_header">
+		<div class="cl_details">Case Details</div>
+		<div class="cl_investigator">Investigated By</div>
+		<div class="cl_next_hearing">Next Hearing</div>
+		<div class="cl_last">Status</div>
+	</div>
+	<div id="caselistarea">
+		<div class="cl_data">
+			<div class="cl_details"><a href="1">Crl.OP.123/2014</a>
+				<p class="extra">Petitioner - Tmt. Kanimozhi</p></div>
+			<div class="cl_investigator">Raj Narayan, DSP
+				<p class="extra">Madurai</p></div>
+			<div class="cl_next_hearing">Jul 24, 2014</div>
+			<div class="cl_last green">PENDING_IN_COURT
+				<p class="extra">Last activity 2 days ago</p></div>
+		</div>
+		<div class="cl_data">
+			<div class="cl_details"><a href="1">Crl.OP.123/2014</a>
+				<p class="extra">Petitioner - Tmt. Kanimozhi</p></div>
+			<div class="cl_investigator">Raj Narayan, DSP
+				<p class="extra">Madurai</p></div>
+			<div class="cl_next_hearing">Jul 24, 2014</div>
+			<div class="cl_last green">PENDING_IN_COURT
+				<p class="extra">Last activity 2 yrs ago</p></div>
+		</div>
+	</div> <!-- caselistarea -->
+	
 	<div class="aligncenter action"><button class="primary" id="caselist_more">Show More</button></div>
 
 </div> <!-- page_caselist -->

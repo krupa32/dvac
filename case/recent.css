@@ -1,0 +1,32 @@
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+.shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
+.rounded()	{ border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px; }
+
+.recent {
+	.case { margin:0 0 1em 0; padding:1em; background:#ddd; .rounded(); border-bottom: solid 2px #444;
+		.casenum {
+			a,a:visited 	{ color:#00f; font-size:1.2em; }
+		}
+		.extra 		{ color:#666; font-size:10pt; }
+		.activityarea 	{ margin:1em 0 0 0; background:#bcd; border:solid 1px #999; .rounded();
+			.activity { padding:0.5em; border-bottom:dotted 1px #999;
+				.title	{ color:#006; 
+					a { color:#900; }
+				}
+				.extra 	{ width:80%; font-size:10pt; color:#333; }
+				.text 	{ width:75%; font-size:10pt; color:#333; }
+			}
+		}
+	}
+
+}
+
+.nomore { margin:2em 0; color:#ccc; }
+
+.action { margin:2em 0; }
+
+

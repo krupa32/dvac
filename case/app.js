@@ -12,7 +12,9 @@ var app = {
 	popstate: function(state) {
 		console.log('popstate:' + JSON.stringify(state));
 
-		if (state.page == 'caselist')
+		if (state.page == 'recent')
+			recent.show(false, false);
+		else if (state.page == 'caselist')
 			caselist.show(state.arg, false, false);
 		else if (state.page == 'editcase')
 			editcase.show(state.id, false);

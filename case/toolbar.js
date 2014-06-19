@@ -39,7 +39,7 @@ var toolbar = {
 				d = $('#toolbar_data').data('id');
 
 			var arg = { type:'search', field:f, data:d };
-			caselist.show(arg, false, true);
+			//caselist.show(arg, false, true);
 		});
 	}
 };

@@ -24,13 +24,17 @@
 		if ($diff->d)
 			$ret = $diff->format("%d days ago");
 		else if ($diff->h)
-			$ret = $diff->format("%h hours ago");
+			$ret = $diff->format("%h hrs ago");
 		else if ($diff->i)
-			$ret = $diff->format("%i minutes ago");
+			$ret = $diff->format("%i min ago");
 		else
 			$ret = "Just now";
 	
 		return $ret;
 	}
 	
+	function absolute_date($timestamp)
+	{	
+		return date("M d, Y", $timestamp);
+	}
 ?>
