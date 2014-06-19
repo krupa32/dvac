@@ -2,8 +2,10 @@
 	include "../common/config.php";
 
 	session_start();
-	if (!$_SESSION["user_id"])
-		header("location: /admin/login.php");
+	if (!$_SESSION["user_id"]) {
+		$ret = "Not logged in";
+		goto out;
+	}
 
 	/* default password is "password".
 	 * default reporting officer id is "0".
@@ -17,7 +19,7 @@
 	if ($_POST["action"] == "new")
 		$q = "insert into users values(null, '${_POST['login']}', '${_POST['name']}', ${_POST['grade']}, '$password', $rep_id, $location)";
 	else if ($_POST["action"] == "update")
-		$q = "update users set name='${_POST['name']}', grade=${_POST['grade']} where id=${_POST['id']}";
+		$q = "update users set login='${_POST["login"]}', name='${_POST['name']}', grade=${_POST['grade']} where id=${_POST['id']}";
 	else
 		$q = "update users set password='$password' where id=${_POST['id']}";
 
@@ -25,6 +27,6 @@
 		$ret = $db->error;
 	else
 		$ret = "ok";
-	
+out:
 	print json_encode($ret);
 ?>
