@@ -25,6 +25,10 @@ var details = {
 			$('#details_attachment').val('');
 			$('#details_attachment').click();
 		});
+		$('#btn_addreminder').click(function(){
+			addreminder.show($('#page_details').data('id'));
+		});
+
 		$('#details_attachment').change(function(){
 			var file = $('#details_attachment').get(0).files[0];
 			var fd = new FormData();
@@ -178,7 +182,7 @@ var details = {
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
 		div.append('<p class="title">' + resp.doer + ' updated a proceeding for case</p>');
 		var extra = '<p class="extra">' + 
-			'At Hall ' + resp.details.hall + ', ' + resp.details.court + ' High Court, by Judge ' + resp.details.judge +
+			'At Hall ' + resp.details.hall + ', ' + resp.details.court + ' High Court, by Justice ' + resp.details.judge +
 			', Counsel ' + resp.details.counsel + ' appeared,<br>' + 
 			'Disposal ' + resp.details.disposal + ', Next hearing ' + resp.details.next_hearing;
 		extra += '</p>';

@@ -40,7 +40,7 @@ var caselist = {
 			console.log('data:' + data);
 
 			if (cases.length == 0) {
-				$('#caselistarea').append('<div class="aligncenter">No more items found</div>');
+				$('#caselistarea').append('<div class="aligncenter cl_data">No more items found</div>');
 				$('#caselist_more').hide();
 				return;
 			}
@@ -72,20 +72,17 @@ var caselist = {
 			c.petitioner = c.petitioner.substr(0, 60) + '...';
 
 		var div = $('<div class="cl_data"></div>').appendTo('#caselistarea');
-		div.append('<div class="cl_details"><a class="caselink" href="' + c.id + '">' + c.case_num + '</a>' + 
-			'<p class="extra">Petitioner ' + c.petitioner + '</p></div>');
-		div.append('<div class="cl_investigator">' + c.investigator +
-			'<p class="extra">' + c.location + '</p></div>');
+		div.append('<div class="cl_details"><a class="caselink" href="' + c.id + '">' + c.case_num + '</a></div>');
 		div.append('<div class="cl_next_hearing">' + c.next_hearing + '</div>');
-		div.append('<div class="cl_last">' + c.status + 
-			'<p class="extra">Last activity ' + c.last_activity + '</p></div>');
+		div.append('<div class="cl_investigator">' + c.investigator + '</div>');
+		div.append('<div class="cl_location">' + c.location + '</div>');
 
 		if (c.status == 'PENDING_IN_COURT')
-			div.children('.cl_last').addClass('green');
+			div.find('a').addClass('green');
 		else if (c.status == 'PENDING_WITH_DVAC')
-			div.children('.cl_last').addClass('red');
+			div.find('a').addClass('red');
 		else
-			div.children('.cl_last').addClass('gray');
+			div.find('a').addClass('gray');
 	},
 
 

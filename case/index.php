@@ -15,6 +15,7 @@
 	<link rel="stylesheet/less" href="/case/search.css"></link>
 	<link rel="stylesheet/less" href="/case/details.css"></link>
 	<link rel="stylesheet/less" href="/case/addproceeding.css"></link>
+	<link rel="stylesheet/less" href="/case/reminderlist.css"></link>
 
 	<script type="text/javascript" src="/common/jquery.js"></script>
 	<script type="text/javascript" src="/common/jquery-ui.js"></script>
@@ -33,6 +34,8 @@
 	<script type="text/javascript" src="/case/addcomment.js"></script>
 	<script type="text/javascript" src="/case/closecase.js"></script>
 	<script type="text/javascript" src="/case/assign.js"></script>
+	<script type="text/javascript" src="/case/addreminder.js"></script>
+	<script type="text/javascript" src="/case/reminderlist.js"></script>
 	<script type="text/javascript">
 		<?php
 			print "var user_id = ${_SESSION['user_id']};\n";
@@ -56,6 +59,8 @@
 			addcomment.init();
 			closecase.init();
 			assign.init();
+			addreminder.init();
+			reminderlist.init();
 
 			//console.log('document.ready state:' + JSON.stringify(history.state));
 			if (history.state)
@@ -88,27 +93,26 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	</div>
 
 	<div class="toolbarsearcharea">
-		<select id="toolbar_field">
+		<!-- <select id="toolbar_field">
 			<option value="case_num">Case Number</option>
 			<option value="petitioner">Petitioner</option>
 			<option value="respondent">Respondent</option>
 			<option value="investigator">IO</option>
 			<option value="assigned_to">Assigned</option>
-			<!-- <option value="location">Detachment</option> -->
-		</select>
+		</select>-->
 		<input type="text" id="toolbar_data"></input>
-		<button class="primary" id="toolbar_search">Search</button></p></td>
+		<!--<button class="primary" id="toolbar_search">Search</button></p></td>-->
 	</div>
 </div>
 
 <div class="content">
 	<table><tr>
 		<td class="nav">
-			<a href="" class="hilite" id="nav_recent">RECENT ACTIVITY</a>
-			<p class="navsectiontitle">CASES</p>
-			<div class="count important" id="num_my">3</div><a href="" id="nav_my">ASSIGNED TO ME</a>
-			<p class="navsectiontitle">HEARINGS</p>
-			<div class="count" id="num_upcoming_hearings">3</div><a href="" id="nav_upcoming_hearings">UPCOMING HEARINGS</a>
+			<a href="" class="hilite" id="nav_recent">Recent Activity</a>
+			<div class="count important" id="num_assigned">3</div><a href="" id="nav_assigned">Assigned to Me</a>
+			<div class="count" id="num_upcoming_hearings">3</div><a href="" id="nav_upcoming_hearings">Upcoming Hearings</a>
+			<div class="count important" id="num_reminders">3</div><a href="" id="nav_reminders">Reminders</a>
+			<a href="" id="nav_dashboard">Dashboard</a>
 			<!--
 			<div class="count" id="num_nohearings">3</div><a href="" id="nav_nohearings">NOT SPECIFIED</a>
 			<p class="navsectiontitle">CASES BY CATEGORY</p>
@@ -166,9 +170,9 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 <div class="page" id="page_caselist">
 	<div class="cl_header">
 		<div class="cl_details">Case Details</div>
-		<div class="cl_investigator">Investigated By</div>
 		<div class="cl_next_hearing">Next Hearing</div>
-		<div class="cl_last">Status</div>
+		<div class="cl_investigator">Investigated By</div>
+		<div class="cl_location">Detachment</div>
 	</div>
 	<div id="caselistarea">
 		<div class="cl_data">
@@ -317,9 +321,32 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<button class="primary" id="btn_addproceeding">Add Proceeding</button>
 		<button class="primary" id="btn_addcomment">Comment</button>
 		<button class="primary" id="btn_assign">Assign</button>
+		<button class="primary" id="btn_addreminder">Add Reminder</button>
 	</p>
 
 </div> <!-- page_details -->
+
+<div class="page" id="page_reminderlist">
+	<div class="rl_header">
+		<div class="rl_case">Case</div>
+		<div class="rl_comment">Remarks</div>
+		<div class="rl_remind_on">When</div>
+	</div>
+	<div id="reminderlistarea">
+		<div class="rl_data">
+			<div class="rl_case"><a href="1">Crl.OP.123/2014</a></div>
+			<div class="rl_comment">Remind about the case</div>
+			<div class="rl_remind_on">Jul 24, 2014</div>
+		</div>
+		<div class="rl_data">
+			<div class="rl_case"><a href="1">Crl.OP.123/2014</a></div>
+			<div class="rl_comment">Remind about the case</div>
+			<div class="rl_remind_on">Jul 24, 2014</div>
+		</div>
+	</div> <!-- reminderlistarea -->
+	
+</div> <!-- page_reminderlist -->
+
 
 <div class="dialog" id="dlg_changestatus">
 	<p><select id="changestatus_status"></select> &nbsp;<button class="primary" id="changestatus_save">Save</button></p>
@@ -330,7 +357,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<tr><td>Court</td><td><select id="proc_court"></select></td></tr>
 	<tr><td class="field">Hall No.</td><td class="data"><input type="text" id="proc_hall"></input></td></tr>
 	<tr><td>Item No.</td><td><input type="text" id="proc_item"></input></tr>
-	<tr><td>Judge</td><td><input type="text" class="fullwidth" id="proc_judge"></input></tr>
+	<tr><td>Justice</td><td><input type="text" class="fullwidth" id="proc_judge"></input></tr>
 	<tr><td>Counsel</td><td><select id="proc_counsel">
 		<option value="1">Advocate General</option>
 		<option value="2">Addl. Advocate General</option>
@@ -363,6 +390,12 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<p>Remarks<br><textarea class="fullwidth" id="assign_comment"></textarea></p>
 	<p class="alignright"><button class="primary" id="btn_save_assignment">Save</button></p>
 </div> <!-- dlg_addcomment -->
+
+<div class="dialog" id="dlg_addreminder">
+	<p>Remind On<br><input type="text" class="fullwidth" id="reminder_on"></input></p>
+	<p>Remarks<br><textarea class="fullwidth" id="reminder_comment"></textarea></p>
+	<p class="alignright"><button class="primary" id="reminder_save">Save</button></p>
+</div> <!-- dlg_addreminder -->
 
 </body>
 </html>

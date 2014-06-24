@@ -20,5 +20,7 @@ var app = {
 			editcase.show(state.id, false);
 		else if (state.page == 'details')
 			details.show(state.id, false);
+		else if (state.page == 'reminderlist')
+			reminderlist.show(false);
 	}
 };

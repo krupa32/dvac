@@ -1,32 +1,8 @@
 var toolbar = {
 	init: function() {
-		/* set autocomplete for input field, initially disabled */
-		$('#toolbar_data').autocomplete({
-			source: '/common/get_user_autocomplete.php',
-			disabled: true,
-			select: function(event,ui) {
-				$('#toolbar_data').val(ui.item.label).data('id', ui.item.value);
-				return false;
-			}
-		});
 
 		$('#toolbar_addcase').click(function(){
 			editcase.show(null, true);
-		});
-
-		$('#toolbar_field').change(function(){
-			var cur = $(this).val();
-			if (cur == 'investigator' || cur == 'assigned_to') {
-				$('#toolbar_data').autocomplete({
-					source: '/common/get_user_autocomplete.php' 
-				}).autocomplete('enable');
-			//} else if (cur == 'location') {
-			//	$('#toolbar_data').autocomplete({
-			//		source: '/common/get_location_autocomplete.php' 
-			//	}).autocomplete('enable');
-			} else {
-				$('#toolbar_data').autocomplete('disable');
-			}
 		});
 
 		$('#toolbar_search').click(function(){
@@ -41,5 +17,16 @@ var toolbar = {
 			var arg = { type:'search', field:f, data:d };
 			//caselist.show(arg, false, true);
 		});
+		
+		var hint = 'Enter case number, petitioner or respondent';
+		$('#toolbar_data').focus(function(){
+			if ($(this).val() == hint)
+				$(this).val('').removeClass('searchhint').addClass('normal');
+		}).blur(function(){
+			if ($(this).val() == '')
+				$(this).val(hint).removeClass('normal').addClass('searchhint');
+		});
+
+		$('#toolbar_data').focus();
 	}
 };

@@ -4,12 +4,16 @@ var navigation = {
 			recent.show(false, true);
 			e.preventDefault();
 		});
-		$('#nav_my').click(function(e){
-			caselist.show({ type:'my' }, false, true);
+		$('#nav_assigned').click(function(e){
+			caselist.show({ type:'assigned' }, false, true);
 			e.preventDefault();
 		});
 		$('#nav_upcoming_hearings').click(function(e){
 			caselist.show({ type:'upcoming_hearings' }, false, true);
+			e.preventDefault();
+		});
+		$('#nav_reminders').click(function(e){
+			reminderlist.show(true);
 			e.preventDefault();
 		});
 
@@ -21,8 +25,9 @@ var navigation = {
 		$.get('/case/get_case_stats.php', null, function(data){
 			//console.log('nav.update_case_stats recv:' + data);
 			var resp = JSON.parse(data);
-			$('#num_my').text(resp.my);
+			$('#num_assigned').text(resp.assigned);
 			$('#num_upcoming_hearings').text(resp.upcoming_hearings);
+			$('#num_reminders').text(resp.reminders);
 		});
 	},
 
@@ -34,11 +39,14 @@ var navigation = {
 		case 'recent':
 			$('#nav_recent').addClass('hilite');
 			return;
-		case 'my':
-			$('#nav_my').addClass('hilite');
+		case 'assigned':
+			$('#nav_assigned').addClass('hilite');
 			break;
 		case 'upcoming_hearings':
 			$('#nav_upcoming_hearings').addClass('hilite');
+			break;
+		case 'reminders':
+			$('#nav_reminders').addClass('hilite');
 			break;
 		}
 	}

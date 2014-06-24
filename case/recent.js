@@ -145,7 +145,7 @@ var recent = {
 		div.append('<p class="title floatright">' + a.ts + '</p>');
 		div.append('<p class="title">' + a.doer + ' updated a proceeding for case</p>');
 		extra = '<p class="extra">' + 
-			'At Hall ' + a.details.hall + ', ' + a.details.court + ' High Court, by Judge ' + a.details.judge + 
+			'At Hall ' + a.details.hall + ', ' + a.details.court + ' High Court, by Justice ' + a.details.judge + 
 			', Counsel ' + a.details.counsel + ' appeared, <br>' + 
 			'Disposal ' + a.details.disposal + ', Next hearing ' + a.details.next_hearing;
 		if (a.details.comment.length > 0)

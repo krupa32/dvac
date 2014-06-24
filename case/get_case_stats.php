@@ -19,27 +19,29 @@
 	session_start();
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
+	
+	$user_id = $_SESSION["user_id"];
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-	/* my */
+	/* assigned */
 	$q = "select count(*) from cases where assigned_to=${_SESSION['user_id']}";
-	$ret["my"] = get_count($db, $q);
+	$ret["assigned"] = get_count($db, $q);
 
-	/* pending_court */
-	$q = "select count(*) from cases where status=${statuses['PENDING_IN_COURT']}";
-	$ret["pending_court"] = get_count($db, $q);
+	/* upcoming_hearings */
+	$from = mktime() - 24*60*60;;
+	$q = "select count(id) from cases where next_hearing >= $from";
+	$ret["upcoming_hearings"] = get_count($db, $q);
+
+	/* reminders */
+	$today = strtotime(date("M j, Y"));
+	error_log("checking for today $today");
+	$q = "select count(*) from reminders where creator=$user_id and remind_on=$today";
+	$ret["reminders"] = get_count($db, $q);
 
 	/* pending_dvac */
 	$q = "select count(*) from cases where status=${statuses['PENDING_WITH_DVAC']}";
 	$ret["pending_dvac"] = get_count($db, $q);
-
-	/* upcoming_hearings */
-	$from = mktime() - 24*60*60;;
-	//$to = $from + ($num_days_upcoming_hearings * 24 * 60 * 60);
-	//$q = "select count(id) from cases where next_hearing >= $from and next_hearing <= $to";
-	$q = "select count(id) from cases where next_hearing >= $from";
-	$ret["upcoming_hearings"] = get_count($db, $q);
 
 	/* nohearings */
 	$q = "select count(id) from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']}";

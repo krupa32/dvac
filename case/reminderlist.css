@@ -1,0 +1,24 @@
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+.shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
+.rounded(@r:4px) { border-radius:@r; -webkit-border-radius:@r; -moz-border-radius:@r }
+
+#page_reminderlist {
+	#reminderlistarea { background:#ddd; }
+	.rl_header { padding:0 1em 1em 1em; font-weight:normal; color:#aaa; .shadow(#000); }
+	.rl_data { padding:1em; border-bottom:solid 1px #666; border-top:solid 1px #fff;
+		.green { color:#060; }
+		.red { color:#c00; }
+		.gray { color:#666; }
+	}
+
+	.rl_case { display:inline-block; width:25%; vertical-align:middle;
+		.caselink { color:#00f; }
+	}
+	.rl_comment { display:inline-block; width:60%; vertical-align:middle; }
+	.rl_remind_on { display:inline-block; width:13%; vertical-align:middle; }
+
+}

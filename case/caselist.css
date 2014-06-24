@@ -7,20 +7,19 @@
 .rounded(@r:4px) { border-radius:@r; -webkit-border-radius:@r; -moz-border-radius:@r }
 
 #page_caselist {
-	.cl_header { font-weight:bold; color:#123; .shadow(#999); text-align:center;
-		.cl_details { text-align:center;}
-	}
-	.cl_data { margin:1em 0; padding:1em; background:#ddd; text-align:center; .rounded(); border-bottom:solid 2px #444; }
+	#caselistarea { background:#ddd; }
+	.cl_header { padding:0 1em 1em 1em; font-weight:normal; color:#aaa; .shadow(#000); }
+	.cl_data { padding:1em; border-bottom:solid 1px #666; border-top:solid 1px #fff; }
 
 	.cl_details { display:inline-block; width:30%; text-align:left;  vertical-align:middle;
-		a,a:visited { color:#00f; }
+		.caselink { color:#00f; }
+		.green { color:#060; }
+		.red { color:#c00; }
+		.gray { color:#666; }
 	}
-	.cl_investigator { display:inline-block; width:30%; vertical-align:middle; }
 	.cl_next_hearing { display:inline-block; width:20%; vertical-align:middle; }
-	.cl_last { display:inline-block; width:18%; vertical-align:middle; }
+	.cl_investigator { display:inline-block; width:35%; vertical-align:middle; }
+	.cl_location { display:inline-block; width:13%; vertical-align:middle; }
 
-	.extra { font-size:10pt; color:#666; }
-	.green { color:#090; }
-	.red { color:#c00; }
-	.gray { color:#666; }
+	.extra { font-size:10px; color:#666; }
 }
