@@ -54,6 +54,7 @@ out1:
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
 
+	$type = $_GET["type"];
 	$start = $_GET["start_item"];
 	$rows = $num_items_per_fetch;
 
@@ -66,7 +67,7 @@ out1:
 	 * this select is global, irrespective of relevance of the case
 	 * to the current user. the list is filtered later.
 	 */
-	switch ($_GET["type"]) {
+	switch ($type) {
 	case "assigned":
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where assigned_to=${_SESSION["user_id"]} and investigator=users.id ";
@@ -77,32 +78,50 @@ out1:
 			"where next_hearing >= $from and investigator=users.id " .
 			"order by next_hearing ";
 		break;
-	case "my":
+	case "notspecified_hearings":
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location from cases,users " . 
+			"where status=${statuses["PENDING_IN_COURT"]} and next_hearing=0 and investigator=users.id " .
+			"order by next_hearing ";
+		break;
+	case "global_total":
+	case "range_total":
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where investigator=users.id ";
 		break;
-	/* below cases are obsolete */
-	case "search":
-		$field = $_GET["field"];
-		$data = $_GET["data"];
-		$q = "select id from cases where $field like '%$data%' limit $start,$rows";
-		if ($field == "assigned_to" || $field == "investigator") /* special cases where data contains id */
-			$q = "select id from cases where $field=$data limit $start,$rows";
-		if ($field == "location")
-			$q = "select cases.id from cases,users where cases.investigator=users.id and users.location=$data limit $start,$rows";
+	case "global_pending_court":
+	case "range_pending_court":
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where status=${statuses["PENDING_IN_COURT"]} and investigator=users.id ";
 		break;
-	case "pending_court":
-		$q = "select id from cases where status=${statuses['PENDING_IN_COURT']} limit $start,$rows";
+	case "global_pending_dvac":
+	case "range_pending_dvac":
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where status=${statuses["PENDING_WITH_DVAC"]} and investigator=users.id ";
 		break;
-	case "pending_dvac":
-		$q = "select id from cases where status=${statuses['PENDING_WITH_DVAC']} limit $start,$rows";
+	case "global_closed":
+	case "range_closed":
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where status=${statuses["CLOSED"]} and investigator=users.id ";
 		break;
 	case "category":
-		$name = $_GET["name"];
-		$q = "select id from cases where category=${categories[$name]} limit $start,$rows";
+		$value = $_GET["value"];
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where category=${categories[$value]} and investigator=users.id ";
 		break;
-	case "nohearings":
-		$q = "select id from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']} limit $start,$rows";
+	case "location":
+		$value = $_GET["value"];
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where location=${locations[$value]} and investigator=users.id ";
+		break;
+	case "user":
+		$value = $_GET["value"];
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where users.id=$value and investigator=users.id ";
+		break;
+	case "search":
+		$value = $_GET["value"];
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where investigator=users.id and (case_num like '%$value%' or petitioner like '%$value%' or respondent like '%$value%')";
 		break;
 	}
 
@@ -114,22 +133,29 @@ out1:
 	while ($row = $res->fetch_assoc())
 		$allcases[] = $row;
 	$res->close();
-	error_log("num allcases=" . count($allcases));
+
+	if ($type == "global_total" || $type == "global_pending_court" ||
+	    $type == "global_pending_dvac" || $type == "global_closed") {
+		/* all cases are requested.
+		 * no team filter required.
+		 */
+		$cases = $allcases;
+		goto post_filter;
+	}
 
 	/* get ids of all officers in current user's team.
 	 * team is defined as all users reporting to current user.
 	 */
 	$team_ids = get_team_ids($db, $_SESSION["user_id"], $_SESSION["user_grade"]);
-	error_log("teamids = " . implode(",", $team_ids));
 
 	/* remove cases not investigated by team */
 	$cases = array();
 	foreach ($allcases as $case) {
-		error_log("checking id ${case["investigator"]} in teamid");
 		if (in_array($case["investigator"], $team_ids))
 			$cases[] = $case;
 	}
-	error_log("num cases=" . count($cases));
+
+post_filter:
 
 	/* translate numbers in the result to readable texts */
 	for ($i = 0; $i < count($cases); $i++) {
@@ -144,6 +170,13 @@ out1:
 
 	}
 
+	if ($type == "upcoming_hearings") {
+		/* no sorting required. query itself has sorted
+		 * on hearing date.
+		 */
+		goto post_sort;
+	}
+
 	/* obtain columns which would be used for multisort */
 	foreach ($cases as $key => $val) {
 		$locs[$key] = $val["location"];
@@ -156,6 +189,7 @@ out1:
 	 */
 	array_multisort($locs, $g, SORT_DESC, $cases);
 
+post_sort:
 	/* apply start and rows now */
 	$cases = array_slice($cases, $start, $rows);
 

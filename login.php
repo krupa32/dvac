@@ -3,6 +3,8 @@
 
 	session_start();
 
+	$error = null;
+
 	if ($_POST && $_POST["login"]) {
 		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 		$q = "select id,name,grade,password from users where login='${_POST['login']}'";

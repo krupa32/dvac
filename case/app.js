@@ -10,7 +10,7 @@ var app = {
 	},
 	
 	popstate: function(state) {
-		console.log('popstate:' + JSON.stringify(state));
+		//console.log('popstate:' + JSON.stringify(state));
 
 		if (state.page == 'recent')
 			recent.show(false, false);
@@ -22,5 +22,7 @@ var app = {
 			details.show(state.id, false);
 		else if (state.page == 'reminderlist')
 			reminderlist.show(false);
+		else if (state.page == 'dashboard')
+			dashboard.show(false);
 	}
 };

@@ -8,7 +8,7 @@
 
 #page_reminderlist {
 	#reminderlistarea { background:#ddd; }
-	.rl_header { padding:0 1em 1em 1em; font-weight:normal; color:#aaa; .shadow(#000); }
+	.rl_header { padding:0 1em 1em 1em; font-weight:normal; color:#000; .shadow(#999); }
 	.rl_data { padding:1em; border-bottom:solid 1px #666; border-top:solid 1px #fff;
 		.green { color:#060; }
 		.red { color:#c00; }

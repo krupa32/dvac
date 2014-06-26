@@ -16,6 +16,7 @@
 	<link rel="stylesheet/less" href="/case/details.css"></link>
 	<link rel="stylesheet/less" href="/case/addproceeding.css"></link>
 	<link rel="stylesheet/less" href="/case/reminderlist.css"></link>
+	<link rel="stylesheet/less" href="/case/dashboard.css"></link>
 
 	<script type="text/javascript" src="/common/jquery.js"></script>
 	<script type="text/javascript" src="/common/jquery-ui.js"></script>
@@ -36,6 +37,7 @@
 	<script type="text/javascript" src="/case/assign.js"></script>
 	<script type="text/javascript" src="/case/addreminder.js"></script>
 	<script type="text/javascript" src="/case/reminderlist.js"></script>
+	<script type="text/javascript" src="/case/dashboard.js"></script>
 	<script type="text/javascript">
 		<?php
 			print "var user_id = ${_SESSION['user_id']};\n";
@@ -61,6 +63,7 @@
 			assign.init();
 			addreminder.init();
 			reminderlist.init();
+			dashboard.init();
 
 			//console.log('document.ready state:' + JSON.stringify(history.state));
 			if (history.state)
@@ -346,6 +349,62 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	</div> <!-- reminderlistarea -->
 	
 </div> <!-- page_reminderlist -->
+
+<div class="page" id="page_dashboard">
+	<div class="card" id="global">
+		<h6>Global Case Summary</h6>
+		<div class="section" type="global_total">
+			<h1 id="global_num_total">1048</h1><div class="small">Total</div></div>
+		<div class="section green" type="global_pending_court">
+			<h1 id="global_num_pending_court">1020</h1><div class="small">In Court</div></div>
+		<div class="section red" type="global_pending_dvac">
+			<h1 id="global_num_pending_dvac">2020</h1><div class="small">With DVAC</div></div>
+		<div class="section gray" type="global_closed">
+			<h1 id="global_num_closed">2008</h1><div class="small">Closed</div></div>
+	</div>
+	<div class="card" id="range">
+		<h6>Cases in My Range</h6>
+		<div class="section" type="range_total">
+			<h1 id="range_num_total">48</h1><div class="small">Total</div></div>
+		<div class="section green" type="range_pending_court">
+			<h1 id="range_num_pending_court">20</h1><div class="small">In Court</div></div>
+		<div class="section red" type="range_pending_dvac">
+			<h1 id="range_num_pending_dvac">20</h1><div class="small">With DVAC</div></div>
+		<div class="section gray" type="range_closed">
+			<h1 id="range_num_closed">8</h1><div class="small">Closed</div></div>
+	</div>
+	<div class="card" id="detachment">
+		<h6>By Detachment</h6>
+		<div id="dash_location"></div>
+	</div>
+	<div class="card" id="hearing">
+		<h6>By Hearing</h6>
+		<div id="dash_hearing">
+			<div class="count" id="hearing_num_upcoming">12</div><p type="upcoming_hearings">Upcoming</p>
+			<div class="count" id="hearing_num_notspecified">2</div><p type="notspecified_hearings">Not Specified</p>
+		</div>
+	</div>
+	<div class="card" id="category">
+		<h6>By Category</h6>
+		<div id="dash_category"></div>
+	</div>
+	<div class="card" id="team">
+		<h6>By Team</h6>
+		<ul id="dash_team">
+			<li><div class="count">12</div><p>Krupa</p>
+				<ul>
+					<li><div class="count">12</div><p>Shanmuga Priya</p>
+						<ul>
+							<li><div class="count">12</div><p>Shahul</p></li>
+							<li><div class="count">2</div><p>Raj Narayan</p></li>
+						</ul>
+					</li>
+					<li><div class="count">2</div><p>Kumaravel</p></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
 
 
 <div class="dialog" id="dlg_changestatus">

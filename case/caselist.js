@@ -37,7 +37,7 @@ var caselist = {
 			var resp = JSON.parse(data);
 			var cases = resp.cases;
 			console.log('caselist.show recv ' + data.length + 'b, query took ' + resp.latency + ' ms');
-			console.log('data:' + data);
+			//console.log('data:' + data);
 
 			if (cases.length == 0) {
 				$('#caselistarea').append('<div class="aligncenter cl_data">No more items found</div>');

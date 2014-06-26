@@ -1,0 +1,41 @@
+
+.shadow(@c:#fff) { text-shadow:1px 1px 1px @c; }
+.rounded(@r:4px) { border-radius:@r; -webkit-border-radius:@r; -moz-border-radius:@r }
+
+#page_dashboard {
+	.card { display:inline-block; vertical-align:top; margin:2% 0 0 2%; background:#ddd; border-bottom:solid 1px #333; .rounded(); 
+		h6 { padding:1em; font-weight:500; background:#ccc; .rounded(); color:#009; }
+		.green { color:#090; }
+		.red { color:#c00; }
+		.gray { color:#999; }
+		.section { display:inline-block; vertical-align:top; width:24%; padding:1em 0; text-align:center; cursor:pointer; }
+		.section:hover { background:#eee; }
+		h1 { font-size:2em; }
+		p { padding:0.5em 1em; border-bottom:dotted 1px #999; cursor:pointer; }
+		p:hover { background:#eee; }
+		.count { float:right; margin:0.5em 1em; }
+	}
+
+	#global { width:46%;
+		.small { font-size:10pt; }
+	}
+	#range { width:46%;
+		.small { font-size:10pt; }
+	}
+	#category { width:30%; 
+		#dash_category { height:300px; overflow-y:auto; }
+	}
+	#detachment { width:30%; 
+		#dash_location { height:300px; overflow-y:auto; }
+	}
+	#hearing { width:30%; 
+		#dash_hearing { height:300px; overflow-y:auto; }
+	}
+	#team { width:96%;
+		.data { padding:1em 0;}
+		ul { list-style-type:none; }
+		li { margin:0 0 0 2em; padding:0 0 0 0; border-left:dotted 1px #999; }
+		p { padding:0.5em; border-bottom:dotted 1px #999;}
+		.count { margin-top:0.5em; }
+	}
+}

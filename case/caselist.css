@@ -8,7 +8,7 @@
 
 #page_caselist {
 	#caselistarea { background:#ddd; }
-	.cl_header { padding:0 1em 1em 1em; font-weight:normal; color:#aaa; .shadow(#000); }
+	.cl_header { padding:0 1em 1em 1em; font-weight:normal; color:#000; .shadow(#999); }
 	.cl_data { padding:1em; border-bottom:solid 1px #666; border-top:solid 1px #fff; }
 
 	.cl_details { display:inline-block; width:30%; text-align:left;  vertical-align:middle;

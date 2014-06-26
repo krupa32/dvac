@@ -35,7 +35,6 @@
 
 	/* reminders */
 	$today = strtotime(date("M j, Y"));
-	error_log("checking for today $today");
 	$q = "select count(*) from reminders where creator=$user_id and remind_on=$today";
 	$ret["reminders"] = get_count($db, $q);
 
