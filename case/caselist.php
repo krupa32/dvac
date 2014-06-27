@@ -135,7 +135,8 @@ out1:
 	$res->close();
 
 	if ($type == "global_total" || $type == "global_pending_court" ||
-	    $type == "global_pending_dvac" || $type == "global_closed") {
+	    $type == "global_pending_dvac" || $type == "global_closed" ||
+	    $type == "search" || $type == "assigned") {
 		/* all cases are requested.
 		 * no team filter required.
 		 */

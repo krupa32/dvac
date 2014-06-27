@@ -352,7 +352,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 <div class="page" id="page_dashboard">
 	<div class="card" id="global">
-		<h6>Global Case Summary</h6>
+		<h6>Total Cases in DVAC</h6>
 		<div class="section" type="global_total">
 			<h1 id="global_num_total">1048</h1><div class="small">Total</div></div>
 		<div class="section green" type="global_pending_court">

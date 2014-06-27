@@ -1,9 +1,9 @@
 var dashboard = {
 
 	init: function() {
-		$('#global .section').click(function(){
-			caselist.show({ type:$(this).attr('type') }, false, true);
-		});
+		//$('#global .section').click(function(){
+		//	caselist.show({ type:$(this).attr('type') }, false, true);
+		//});
 		$('#range .section').click(function(){
 			caselist.show({ type:$(this).attr('type') }, false, true);
 		});

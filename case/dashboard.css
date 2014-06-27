@@ -18,6 +18,8 @@
 
 	#global { width:46%;
 		.small { font-size:10pt; }
+		.section { cursor:default; }
+		.section:hover { background:none; }
 	}
 	#range { width:46%;
 		.small { font-size:10pt; }
