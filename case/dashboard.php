@@ -2,32 +2,6 @@
 	include "../common/config.php";
 	include "../common/utils.php";
 
-	function get_team_ids($db, $id, $grade)
-	{
-		$team = array();
-		$team[] = $id;
-
-		if ($grade == 10) // inspector, no team, single
-			goto out1;
-
-		$q = "select id,grade from users where reporting_to=$id";
-		$res = $db->query($q);
-		if (!$res)
-			goto out1;
-		if ($res->num_rows == 0)
-			goto out2;
-
-		while ($row = $res->fetch_assoc()) {
-			$subteam = get_team_ids($db, $row["id"], $row["grade"]);
-			$team = array_merge($team, $subteam);
-		}
-
-out2:
-		$res->close();
-out1:
-		return $team;
-	}
-
 
 	function init_global(&$global)
 	{

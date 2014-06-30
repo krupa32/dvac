@@ -102,17 +102,29 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-	$q = "select case_id from activities where datediff(now(), ts) < $num_days_recent_activity order by ts desc";
-
 	$before = gettimeofday(true);
+
+	/* get ids of all officers in current user's team.
+	 * team is defined as all users reporting to current user.
+	 */
+	$team_ids = get_team_ids($db, $_SESSION["user_id"], $_SESSION["user_grade"]);
+
+	/* get list of cases with recent activity */
+	$q = "select case_id,investigator from activities,cases " .
+		"where datediff(now(), activities.ts) < $num_days_recent_activity and case_id=cases.id " .
+		"order by activities.ts desc";
 
 	$res = $db->query($q);
 
-	/* form a list of caseids from the query result */
-	while ($row = $res->fetch_row())
-		$caseids[] = $row[0];
+	/* form a list of caseids from the query result.
+	 * filter only cases investigated by team.
+	 */
+	while ($row = $res->fetch_assoc()) {
+		if (in_array($row["investigator"], $team_ids))
+			$caseids[] = $row["case_id"];
+	}
 
-	/* The query for 'recent' will return duplicate caseids.
+	/* The query for 'recent' may return duplicate caseids.
 	 * Also, the caseids are not limited to $start and $rows.
 	 * So, make the caseids unique and restrict the result to
 	 * $start, $rows.

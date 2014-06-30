@@ -1,4 +1,7 @@
 <?php
+	include "../common/config.php";
+	include "../common/utils.php";
+
 	function get_count($db, $q)
 	{
 		$count = 0;
@@ -13,9 +16,6 @@
 		return $count;
 	}
 
-	include "../common/config.php";
-	include "../common/utils.php";
-
 	session_start();
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
@@ -24,40 +24,30 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
+	/* get ids of all officers in current user's team */
+	$team_ids = get_team_ids($db, $_SESSION["user_id"], $_SESSION["user_grade"]);
+
 	/* assigned */
 	$q = "select count(*) from cases where assigned_to=${_SESSION['user_id']}";
 	$ret["assigned"] = get_count($db, $q);
 
 	/* upcoming_hearings */
-	$from = mktime() - 24*60*60;;
-	$q = "select count(id) from cases where next_hearing >= $from";
-	$ret["upcoming_hearings"] = get_count($db, $q);
+	$ret["upcoming_hearings"] = 0;
+	$today = strtotime(date("M j, Y"));
+	$q = "select investigator from cases where next_hearing >= $today";
+	$res = $db->query($q);
+	while ($res && ($row = $res->fetch_row())) {
+		/* filter cases investigated by team */
+		if (in_array($row[0], $team_ids))
+			$ret["upcoming_hearings"]++;
+	}
+	if ($res)
+		$res->close();
 
 	/* reminders */
 	$today = strtotime(date("M j, Y"));
 	$q = "select count(*) from reminders where creator=$user_id and remind_on=$today";
 	$ret["reminders"] = get_count($db, $q);
-
-	/* pending_dvac */
-	$q = "select count(*) from cases where status=${statuses['PENDING_WITH_DVAC']}";
-	$ret["pending_dvac"] = get_count($db, $q);
-
-	/* nohearings */
-	$q = "select count(id) from cases where next_hearing = 0 and status = ${statuses['PENDING_IN_COURT']}";
-	$ret["nohearings"] = get_count($db, $q);
-
-	/* get cases stats by category */
-	$ret["categories"] = array();
-	foreach ($categories as $name => $value) {
-		$q = "select count(*) from cases where category=$value and " .
-			"status != ${statuses['CLOSED']}";
-		/* key is derived by removing space,/,. and converting to lower */
-		$key = strtolower(strtr($name, array(" " => "", "/" => "", "." => "")));
-		$entry["name"] = $name;
-		$entry["key"] = $key;
-		$entry["count"] = get_count($db, $q);
-		$ret["categories"][] = $entry;
-	}
 
 out:
 	$db->close();
