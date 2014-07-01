@@ -16,12 +16,19 @@ var caselist = {
 	show: function(arg, more, push) {
 		//console.log('caselist.show type:' + type);
 
+		$('.page').hide();
+		$('#page_caselist').show();
+		navigation.update_hilite(arg.type);
+
+		/* if called due to browser back/fwd button,
+		 * no need to refresh anything.
+		 */
+		if (!more && !push)
+			return;
+
 		if (!more) {
 			caselist.start_item = 0;
-			$('.page').hide();
-			$('#page_caselist').show();
 			$('#caselist_more').show();
-			navigation.update_hilite(arg.type);
 		}
 
 		if (push)

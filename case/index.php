@@ -66,10 +66,7 @@
 			dashboard.init();
 
 			//console.log('document.ready state:' + JSON.stringify(history.state));
-			if (history.state)
-				app.popstate(history.state);
-			else
-				recent.show(false, true);
+			recent.show(false, true);
 		});
 	</script>
 </head>

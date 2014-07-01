@@ -15,12 +15,19 @@ var recent = {
 
 	show: function(more, push) {
 
+		$('.page').hide();
+		$('#page_recent').show();
+		navigation.update_hilite('recent');
+
+		/* if called due to browser back/fwd button,
+		 * no need to refresh anything.
+		 */
+		if (!more && !push)
+			return;
+
 		if (!more) {
 			recent.start_item = 0;
-			$('.page').hide();
-			$('#page_recent').show();
 			$('#recent_more').show();
-			navigation.update_hilite('recent');
 		}
 
 		if (push)
