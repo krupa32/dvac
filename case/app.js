@@ -24,5 +24,7 @@ var app = {
 			reminderlist.show(false);
 		else if (state.page == 'dashboard')
 			dashboard.show(false);
+		else if (state.page == 'advancedsearch')
+			advancedsearch.show(false);
 	}
 };

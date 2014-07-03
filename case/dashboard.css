@@ -25,13 +25,13 @@
 		.small { font-size:10pt; }
 	}
 	#category { width:30%; 
-		#dash_category { height:300px; overflow-y:auto; }
+		#dash_category { height:200px; overflow-y:auto; }
 	}
 	#detachment { width:30%; 
-		#dash_location { height:300px; overflow-y:auto; }
+		#dash_location { height:200px; overflow-y:auto; }
 	}
 	#hearing { width:30%; 
-		#dash_hearing { height:300px; overflow-y:auto; }
+		#dash_hearing { height:200px; overflow-y:auto; }
 	}
 	#team { width:96%;
 		.data { padding:1em 0;}

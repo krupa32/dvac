@@ -22,6 +22,73 @@ out1:
 		return $last_activity;
 	}
 
+	function form_advanced_search_query($param)
+	{
+		/* Join with proceedings table ONLY if a filter based on hearing is specified.
+		 * If it is ALWAYS joined with proceedings, then only cases WITH proceedings are queried.
+		 */
+		if ($param["hearingafter"] || $param["hearingbefore"]) {
+			$q = "select distinct cases.id,case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
+				"from cases,users,proceedings " .
+				"where investigator=users.id and proceedings.case_id=cases.id ";
+		} else {
+			$q = "select distinct cases.id,case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
+				"from cases,users " .
+				"where investigator=users.id ";
+		}
+
+		if (count($param["status"]) > 0) {
+			$q = $q . " and ( ";
+			foreach ($param["status"] as $key => $value) {
+				if ($key > 0)
+					$q = $q . " or ";
+				$q = $q . " status=$value ";
+			}
+			$q = $q . " ) ";
+		}
+
+		if (count($param["location"]) > 0) {
+			$q = $q . " and ( ";
+			foreach ($param["location"] as $key => $value) {
+				if ($key > 0)
+					$q = $q . " or ";
+				$q = $q . " location=$value ";
+			}
+			$q = $q . " ) ";
+		}
+
+		if (count($param["category"]) > 0) {
+			$q = $q . " and ( ";
+			foreach ($param["category"] as $key => $value) {
+				if ($key > 0)
+					$q = $q . " or ";
+				$q = $q . " category=$value ";
+			}
+			$q = $q . " ) ";
+		}
+
+
+		if ($param["investigator"])
+			$q = $q . " and investigator=" . $param["investigator"];
+
+		if ($param["assigned_to"])
+			$q = $q . " and assigned_to=" . $param["assigned_to"];
+
+		if ($param["hearingafter"]) {
+			$ts = strtotime($param["hearingafter"]);
+			$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) >= $ts or cases.next_hearing >= $ts)";
+		}
+
+		/* since the given date is ON or before,
+		 * midnight of next day is used in the comparison.
+		 */
+		if ($param["hearingbefore"]) {
+			$ts = strtotime($param["hearingbefore"]) + (24 * 60 * 60);
+			$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) <= $ts or (cases.next_hearing != 0 and cases.next_hearing <= $ts))";
+		}
+
+		return $q;
+	}
 
 	session_start();
 	if (!$_SESSION["user_id"])
@@ -96,6 +163,10 @@ out1:
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where investigator=users.id and (case_num like '%$value%' or petitioner like '%$value%' or respondent like '%$value%')";
 		break;
+	case "advanced":
+		$q = form_advanced_search_query($_GET["param"]);
+		error_log("advanced query = $q");
+		break;
 	}
 
 	$before = gettimeofday(true);
@@ -109,7 +180,7 @@ out1:
 
 	if ($type == "global_total" || $type == "global_pending_court" ||
 	    $type == "global_pending_dvac" || $type == "global_closed" ||
-	    $type == "search" || $type == "assigned") {
+	    $type == "search" || $type == "assigned" || $type == "advanced") {
 		/* all cases are requested.
 		 * no team filter required.
 		 */

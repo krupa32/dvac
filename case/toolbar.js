@@ -21,5 +21,10 @@ var toolbar = {
 				caselist.show({ type:'search', value:$(this).val() }, false, true);
 			}
 		});
+
+		$('#toolbar_advanced').click(function(e){
+			advancedsearch.show(true);
+			e.preventDefault();
+		});
 	}
 };

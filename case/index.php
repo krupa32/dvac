@@ -17,6 +17,7 @@
 	<link rel="stylesheet/less" href="/case/addproceeding.css"></link>
 	<link rel="stylesheet/less" href="/case/reminderlist.css"></link>
 	<link rel="stylesheet/less" href="/case/dashboard.css"></link>
+	<link rel="stylesheet/less" href="/case/advancedsearch.css"></link>
 
 	<script type="text/javascript" src="/common/jquery.js"></script>
 	<script type="text/javascript" src="/common/jquery-ui.js"></script>
@@ -38,6 +39,7 @@
 	<script type="text/javascript" src="/case/addreminder.js"></script>
 	<script type="text/javascript" src="/case/reminderlist.js"></script>
 	<script type="text/javascript" src="/case/dashboard.js"></script>
+	<script type="text/javascript" src="/case/advancedsearch.js"></script>
 	<script type="text/javascript">
 		<?php
 			print "var user_id = ${_SESSION['user_id']};\n";
@@ -64,6 +66,7 @@
 			addreminder.init();
 			reminderlist.init();
 			dashboard.init();
+			advancedsearch.init();
 
 			//console.log('document.ready state:' + JSON.stringify(history.state));
 			recent.show(false, true);
@@ -93,15 +96,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	</div>
 
 	<div class="toolbarsearcharea">
-		<!-- <select id="toolbar_field">
-			<option value="case_num">Case Number</option>
-			<option value="petitioner">Petitioner</option>
-			<option value="respondent">Respondent</option>
-			<option value="investigator">IO</option>
-			<option value="assigned_to">Assigned</option>
-		</select>-->
 		<input type="text" id="toolbar_data"></input>
-		<!--<button class="primary" id="toolbar_search">Search</button></p></td>-->
+		<p><a href="" id="toolbar_advanced">Advanced Search</a></p>
 	</div>
 </div>
 
@@ -401,7 +397,58 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			</li>
 		</ul>
 	</div>
-</div>
+</div> <!-- page_dashboard -->
+
+<div class="page" id="page_advancedsearch">
+	<div id="filterarea">
+		<h3>Status</h3>
+		<div id="filter_status">
+			<label><input type="checkbox" value="10"></input> Pending Court</label>
+			<label><input type="checkbox" value="20"></input> Pending DVAC</label>
+			<label><input type="checkbox" value="30"></input> Closed</label>
+		</div>
+
+		<h3>Detachment</h3>
+		<div id="filter_detachment">
+			<!--
+			<label><input type="checkbox"></input> Madras</label>
+			<label><input type="checkbox"></input> Madurai</label>
+			-->
+		</div>
+
+		<h3>Category</h3>
+		<div id="filter_category">
+			<!--
+			<label><input type="checkbox"></input> Crl.OP</label>
+			<label><input type="checkbox"></input> Contempt Appeal</label>
+			-->
+		</div>
+
+		<h3>Officer</h3>
+		<div id="filter_officer">
+			<div id="filter_investigator">
+				Investigated by<br><input type="text" id="advanced_investigator"></input>
+			</div>
+			<div id="filter_assignedto">
+				Assigned to<br><input type="text" id="advanced_assignedto"></input>
+			</div>
+		</div>
+
+		<h3>Hearing or Proceeding</h3>
+		<div id="filter_hearing">
+			<div id="filter_hearingafter">
+				After<br><input type="text" id="advanced_hearingafter"></input>
+			</div>
+			<div id="filter_hearingbefore">
+				Before<br><input type="text" id="advanced_hearingbefore"></input>
+			</div>
+		</div>
+	</div>
+	<div class="actions aligncenter">
+		<button class="primary" id="advanced_search">Advanced Search</button>
+		<button class="secondary" id="advanced_reset">Reset</button>
+	</div>
+</div> <!-- page_advancedsearch -->
 
 
 <div class="dialog" id="dlg_changestatus">

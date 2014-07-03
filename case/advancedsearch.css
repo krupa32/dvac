@@ -1,0 +1,24 @@
+
+.rounded(@r:4px) { border-radius:@r; -webkit-border-radius:@r; -moz-border-radius:@r; }
+
+#page_advancedsearch {
+	#filterarea { padding:2em; background: #ddd; .rounded(); }
+	h3 { margin:1em 0 0 0; font-size:12pt; color:#009; border-bottom:dashed 1px #999; }
+	label { display:inline-block; margin:1em 0; width:12em; }
+	#filter_status {
+	}
+	#filter_detachment {
+	}
+	#filter_category {
+	}
+	#filter_officer {
+		#filter_investigator { display:inline-block; margin:1em 2em 1em 0; }
+		#filter_assignedto { display:inline-block; margin:1em 2em 1em 0; }
+		#advanced_investigator { width:20em; }
+		#advanced_assignedto { width:20em; }
+	}
+	#filter_hearing {
+		#filter_hearingafter { display:inline-block; margin:1em 2em 1em 0; }
+		#filter_hearingbefore { display:inline-block; margin:1em 2em 1em 0; }
+	}
+}
