@@ -49,10 +49,10 @@ select 	{ padding:0.3em; }
 textarea{ height:6em; padding:0.3em; border:solid 1px #999; }
 table	{ width:100%; border-spacing:0; }
 p	{ }
-h3	{ margin:1em 1em 0 1em; font-size:14pt; font-weight:bold; text-shadow:1px 1px 1px #fff; }
 button	{ padding:0.3em 1em; .rounded(); }
 button:disabled	{ border:solid 1px #666; .gradient(#999, #666); }
 button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(#fc0, #c60); }
+button.secondary { background:#ccc; color:#000; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(#ccc, #999); }
 
 
 .ajaxstatus { display:none; position:fixed; width:50%; top:25px; padding:1em; background:#ff0; border:solid 2px #999; text-align:center; }
@@ -63,13 +63,15 @@ button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #555; text-
 }
 
 .toolbar 		{ border-top:solid 1px #666; border-bottom:solid 1px #000; background:#345; }
-.toolbarbuttonarea 	{ float:left; margin:2em 0 2em 4em; }
-.toolbarsearcharea 	{ margin:2em 4em 2em 0; text-align:right; 
+.toolbarbuttonarea 	{ float:left; margin:2em 0 1em 4em; }
+.toolbarsearcharea 	{ margin:2em 4em 1em 0; text-align:right; 
 	input[type=text] { width:24em; padding:0.3em 0 0.3em 2em; .rounded(1.3em); border:none; outline:none;
 		background:#fff url('/common/lens.png') 0.5em 0.6em; background-size:1em 1em; background-repeat:no-repeat; 
 	}
 	.normal { color:#000; }
 	.searchhint { color:#999; font-style:italic; }
+	p { margin:0.5em 1em 0 0; }
+	a,a:visited { color:#999; }
 }
 
 
