@@ -8,6 +8,7 @@
 
 .recent {
 	.case { margin:0 0 1em 0; padding:1em; background:#ddd; .rounded(); border-bottom: solid 2px #444;
+		.recenttag { float:right; padding:0.1em 0.5em; border:dashed 1px #666; background:#ff0; }
 		.casenum {
 			a,a:visited 	{ color:#00f; font-size:1.2em; }
 		}

@@ -147,18 +147,28 @@
 		}
 		$res2->close();
 
+		$case["recent"] = false;
 		$case["activities"] = array();
 
 		/* get recent activities for the case */
 		$q = "select type,doer,object,ts from activities where case_id=${case['id']} order by ts desc limit $num_recent_activities_per_case";
 		$res2 = $db->query($q);
 		while ($act = $res2->fetch_assoc()) {
+			/* take a backup of the ts, to be used below */
+			$ts = strtotime($act["ts"]);
+
 			$act["type"] = array_search($act["type"], $activities);
 			$act["doer"] = get_name_grade($act["doer"]);
 			$act["ts"] = relative_time($act["ts"]);
 			$act["details"] = get_activity_details($db, $act["type"], $act["object"]);
 
 			$case["activities"][] = $act;
+
+			/* if this activity ts is later than the last login time,
+			 * then this case is marked as one with 'recent' activity.
+			 */
+			if ($ts > $_SESSION["user_last_login"])
+				$case["recent"] = true;
 		}
 		$res2->close();
 
