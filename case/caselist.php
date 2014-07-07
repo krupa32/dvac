@@ -37,7 +37,7 @@ out1:
 				"where investigator=users.id ";
 		}
 
-		if (count($param["status"]) > 0) {
+		if ($param["status"] && count($param["status"]) > 0) {
 			$q = $q . " and ( ";
 			foreach ($param["status"] as $key => $value) {
 				if ($key > 0)
@@ -47,7 +47,7 @@ out1:
 			$q = $q . " ) ";
 		}
 
-		if (count($param["location"]) > 0) {
+		if ($param["location"] && count($param["location"]) > 0) {
 			$q = $q . " and ( ";
 			foreach ($param["location"] as $key => $value) {
 				if ($key > 0)
@@ -57,7 +57,7 @@ out1:
 			$q = $q . " ) ";
 		}
 
-		if (count($param["category"]) > 0) {
+		if ($param["category"] && count($param["category"]) > 0) {
 			$q = $q . " and ( ";
 			foreach ($param["category"] as $key => $value) {
 				if ($key > 0)
@@ -76,7 +76,8 @@ out1:
 
 		if ($param["hearingafter"]) {
 			$ts = strtotime($param["hearingafter"]);
-			$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) >= $ts or cases.next_hearing >= $ts)";
+			//$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) >= $ts or cases.next_hearing >= $ts)";
+			$q = $q . " and (proceedings.next_hearing >= $ts) ";
 		}
 
 		/* since the given date is ON or before,
@@ -84,7 +85,8 @@ out1:
 		 */
 		if ($param["hearingbefore"]) {
 			$ts = strtotime($param["hearingbefore"]) + (24 * 60 * 60);
-			$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) <= $ts or (cases.next_hearing != 0 and cases.next_hearing <= $ts))";
+			//$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) <= $ts or (cases.next_hearing != 0 and cases.next_hearing <= $ts))";
+			$q = $q . " and (proceedings.next_hearing != 0 and proceedings.next_hearing <= $ts)";
 		}
 
 		return $q;
@@ -165,7 +167,7 @@ out1:
 		break;
 	case "advanced":
 		$q = form_advanced_search_query($_GET["param"]);
-		error_log("advanced query = $q");
+		//error_log("advanced query = $q");
 		break;
 	}
 

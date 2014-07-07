@@ -434,7 +434,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			</div>
 		</div>
 
-		<h3>Hearing or Proceeding</h3>
+		<h3>Hearing</h3>
 		<div id="filter_hearing">
 			<div id="filter_hearingafter">
 				After<br><input type="text" id="advanced_hearingafter"></input>
