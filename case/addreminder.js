@@ -28,6 +28,8 @@ var addreminder = {
 		param.case_id = $('#dlg_addreminder').data('case_id');
 		param.on = $('#reminder_on').val();
 		param.comment = $('#reminder_comment').val();
+
+		$('.ajaxstatus').text('Adding reminder...').show();
 		$.post('/case/save_reminder.php', param, function(data){
 			//console.log('addreminder.save recv:' + data);
 			var resp = JSON.parse(data);
@@ -36,6 +38,7 @@ var addreminder = {
 				return;
 			}
 
+			$('.ajaxstatus').text('Added reminder').fadeOut();
 			$('#dlg_addreminder').dialog('close');
 
 			navigation.update_case_stats();

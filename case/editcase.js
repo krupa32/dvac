@@ -100,14 +100,18 @@ var editcase = {
 		param.petitioner = $('#editcase_petitioner').val();
 		param.respondent = $('#editcase_respondent').val();
 		param.prayer = $('#editcase_prayer').val();
+
+		$('.ajaxstatus').text('Saving case...').show();
 		$.post('/case/save_case.php', param, function(data) {
 			//console.log('save_case recv:' + data);
 			var resp = JSON.parse(data);
 			if (typeof resp === 'string') {
 				alert('Error:' + resp);
+				$('.ajaxstatus').hide();
 				return;
 			}
 
+			$('.ajaxstatus').text('Case saved').fadeOut();
 			navigation.update_case_stats();
 
 			// open the case details with the new case id

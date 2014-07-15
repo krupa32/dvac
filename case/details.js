@@ -35,8 +35,7 @@ var details = {
 			fd.append('attachment', file);
 			fd.append('case_id', $('#page_details').data('id'));
 
-			//console.log('Starting file upload');
-			$('.ajaxstatus').text('Uploading...').fadeIn();
+			$('.ajaxstatus').text('Uploading...').show();
 			$.ajax({
 				url: '/case/save_attachment.php',
 				type: 'POST',
@@ -52,8 +51,8 @@ var details = {
 					}
 					details.show($('#page_details').data('id'), false);
 				},
-				error: function(o, status, e) {
-					alert('Error:' + status);
+				error: function(xhr, status, e) {
+					alert('Error:' + xhr.statusText);
 				},
 				complete: function() {
 					$('.ajaxstatus').fadeOut();

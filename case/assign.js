@@ -34,14 +34,18 @@ var assign = {
 		param.case_id = $('#dlg_assign').data('case_id');
 		param.target = $('#assign_to').data('id');
 		param.comment = $('#assign_comment').val();
+
+		$('.ajaxstatus').text('Assigning case...').show();
 		$.post('/case/save_assignment.php', param, function(data){
 			//console.log('assign.save recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp != "ok") {
 				alert('Error:' + resp);
+				$('.ajaxstatus').hide();
 				return;
 			}
 
+			$('.ajaxstatus').text('Case assigned').fadeOut();
 			$('#dlg_assign').dialog('close');
 
 			navigation.update_case_stats();

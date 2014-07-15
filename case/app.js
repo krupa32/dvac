@@ -7,6 +7,11 @@ var app = {
 
 		var left = $(window).width()/2 - $('.ajaxstatus').width()/2; 
 		$('.ajaxstatus').css('left', left).css('top', 25);
+
+		$(document).ajaxError(function(evt, xhr, opt, e){
+			alert('Error (' + opt.url + '): ' + xhr.status + ' ' + xhr.statusText);
+			$('.ajaxstatus').hide();
+		});
 	},
 	
 	popstate: function(state) {

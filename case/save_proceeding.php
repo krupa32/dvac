@@ -10,6 +10,13 @@
 	$hearing = strtotime($_POST["hearing"]);
 	if (!$hearing)
 		$hearing = 0;
+	
+	if ($_POST["court"] == "")
+		$_POST["court"] = 0;
+	if ($_POST["hall"] == "")
+		$_POST["hall"] = 0;
+	//if ($_POST["item"] == "")
+	//	$_POST["item"] = 0;
 
 	$q = "insert into proceedings values(null, ${_SESSION['user_id']}, ${_POST['case_id']}, null, " . 
 		"${_POST['court']}, ${_POST['hall']}, ${_POST['item']}, '${_POST['judge']}', " . 

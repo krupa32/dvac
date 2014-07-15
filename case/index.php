@@ -171,6 +171,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<div class="cl_location">Detachment</div>
 	</div>
 	<div id="caselistarea">
+		<!--
 		<div class="cl_data">
 			<div class="cl_details"><a href="1">Crl.OP.123/2014</a>
 				<p class="extra">Petitioner - Tmt. Kanimozhi</p></div>
@@ -189,6 +190,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<div class="cl_last green">PENDING_IN_COURT
 				<p class="extra">Last activity 2 yrs ago</p></div>
 		</div>
+		-->
 	</div> <!-- caselistarea -->
 	
 	<div class="aligncenter action"><button class="primary" id="caselist_more">Show More</button></div>
@@ -329,6 +331,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<div class="rl_remind_on">When</div>
 	</div>
 	<div id="reminderlistarea">
+		<!--
 		<div class="rl_data">
 			<div class="rl_case"><a href="1">Crl.OP.123/2014</a></div>
 			<div class="rl_comment">Remind about the case</div>
@@ -339,6 +342,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<div class="rl_comment">Remind about the case</div>
 			<div class="rl_remind_on">Jul 24, 2014</div>
 		</div>
+		-->
 	</div> <!-- reminderlistarea -->
 	
 </div> <!-- page_reminderlist -->
@@ -347,24 +351,24 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<div class="card" id="global">
 		<h6>Total Cases in DVAC</h6>
 		<div class="section" type="global_total">
-			<h1 id="global_num_total">1048</h1><div class="small">Total</div></div>
+			<h1 id="global_num_total"></h1><div class="small">Total</div></div>
 		<div class="section green" type="global_pending_court">
-			<h1 id="global_num_pending_court">1020</h1><div class="small">In Court</div></div>
+			<h1 id="global_num_pending_court"></h1><div class="small">In Court</div></div>
 		<div class="section red" type="global_pending_dvac">
-			<h1 id="global_num_pending_dvac">2020</h1><div class="small">With DVAC</div></div>
+			<h1 id="global_num_pending_dvac"></h1><div class="small">With DVAC</div></div>
 		<div class="section gray" type="global_closed">
-			<h1 id="global_num_closed">2008</h1><div class="small">Closed</div></div>
+			<h1 id="global_num_closed"></h1><div class="small">Closed</div></div>
 	</div>
 	<div class="card" id="range">
 		<h6>Cases in My Range</h6>
 		<div class="section" type="range_total">
-			<h1 id="range_num_total">48</h1><div class="small">Total</div></div>
+			<h1 id="range_num_total"></h1><div class="small">Total</div></div>
 		<div class="section green" type="range_pending_court">
-			<h1 id="range_num_pending_court">20</h1><div class="small">In Court</div></div>
+			<h1 id="range_num_pending_court"></h1><div class="small">In Court</div></div>
 		<div class="section red" type="range_pending_dvac">
-			<h1 id="range_num_pending_dvac">20</h1><div class="small">With DVAC</div></div>
+			<h1 id="range_num_pending_dvac"></h1><div class="small">With DVAC</div></div>
 		<div class="section gray" type="range_closed">
-			<h1 id="range_num_closed">8</h1><div class="small">Closed</div></div>
+			<h1 id="range_num_closed"></h1><div class="small">Closed</div></div>
 	</div>
 	<div class="card" id="detachment">
 		<h6>By Detachment</h6>
@@ -373,8 +377,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<div class="card" id="hearing">
 		<h6>By Hearing</h6>
 		<div id="dash_hearing">
-			<div class="count" id="hearing_num_upcoming">12</div><p type="upcoming_hearings">Upcoming</p>
-			<div class="count" id="hearing_num_notspecified">2</div><p type="notspecified_hearings">Not Specified</p>
+			<div class="count" id="hearing_num_upcoming"></div><p type="upcoming_hearings">Upcoming</p>
+			<div class="count" id="hearing_num_notspecified"></div><p type="notspecified_hearings">Not Specified</p>
 		</div>
 	</div>
 	<div class="card" id="category">
@@ -384,6 +388,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<div class="card" id="team">
 		<h6>By Team</h6>
 		<ul id="dash_team">
+			<!--
 			<li><div class="count">12</div><p>Krupa</p>
 				<ul>
 					<li><div class="count">12</div><p>Shanmuga Priya</p>
@@ -395,6 +400,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 					<li><div class="count">2</div><p>Kumaravel</p></li>
 				</ul>
 			</li>
+			-->
 		</ul>
 	</div>
 </div> <!-- page_dashboard -->

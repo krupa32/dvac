@@ -21,13 +21,17 @@ var changestatus = {
 		var param = {};
 		param.case_id = case_id;
 		param.status = $('#changestatus_status').val();
+
+		$('.ajaxstatus').text('Changing status...').show();
 		$.post('/case/save_status.php', param, function(data){
 			var resp = JSON.parse(data);
 			if (resp != "ok") {
 				alert('Error:' + resp);
+				$('.ajaxstatus').hide();
 				return;
 			}
 			
+			$('.ajaxstatus').text('Status changed').fadeOut();
 			$('#dlg_changestatus').dialog('close');
 			navigation.update_case_stats();
 

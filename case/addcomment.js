@@ -26,14 +26,18 @@ var addcomment = {
 		var param = {};
 		param.case_id = case_id;
 		param.comment = $('#comment_text').val();
+
+		$('.ajaxstatus').text('Saving comment...').show();
 		$.post('/case/save_comment.php', param, function(data){
 			//console.log('addcomment.save recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp != "ok") {
 				alert('Error:' + resp);
+				$('.ajaxstatus').hide();
 				return;
 			}
 
+			$('.ajaxstatus').text('Comment saved').fadeOut(1000);
 			$('#dlg_addcomment').dialog('close');
 			details.show(case_id, false);
 		});
