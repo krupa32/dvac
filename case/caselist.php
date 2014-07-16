@@ -29,8 +29,8 @@ out1:
 		 */
 		if ($param["hearingafter"] || $param["hearingbefore"]) {
 			$q = "select distinct cases.id,case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
-				"from cases,users,proceedings " .
-				"where investigator=users.id and proceedings.case_id=cases.id ";
+				"from cases inner join users on investigator=users.id left join proceedings on proceedings.case_id=cases.id " .
+				"where true ";
 		} else {
 			$q = "select distinct cases.id,case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
 				"from cases,users " .
@@ -74,19 +74,26 @@ out1:
 		if ($param["assigned_to"])
 			$q = $q . " and assigned_to=" . $param["assigned_to"];
 
-		if ($param["hearingafter"]) {
+		// only hearingafter
+		if ($param["hearingafter"] && !$param["hearingbefore"]) {
 			$ts = strtotime($param["hearingafter"]);
-			//$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) >= $ts or cases.next_hearing >= $ts)";
-			$q = $q . " and (proceedings.next_hearing >= $ts) ";
+			$q = $q . " and (proceedings.next_hearing >= $ts or cases.next_hearing >= $ts) ";
 		}
 
-		/* since the given date is ON or before,
-		 * midnight of next day is used in the comparison.
-		 */
-		if ($param["hearingbefore"]) {
+		// only hearingbefore
+		if ($param["hearingbefore"] && !$param["hearingafter"]) {
+			// since the given date is ON or before, midnight of next day is used
 			$ts = strtotime($param["hearingbefore"]) + (24 * 60 * 60);
-			//$q = $q . " and (UNIX_TIMESTAMP(proceedings.ts) <= $ts or (cases.next_hearing != 0 and cases.next_hearing <= $ts))";
-			$q = $q . " and (proceedings.next_hearing != 0 and proceedings.next_hearing <= $ts)";
+			$q = $q . " and ( (proceedings.next_hearing != 0 and proceedings.next_hearing <= $ts) or " .
+				"(cases.next_hearing != 0 and cases.next_hearing <= $ts) )";
+		}
+
+		// both hearingafter and hearingbefore
+		if ($param["hearingafter"] && $param["hearingbefore"]) {
+			$afterts = strtotime($param["hearingafter"]);
+			$beforets = strtotime($param["hearingbefore"]) + (24 * 60 * 60);
+			$q = $q . " and ( (proceedings.next_hearing >= $afterts and proceedings.next_hearing <= $beforets) or " .
+				"(cases.next_hearing >= $afterts and cases.next_hearing <= $beforets) )";
 		}
 
 		return $q;

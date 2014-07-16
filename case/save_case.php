@@ -7,18 +7,23 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-	/* default values */
+	$hearing = strtotime($_POST["next_hearing"]);
+	if (!$hearing)
+		$hearing = 0;
+
+	/* default values for new case */
 	$status = $statuses["PENDING_IN_COURT"];
 	$assigned_to = $_POST["investigator"];
 
 	if ($_POST["id"])
 		$q = "update cases set case_num='${_POST['case_num']}', category=${_POST['category']}, investigator=${_POST['investigator']}, " .
-			"petitioner='${_POST['petitioner']}', respondent='${_POST['respondent']}', prayer='${_POST['prayer']}' " .
+			"petitioner='${_POST['petitioner']}', respondent='${_POST['respondent']}', prayer='${_POST['prayer']}', " .
+			"next_hearing=$hearing " .
 			"where id=${_POST['id']}";
 	else
 		$q = "insert into cases values(null, '${_POST['case_num']}', ${_POST['category']}, ${_SESSION['user_id']}, null, " .
 			"$status, $assigned_to, ${_POST['investigator']}, " . 
-			"'${_POST['petitioner']}', '${_POST['respondent']}', '${_POST['prayer']}', 0)";
+			"'${_POST['petitioner']}', '${_POST['respondent']}', '${_POST['prayer']}', $hearing)";
 
 	if (!$db->query($q)) {
 		$ret = $db->error;

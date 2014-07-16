@@ -32,6 +32,8 @@ var editcase = {
 			}
 		});
 
+		$('#editcase_next_hearing').datepicker({ dateFormat:'M d, yy' });
+
 		$('#editcase_save').click(editcase.save);
 
 	},
@@ -68,6 +70,9 @@ var editcase = {
 			$('#editcase_respondent').val(resp.respondent);
 			$('#editcase_prayer').val(resp.prayer);
 
+			if (resp.next_hearing != 'None')
+				$('#editcase_next_hearing').val(resp.next_hearing);
+
 			if (resp.case_num.indexOf('(MD)') != -1)
 				$('#editcase_court').val(2);
 
@@ -100,6 +105,7 @@ var editcase = {
 		param.petitioner = $('#editcase_petitioner').val();
 		param.respondent = $('#editcase_respondent').val();
 		param.prayer = $('#editcase_prayer').val();
+		param.next_hearing = $('#editcase_next_hearing').val();
 
 		$('.ajaxstatus').text('Saving case...').show();
 		$.post('/case/save_case.php', param, function(data) {
@@ -127,6 +133,7 @@ var editcase = {
 		editcase.update_case_num();
 		$('#editcase_investigator').val('').data('id', null);
 		$('#editcase_petitioner, #editcase_respondent, #editcase_prayer').val('');
+		$('#editcase_next_hearing').val('');
 	},
 
 	validate: function() {

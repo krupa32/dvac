@@ -233,6 +233,10 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<td><p><textarea class="fullwidth" id="editcase_prayer"></textarea></p></td>
 	</tr>
 	<tr>
+		<td class="field"><p>Next Hearing<br>(Optional)</p></td>
+		<td><p><input type="text" id="editcase_next_hearing"></input></p></td>
+	</tr>
+	<tr>
 		<td>&nbsp;</td>
 		<td><p class="aligncenter"><button class="primary" id="editcase_save">Save</button></p></td>
 	</tr>

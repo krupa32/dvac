@@ -20,6 +20,9 @@ var caselist = {
 		$('#page_caselist').show();
 		navigation.update_hilite(arg.type);
 
+		if (!more)
+			$('#caselistarea').html('');
+
 		/* if called due to browser back/fwd button,
 		 * no need to refresh anything.
 		 */
