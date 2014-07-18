@@ -31,7 +31,7 @@ var navigation = {
 			var resp = JSON.parse(data);
 			$('#num_assigned').text(resp.assigned);
 			$('#num_upcoming_hearings').text(resp.upcoming_hearings);
-			$('#num_reminders').text(resp.reminders);
+			$('#num_reminders').text(resp.reminders + ' of ' + resp.reminders_total);
 
 			if (resp.assigned == 0)
 				$('#num_assigned').removeClass('important');

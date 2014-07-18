@@ -6,11 +6,12 @@
 	$ret = array();
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
-	$q = "select id,name,grade from users where name like '%${_GET['term']}%' limit 5";
+	$q = "select id,name,grade,location from users where name like '%${_GET['term']}%' limit 5";
 	$res = $db->query($q);
 	while ($row = $res->fetch_assoc()) {
 		$grade = array_search($row["grade"], $grades);
-		$entry["label"] = "${row['name']}, $grade";
+		$loc = array_search($row["location"], $locations);
+		$entry["label"] = "${row['name']}, $grade, $loc";
 		$entry["value"] = $row['id'];
 		$ret[] = $entry;
 	}

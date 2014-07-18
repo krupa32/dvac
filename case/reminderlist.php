@@ -15,7 +15,7 @@
 
 	$today = strtotime(date("M j, Y"));
 	$q = "select cases.id,case_num,status,comment,remind_on from reminders,cases " .
-		"where reminders.creator=$user_id and remind_on >= $today and case_id=cases.id";
+		"where reminders.creator=$user_id and remind_on >= $today and case_id=cases.id order by remind_on";
 
 	$res = $db->query($q);
 	if (!$res || $res->num_rows == 0)

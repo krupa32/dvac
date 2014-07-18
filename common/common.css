@@ -17,7 +17,7 @@
 /* less definitions */
 @bg: #567;
 @fg: #333;
-@pbtnbg: #fc0;
+@pbtnbg: greenyellow;
 @pbtnfg: #000;
 .gradient(@c1,@c2) {
 	background:-webkit-linear-gradient(top, @c1, @c2);
@@ -51,7 +51,7 @@ table	{ width:100%; border-spacing:0; }
 p	{ }
 button	{ padding:0.3em 1em; .rounded(); }
 button:disabled	{ border:solid 1px #666; .gradient(#999, #666); }
-button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(#fc0, #c60); }
+button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(@pbtnbg, darken(@pbtnbg,30%)); }
 button.secondary { background:#ccc; color:#000; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(#ccc, #999); }
 
 
@@ -77,7 +77,7 @@ button.secondary { background:#ccc; color:#000; border:solid 1px #555; text-shad
 
 .content 	{ border-top:solid 1px #888; }
 
-.nav { width:20%; padding:2em 1em 0 4em; vertical-align:top; font:12pt arial,'Archivo Narrow';
+.nav { width:25%; padding:2em 1em 0 4em; vertical-align:top; font:12pt arial,'Archivo Narrow';
 	a,a:visited { display:block; padding:0.5em;
 	  	color:#fff; text-decoration:none; letter-spacing:0px; .shadow(#000); 
 		border-bottom:dotted 1px #999;

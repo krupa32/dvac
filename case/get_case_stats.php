@@ -44,10 +44,15 @@
 	if ($res)
 		$res->close();
 
-	/* reminders */
+	/* reminders for today */
 	$today = strtotime(date("M j, Y"));
 	$q = "select count(*) from reminders where creator=$user_id and remind_on=$today";
 	$ret["reminders"] = get_count($db, $q);
+
+	/* total reminders */
+	$today = strtotime(date("M j, Y"));
+	$q = "select count(*) from reminders where creator=$user_id and remind_on >= $today";
+	$ret["reminders_total"] = get_count($db, $q);
 
 out:
 	$db->close();

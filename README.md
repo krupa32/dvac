@@ -15,3 +15,7 @@ INSTALLATION
 4) Edit /etc/php5/apache2/php.ini and set
     upload_max_filesize = 64M
     post_max_size = 64M
+
+5) To install auto backup,
+    sudo su
+    crontab $DVACDIR/backup/backup.crontab
