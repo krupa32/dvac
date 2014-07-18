@@ -40,6 +40,7 @@ var caselist = {
 		/* send the start_item also to the server */
 		arg.start_item = caselist.start_item;
 
+		$('.ajaxstatus').text('Loading...').show();
 		$.get('/case/caselist.php', arg, function(data){
 			if (!more)
 				$('#caselistarea').html('');
@@ -48,6 +49,7 @@ var caselist = {
 			var cases = resp.cases;
 			console.log('caselist.show recv ' + data.length + 'b, query took ' + resp.latency + ' ms');
 			//console.log('data:' + data);
+			$('.ajaxstatus').text('Done').fadeOut();
 
 			if (cases.length == 0) {
 				$('#caselistarea').append('<div class="aligncenter cl_data">No more items found</div>');

@@ -21,11 +21,13 @@ var dashboard = {
 		if (push)
 			history.pushState({ page:'dashboard' }, '', '#dashboard');
 
+		$('.ajaxstatus').text('Loading...').show();
 		$.get('/case/dashboard.php', null, function(data){
 
 			var resp = JSON.parse(data);
 			console.log('dashboard.show recv ' + data.length + 'b, query took ' + resp.latency + ' ms');
 			//console.log('data:' + data);
+			$('.ajaxstatus').text('Done').fadeOut();
 
 			dashboard.update_global(resp.global);
 			dashboard.update_range(resp.range);

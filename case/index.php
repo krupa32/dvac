@@ -12,7 +12,6 @@
 	<link rel="stylesheet/less" href="/case/recent.css"></link>
 	<link rel="stylesheet/less" href="/case/caselist.css"></link>
 	<link rel="stylesheet/less" href="/case/editcase.css"></link>
-	<link rel="stylesheet/less" href="/case/search.css"></link>
 	<link rel="stylesheet/less" href="/case/details.css"></link>
 	<link rel="stylesheet/less" href="/case/addproceeding.css"></link>
 	<link rel="stylesheet/less" href="/case/reminderlist.css"></link>
@@ -29,7 +28,6 @@
 	<script type="text/javascript" src="/case/recent.js"></script>
 	<script type="text/javascript" src="/case/caselist.js"></script>
 	<script type="text/javascript" src="/case/editcase.js"></script>
-	<script type="text/javascript" src="/case/search.js"></script>
 	<script type="text/javascript" src="/case/details.js"></script>
 	<script type="text/javascript" src="/case/changestatus.js"></script>
 	<script type="text/javascript" src="/case/addproceeding.js"></script>
@@ -56,7 +54,6 @@
 			recent.init();
 			caselist.init();
 			editcase.init();
-			search.init();
 			details.init();
 			changestatus.init();
 			addproceeding.init();

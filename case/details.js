@@ -73,10 +73,12 @@ var details = {
 		else
 			$('#details_change').hide();
 
+		$('.ajaxstatus').text('Loading...').show();
 		var param = {};
 		param.id = id;
 		$.get('/case/get_details.php', param, function(data){
 			//console.log('details.show recv:' + data);
+			$('.ajaxstatus').text('Done').fadeOut();
 			var resp = JSON.parse(data);
 			$('#details_case_num').text(resp.case_num);
 			$('#details_status').text(resp.status);

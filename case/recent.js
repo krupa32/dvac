@@ -37,6 +37,7 @@ var recent = {
 		var param = {};
 		param.start_item = recent.start_item;
 
+		$('.ajaxstatus').text('Loading...').show();
 		$.get('/case/recent.php', param, function(data){
 			if (!more)
 				$('#recentarea').html('');
@@ -45,6 +46,7 @@ var recent = {
 			var cases = resp.cases;
 			console.log('recent.show recv ' + data.length + 'b, query took ' + resp.latency + ' ms');
 			//console.log('data:' + data);
+			$('.ajaxstatus').text('Done').fadeOut();
 
 			if (cases.length == 0) {
 				$('#recentarea').append('<div class="aligncenter nomore">No more items found</div>');
