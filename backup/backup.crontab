@@ -1,1 +1,1 @@
-0 0 * * * /home/krupa/work/dvac/backup/backup.sh
+0 0 * * * /var/www/dvac/backup/backup.sh
