@@ -144,4 +144,11 @@
 			"FINAL ORDER PASSED"	=> 4,
 			"OTHER"			=> 5
 			);
+
+	/* reporting_officer_ids.
+	 * the mysql db ids of reporting officers.
+	 * these officers need to have special permission to view
+	 * and update all cases, without applying any team filter.
+	 */
+	$reporting_officer_ids = array(10);
 ?>

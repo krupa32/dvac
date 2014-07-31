@@ -132,22 +132,18 @@ out1:
 			"where status=${statuses["PENDING_IN_COURT"]} and next_hearing=0 and investigator=users.id " .
 			"order by next_hearing ";
 		break;
-	case "global_total":
 	case "range_total":
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where investigator=users.id ";
 		break;
-	case "global_pending_court":
 	case "range_pending_court":
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status=${statuses["PENDING_IN_COURT"]} and investigator=users.id ";
 		break;
-	case "global_pending_dvac":
 	case "range_pending_dvac":
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status=${statuses["PENDING_WITH_DVAC"]} and investigator=users.id ";
 		break;
-	case "global_closed":
 	case "range_closed":
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status=${statuses["CLOSED"]} and investigator=users.id ";
@@ -187,11 +183,10 @@ out1:
 		$allcases[] = $row;
 	$res->close();
 
-	if ($type == "global_total" || $type == "global_pending_court" ||
-	    $type == "global_pending_dvac" || $type == "global_closed" ||
-	    $type == "assigned") {
-		/* all cases are requested.
-		 * no team filter required.
+	if ($type == "assigned" || in_array($_SESSION["user_id"], $reporting_officer_ids)) {
+		/* 'assigned' cases might be investigated by someone else.
+		 * reporting officers should ALWAYS allowed to see all cases.
+		 * no team filter required in these cases.
 		 */
 		$cases = $allcases;
 		goto post_filter;
