@@ -8,10 +8,19 @@ var app = {
 			open: app.user_edit_dlg_on_open,
 			title: 'Add/Edit User Information',
 			position: { my:'top', at:'top', of:'#listofusers'},
-			width: 400
+			width: 400,
+			height:500
 		});
 
-		app.user_list_update();
+		utils.dynamic_combo('#grade', '/common/get_grades.php', null);
+
+		$('#to').autocomplete({
+			source: '/common/get_user_autocomplete.php',
+			select: function(event,ui) {
+				$('#to').val(ui.item.label).data('id', ui.item.value);
+				return false;
+			}
+		});
 
 		$('button#user_add').click(function(){
 			$('div#user_edit').data('id',null).dialog('open');
@@ -24,6 +33,13 @@ var app = {
 		$('button#reset_password').click(function(){
 			app.user_reset_password();
 		});
+
+		$('button#move_cases').click(function(){
+			app.move_cases();
+		});
+
+		app.user_list_update();
+
 	},
 
 	user_list_update: function() {
@@ -81,6 +97,26 @@ var app = {
 			$('div#user_edit').dialog('close');
 		});
 
+	},
+
+	move_cases: function() {
+		if (!$('#to').data('id')) {
+			alert('Invalid officer specified');
+			return;
+		}
+
+		var param = {};
+		param.from = $('#user_edit').data('id');
+		param.to = $('#to').data('id');
+		$.post('/admin/move_cases.php', param, function(data){
+			console.log('move_cases recv:' + data);
+			var resp = JSON.parse(data);
+			if (resp != 'ok') {
+				alert('Error:' + data);
+				return;
+			}
+			$('div#user_edit').dialog('close');
+		});
 	},
 
 	user_edit_dlg_on_open: function() {

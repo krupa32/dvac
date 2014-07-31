@@ -1,5 +1,6 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	session_start();
 	$id = $_SESSION["user_id"];
@@ -11,14 +12,7 @@
 	$ret = $row;
 	$res->close();
 
-	$q = "select name from users where id='${ret['reporting_to']}'";
-	$res = $db->query($q);
-	if ($res && $res->num_rows > 0) {
-		$row = $res->fetch_assoc();
-		$grade = array_search($ret["grade"], $grades);
-		$ret["reporting_to_name"] = $row["name"] . ", " . $grade;
-	}
-	$res->close();
+	$ret["reporting_to_name"] = get_name_grade($ret["reporting_to"]);
 
 	$db->close();
 
