@@ -21,7 +21,7 @@ fi
 
 # Take backup
 mysqldump -u root -p$MYSQLPASS --databases dvac --add-drop-database > $SYNCDIR/db.sql
-rsync -ru $SITEDIR/case/uploads $SYNCDIR
+rsync -ru $SITEDIR/* $SYNCDIR
 tar -czf $BACKUPDIR/$BACKUPNAME.tgz $SYNCDIR/*
 #zip -r $BACKUPDIR/$BACKUPNAME.zip $SYNCDIR/*
 
