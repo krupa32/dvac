@@ -42,7 +42,7 @@ var editcase = {
 		var court_spec, case_num;
 		court_spec = ($('#editcase_court option:selected').text() == 'Madurai') ? '(MD)' : '';
 		case_num = $('#editcase_category option:selected').text() + '.' + court_spec +
-				 $('#editcase_no').val() + '/' + $('#editcase_year').val();
+				 $('#editcase_no').val().trim() + '/' + $('#editcase_year').val().trim();
 		 $('#editcase_case_num').text(case_num);
 	},
 

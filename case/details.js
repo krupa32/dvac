@@ -207,7 +207,7 @@ var details = {
 		var div = $('<div class="activity"></div>').appendTo('#historyarea');
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
 		div.append('<p class="title">' + resp.doer + ' added an attachment ' + 
-				'<a href="' + resp.details.link + '">' + resp.details.name + '</a></p>');
+				'<a href="' + resp.details.link + '" target="_blank">' + resp.details.name + '</a></p>');
 	}
 
 

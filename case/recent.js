@@ -183,7 +183,7 @@ var recent = {
 		var div = $('<div class="activity"></div>').appendTo(divact);
 		div.append('<p class="title floatright">' + a.ts + '</p>');
 		div.append('<p class="title">' + a.doer + ' added an attachment ' + 
-				'<a href="' + a.details.link + '">' + a.details.name + '</a></p>');
+				'<a href="' + a.details.link + '" target="_blank">' + a.details.name + '</a></p>');
 	}
 
 
