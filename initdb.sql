@@ -19,8 +19,6 @@
 -- Current Database: `dvac`
 --
 
-/*!40000 DROP DATABASE IF EXISTS `dvac`*/;
-
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `dvac` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `dvac`;
@@ -54,7 +52,7 @@ CREATE TABLE `assignments` (
   `target` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +66,7 @@ CREATE TABLE `attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +91,7 @@ CREATE TABLE `cases` (
   `next_hearing` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `case_num` (`case_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +106,7 @@ CREATE TABLE `comments` (
   `case_id` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +130,24 @@ CREATE TABLE `proceedings` (
   `next_hearing` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `reminders`
+--
+
+DROP TABLE IF EXISTS `reminders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reminders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `creator` int(11) DEFAULT NULL,
+  `case_id` int(11) DEFAULT NULL,
+  `remind_on` int(11) DEFAULT NULL,
+  `comment` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,11 +163,12 @@ CREATE TABLE `users` (
   `name` varchar(32) DEFAULT NULL,
   `grade` tinyint(4) DEFAULT NULL,
   `password` varchar(128) DEFAULT NULL,
-  `reporting_to` varchar(16) DEFAULT NULL,
+  `reporting_to` int(11) DEFAULT NULL,
   `location` tinyint(4) DEFAULT NULL,
+  `last_login` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -164,4 +180,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-06 17:09:59
+-- Dump completed on 2014-09-09  7:15:50
