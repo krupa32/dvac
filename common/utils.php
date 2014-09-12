@@ -18,7 +18,6 @@
 	{
 		global $db_host, $db_user, $db_password, $db_name;
 
-		error_log("get_rc_case_num: id=$id");
 		$ret = "";
 
 		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
