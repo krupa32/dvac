@@ -22,43 +22,12 @@ var details = {
 			e.preventDefault();
 		});
 		$('#btn_attach').click(function(){
-			$('#details_attachment').val('');
-			$('#details_attachment').click();
+			attach.show($('#page_details').data('id'));
 		});
 		$('#btn_addreminder').click(function(){
 			addreminder.show($('#page_details').data('id'));
 		});
 
-		$('#details_attachment').change(function(){
-			var file = $('#details_attachment').get(0).files[0];
-			var fd = new FormData();
-			fd.append('attachment', file);
-			fd.append('case_id', $('#page_details').data('id'));
-
-			$('.ajaxstatus').text('Uploading...').show();
-			$.ajax({
-				url: '/case/save_attachment.php',
-				type: 'POST',
-				data: fd,
-				processData: false,
-				contentType: false,
-				success: function(data) {
-					//console.log('save_attachment recv:' + data);
-					var resp = JSON.parse(data);
-					if (resp != 'ok') {
-						alert('Error:' + resp);
-						return;
-					}
-					details.show($('#page_details').data('id'), false);
-				},
-				error: function(xhr, status, e) {
-					alert('Error:' + xhr.statusText);
-				},
-				complete: function() {
-					$('.ajaxstatus').fadeOut();
-				}
-			});
-		});
 	},
 
 	show: function(id, push) {
@@ -80,6 +49,10 @@ var details = {
 			//console.log('details.show recv:' + data);
 			$('.ajaxstatus').text('Done').fadeOut();
 			var resp = JSON.parse(data);
+
+			if (resp.rc_case_num == '')
+				resp.rc_case_num = 'None';
+
 			$('#details_case_num').text(resp.case_num);
 			$('#details_status').text(resp.status);
 			$('#details_io').text(resp.investigator);
@@ -88,6 +61,7 @@ var details = {
 			$('#details_respondent').text(resp.respondent);
 			$('#details_prayer').text(resp.prayer);
 			$('#details_next_hearing').text(resp.next_hearing);
+			$('#details_rc_case_num').text(resp.rc_case_num);
 
 			// set back color of status
 			$('#details_status').removeClass('red green gray');
@@ -206,8 +180,9 @@ var details = {
 	add_attachment_activity: function(resp) {
 		var div = $('<div class="activity"></div>').appendTo('#historyarea');
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
-		div.append('<p class="title">' + resp.doer + ' added an attachment ' + 
+		div.append('<p class="title">' + resp.doer + ' added ' + resp.details.type + ' attachment ' + 
 				'<a href="' + resp.details.link + '" target="_blank">' + resp.details.name + '</a></p>');
+		div.append('<p class="text">' + resp.details.comment + '</p>');
 	}
 
 

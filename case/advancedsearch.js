@@ -45,6 +45,15 @@ var advancedsearch = {
 
 		$('#advanced_search').click(advancedsearch.search);
 		$('#advanced_reset').click(advancedsearch.reset);
+
+		$('#advanced_rc').autocomplete({
+			source: '/common/get_rc_autocomplete.php',
+			select: function(event,ui) {
+				//$('#editcase_rc').val(ui.item.label).data('id', ui.item.value);
+				$('#advanced_rc').val(ui.item.label);
+				return false;
+			}
+		});
 	},
 
 	show: function(push) {
@@ -84,6 +93,7 @@ var advancedsearch = {
 		param.assigned_to = $('#advanced_assignedto').data('id');
 		param.hearingafter = $('#advanced_hearingafter').val();
 		param.hearingbefore = $('#advanced_hearingbefore').val();
+		param.rc = $('#advanced_rc').val();
 
 		console.log('param:' + JSON.stringify(param));
 
@@ -105,5 +115,6 @@ var advancedsearch = {
 		$('#advanced_assignedto').val('').data('id', null);
 		$('#advanced_hearingafter').val('');
 		$('#advanced_hearingbefore').val('');
+		$('#advanced_rc').val('');
 	}
 };

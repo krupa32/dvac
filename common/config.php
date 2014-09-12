@@ -145,6 +145,17 @@
 			"OTHER"			=> 5
 			);
 
+	/* attachment_types
+	 * attachment types
+	 */
+	$attachment_types = array(
+			"UNSPECIFIED"		=> 0,
+			"INTERIM ORDER"		=> 1,
+			"FINAL ORDER"		=> 2,
+			"OTHER"			=> 3
+			);
+
+
 	/* reporting_officer_ids.
 	 * the mysql db ids of reporting officers.
 	 * these officers need to have special permission to view

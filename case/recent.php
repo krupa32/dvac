@@ -52,13 +52,14 @@
 
 	function get_attachment_details($db, $attachment_id)
 	{
-		global $upload_dir;
+		global $upload_dir, $attachment_types;
 
-		$q = "select name from attachments where id=$attachment_id";
+		$q = "select name,type,comment from attachments where id=$attachment_id";
 		$res = $db->query($q);
 		$row = $res->fetch_assoc();
 		$ext = pathinfo($row["name"], PATHINFO_EXTENSION);
 		$row["link"] = "$upload_dir/$attachment_id.$ext";
+		$row["type"] = array_search($row["type"], $attachment_types);
 		$res->close();
 		return $row;
 	}
@@ -136,7 +137,7 @@
 	foreach ($caseids as $caseid) {
 
 		/* get case details */
-		$q = "select id,case_num,petitioner,respondent,prayer,next_hearing from cases where id=$caseid";
+		$q = "select id,case_num,petitioner,respondent,prayer,status,next_hearing from cases where id=$caseid";
 		$res2 = $db->query($q);
 		$case = $res2->fetch_assoc();
 		if ($case["next_hearing"] == 0) {
@@ -147,6 +148,7 @@
 		}
 		$res2->close();
 
+		$case["status"] = array_search($case["status"], $statuses);
 		$case["recent"] = false;
 		$case["activities"] = array();
 

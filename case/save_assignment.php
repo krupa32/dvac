@@ -13,7 +13,8 @@
 		goto out;
 	}
 
-	$q = "insert into assignments values(null, ${_POST['case_id']}, ${_POST['target']}, '${_POST['comment']}')";
+	$comment = $db->real_escape_string($_POST["comment"]);
+	$q = "insert into assignments values(null, ${_POST['case_id']}, ${_POST['target']}, '$comment')";
 	if (!$db->query($q)) {
 		$ret = $db->error;
 		goto out;

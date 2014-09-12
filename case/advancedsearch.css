@@ -3,6 +3,7 @@
 
 #page_advancedsearch {
 	#filterarea { padding:2em; background: #ddd; .rounded(); }
+	p { margin:1em 0 0 0; }
 	h3 { margin:1em 0 0 0; font-size:12pt; color:#009; border-bottom:dashed 1px #999; }
 	label { display:inline-block; margin:1em 0; width:12em; }
 	#filter_status {
@@ -21,6 +22,7 @@
 		#filter_hearingafter { display:inline-block; margin:1em 2em 1em 0; }
 		#filter_hearingbefore { display:inline-block; margin:1em 2em 1em 0; }
 	}
+	#advanced_rc { width:30em; }
 
 	.actions { margin:2em 0 6em 0; }
 }

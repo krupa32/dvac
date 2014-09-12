@@ -32,6 +32,16 @@ var editcase = {
 			}
 		});
 
+		$('#editcase_rc').autocomplete({
+			source: '/common/get_rc_autocomplete.php',
+			select: function(event,ui) {
+				//$('#editcase_rc').val(ui.item.label).data('id', ui.item.value);
+				$('#editcase_rc').val(ui.item.label);
+				return false;
+			}
+		});
+
+
 		$('#editcase_next_hearing').datepicker({ dateFormat:'M d, yy' });
 
 		$('#editcase_save').click(editcase.save);
@@ -66,6 +76,7 @@ var editcase = {
 			$('#editcase_category').val(resp.category);
 			$('#editcase_case_num').text(resp.case_num);
 			$('#editcase_investigator').val(resp.investigator).data('id', resp.investigator_id);
+			$('#editcase_rc').val(resp.rc_case_num);
 			$('#editcase_petitioner').val(resp.petitioner);
 			$('#editcase_respondent').val(resp.respondent);
 			$('#editcase_prayer').val(resp.prayer);
@@ -102,6 +113,7 @@ var editcase = {
 		param.case_num = $('#editcase_case_num').text();
 		param.category = $('#editcase_category').val();
 		param.investigator = $('#editcase_investigator').data('id');
+		param.rc_case_num = $('#editcase_rc').val().trim();
 		param.petitioner = $('#editcase_petitioner').val();
 		param.respondent = $('#editcase_respondent').val();
 		param.prayer = $('#editcase_prayer').val();
@@ -132,6 +144,7 @@ var editcase = {
 		$('#editcase_year').val('Year');
 		editcase.update_case_num();
 		$('#editcase_investigator').val('').data('id', null);
+		$('#editcase_rc').val('');
 		$('#editcase_petitioner, #editcase_respondent, #editcase_prayer').val('');
 		$('#editcase_next_hearing').val('');
 	},

@@ -34,6 +34,7 @@
 	<script type="text/javascript" src="/case/addcomment.js"></script>
 	<script type="text/javascript" src="/case/closecase.js"></script>
 	<script type="text/javascript" src="/case/assign.js"></script>
+	<script type="text/javascript" src="/case/attach.js"></script>
 	<script type="text/javascript" src="/case/addreminder.js"></script>
 	<script type="text/javascript" src="/case/reminderlist.js"></script>
 	<script type="text/javascript" src="/case/dashboard.js"></script>
@@ -60,6 +61,7 @@
 			addcomment.init();
 			closecase.init();
 			assign.init();
+			attach.init();
 			addreminder.init();
 			reminderlist.init();
 			dashboard.init();
@@ -214,6 +216,10 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<td><p><span id="editcase_case_num"></span></p>
 	</tr>
 	<tr>
+		<td class="field"><p>Regular Case Number</p></td>
+		<td><p><input type="text" class="fullwidth" id="editcase_rc"></input></p>
+	</tr>
+	<tr>
 		<td class="field"><p>Investigating Officer</p></td>
 		<td><p><input type="text" class="fullwidth" id="editcase_investigator"></input></p>
 	</tr>
@@ -279,12 +285,14 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<p class="floatright"><button class="primary" id="details_edit">Edit</button></p>
 		<p class="casenum" id="details_case_num"></p>
 		<p class="status"><span id="details_status"></span> &nbsp;<a href="" id="details_change">Change</a></p>
-		<p class="petitioner ">Petitioner<br><span id="details_petitioner"></span></p>
-		<p class="respondent ">Respondent<br><span id="details_respondent"></span></p>
-		<p class="io ">Investigated by<br><span id="details_io"></span></p>
-		<p class="assigned_to ">Assigned to<br><span id="details_assigned_to"></span></p>
-		<p class="assigned_to ">Next hearing<br><span id="details_next_hearing"></span></p>
-		<p class="text" id="details_prayer"></p>
+		<br>
+		<p class="text">Petitioner<br><span id="details_petitioner"></span></p>
+		<p class="text">Respondent<br><span id="details_respondent"></span></p>
+		<p class="text">Investigated by<br><span id="details_io"></span></p>
+		<p class="text">Assigned to<br><span id="details_assigned_to"></span></p>
+		<p class="text">Next hearing<br><span id="details_next_hearing"></span></p>
+		<p class="text">Regular Case Number<br><span id="details_rc_case_num"></span></p>
+		<p class="text">Prayer<br><span id="details_prayer"></span></p>
 		<div id="historyarea">
 			<!--
 			<div class="activity">
@@ -315,7 +323,6 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	</div>
 
 	<p class="actions aligncenter">
-		<input type="file" name="attachment" id="details_attachment"></input>
 		<button class="primary" id="btn_attach">Attach</button>
 		<button class="primary" id="btn_addproceeding">Add Proceeding</button>
 		<button class="primary" id="btn_addcomment">Comment</button>
@@ -450,6 +457,13 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 				Before<br><input type="text" id="advanced_hearingbefore"></input>
 			</div>
 		</div>
+
+		<h3>Other</h3>
+		<div id="filter_rc">
+			<p>RC No.<br><input type="text" id="advanced_rc"></input></p>
+		</div>
+
+
 	</div>
 	<div class="actions aligncenter">
 		<button class="primary" id="advanced_search">Advanced Search</button>
@@ -499,7 +513,15 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<p>Assign to<br><input type="text" class="fullwidth" id="assign_to"></input></p>
 	<p>Remarks<br><textarea class="fullwidth" id="assign_comment"></textarea></p>
 	<p class="alignright"><button class="primary" id="btn_save_assignment">Save</button></p>
-</div> <!-- dlg_addcomment -->
+</div> <!-- dlg_assign -->
+
+<div class="dialog" id="dlg_attach">
+	<p>Type<br><select id="attach_type"></select></p>
+	<p><input type="file" name="attachment" id="attach_file"></input></p>
+	<p>Remarks<br><textarea class="fullwidth" id="attach_comment"></textarea></p>
+	<p class="alignright"><button class="primary" id="attach_save">Save</button></p>
+</div> <!-- dlg_attach -->
+
 
 <div class="dialog" id="dlg_addreminder">
 	<p>Remind On<br><input type="text" class="fullwidth" id="reminder_on"></input></p>

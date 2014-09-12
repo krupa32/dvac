@@ -13,7 +13,27 @@
 		$db->close();
 		return $ret;
 	}
-	
+
+	function get_rc_case_num($id)
+	{
+		global $db_host, $db_user, $db_password, $db_name;
+
+		error_log("get_rc_case_num: id=$id");
+		$ret = "";
+
+		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
+		$q = "select case_num from regularcases where id=$id";
+		$res = $db->query($q);
+		if ($res && $res->num_rows > 0) {
+			$row = $res->fetch_assoc();
+			$ret = $row["case_num"];
+			$res->close();
+		}
+
+		$db->close();
+		return $ret;
+	}
+
 	function relative_time($timestamp)
 	{
 		$now = new DateTime(date(DATE_W3C));
@@ -21,7 +41,9 @@
 		$dt = new DateTime($timestamp);
 		$diff = $dt->diff($now);
 	
-		if ($diff->d)
+		if ($diff->m)
+			$ret = $diff->format("%d months ago");
+		else if ($diff->d)
 			$ret = $diff->format("%d days ago");
 		else if ($diff->h)
 			$ret = $diff->format("%h hrs ago");

@@ -21,7 +21,10 @@
 
 	/* add an attachment record in db */
 	$name = $_FILES["attachment"]["name"];
-	$q = "insert into attachments values(null, '$name')";
+	$type = $_POST["type"];
+	$comment = $db->real_escape_string($_POST["comment"]);
+	error_log("original:${_POST['comment']}, escaped:$comment");
+	$q = "insert into attachments values(null, '$name', $type, '$comment')";
 	if (!$db->query($q)) {
 		$ret = $db->error;
 		goto out;

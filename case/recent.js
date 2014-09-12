@@ -85,7 +85,8 @@ var recent = {
 		var divcase = $('<div class="case"></div>').appendTo('#recentarea');
 		if (c.recent)
 			divcase.append('<div class="recenttag">Recent</div>');
-		divcase.append('<p class="casenum"><a class="caselink" href="' + c.id + '">' + c.case_num + '</a></p>');
+
+		divcase.append('<p class="casenum"><a class="caselink ' + c.status + '" href="' + c.id + '">' + c.case_num + '</a></p>');
 		var extra = '<p class="extra">Petitioner ' + c.petitioner + ', Respondent ' + c.respondent + '<br>';
 		extra += 'Next hearing ' + c.next_hearing;
 		extra += '</p>';
@@ -182,8 +183,9 @@ var recent = {
 	add_attachment_activity: function(divact, a) {
 		var div = $('<div class="activity"></div>').appendTo(divact);
 		div.append('<p class="title floatright">' + a.ts + '</p>');
-		div.append('<p class="title">' + a.doer + ' added an attachment ' + 
+		div.append('<p class="title">' + a.doer + ' added ' + a.details.type + ' attachment ' + 
 				'<a href="' + a.details.link + '" target="_blank">' + a.details.name + '</a></p>');
+		div.append('<p class="text">' + a.details.comment + '</p>');
 	}
 
 

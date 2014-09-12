@@ -14,6 +14,8 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
+	$comment = $db->real_escape_string($_POST["comment"]);
+
 	$q = "insert into reminders values(null, $user_id, $case_id, $on, '$comment')";
 	if (!$db->query($q)) {
 		$ret = $db->error;

@@ -7,7 +7,8 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-	$q = "insert into comments values(null, ${_POST['case_id']}, '${_POST['comment']}')";
+	$comment = $db->real_escape_string($_POST["comment"]);
+	$q = "insert into comments values(null, ${_POST['case_id']}, '$comment')";
 
 	if (!$db->query($q)) {
 		$ret = $db->error;

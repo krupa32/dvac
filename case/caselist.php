@@ -28,13 +28,15 @@ out1:
 		 * If it is ALWAYS joined with proceedings, then only cases WITH proceedings are queried.
 		 */
 		if ($param["hearingafter"] || $param["hearingbefore"]) {
-			$q = "select distinct cases.id,case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
-				"from cases inner join users on investigator=users.id left join proceedings on proceedings.case_id=cases.id " .
+			$q = "select distinct cases.id,cases.case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
+				"from cases inner join users on investigator=users.id " . 
+				    "left join proceedings on proceedings.case_id=cases.id " .
+				    "left join regularcases on regularcases.id=cases.regularcase " .
 				"where true ";
 		} else {
-			$q = "select distinct cases.id,case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
-				"from cases,users " .
-				"where investigator=users.id ";
+			$q = "select distinct cases.id,cases.case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
+				"from cases,users,regularcases " .
+				"where investigator=users.id and cases.regularcase=regularcases.id ";
 		}
 
 		if ($param["status"] && count($param["status"]) > 0) {
@@ -73,6 +75,9 @@ out1:
 
 		if ($param["assigned_to"])
 			$q = $q . " and assigned_to=" . $param["assigned_to"];
+
+		if ($param["rc"])
+			$q = $q . " and regularcases.case_num like '%" . $param["rc"] . "%'";
 
 		// only hearingafter
 		if ($param["hearingafter"] && !$param["hearingbefore"]) {

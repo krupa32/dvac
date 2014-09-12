@@ -16,6 +16,7 @@
 
 	$ret["investigator_id"] = $ret["investigator"];
 	$ret["investigator"] = get_name_grade($ret["investigator"]);
+	$ret["rc_case_num"] = get_rc_case_num($ret["regularcase"]);
 
 	if ($ret["assigned_to"] != 0)
 		$ret["assigned_to"] = get_name_grade($ret["assigned_to"]);
