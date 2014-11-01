@@ -1,11 +1,14 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	session_start();
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+	$case_id = $_POST["case_id"];
 
 	$q = "update cases set assigned_to=${_POST['target']} where id=${_POST['case_id']}";
 	if (!$db->query($q)) {
@@ -28,6 +31,11 @@
 		$ret = $db->error;
 		goto out;
 	}
+
+	/* send sms if required */
+	$assigned = get_name_grade($_POST["target"]);
+	$sms = "assigned case to $assigned";
+	check_and_send_sms("ASSIGN", $_SESSION["user_id"], $case_id, $sms);
 
 	$ret = "ok";
 

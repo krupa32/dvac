@@ -162,4 +162,27 @@
 	 * and update all cases, without applying any team filter.
 	 */
 	$reporting_officer_ids = array(10);
+
+	/* sms_list
+	 * for each activity, list of users to whom sms will be sent.
+	 * the possible values for the list (SMS_xxx) are also set below.
+	 *
+	 * note that this list is only for cases pending in court.
+	 * for cases pending with dvac, if list value is not SMS_NONE,
+	 * sms will always be sent to all ancestors.
+	 */
+	$SMS_NONE = 0;
+	$SMS_SELF_PARENT = 1;
+	$SMS_ANCESTORS = 2;
+	$sms_list = array(
+			"ADDCASE"		=> $SMS_ANCESTORS,
+			"UPDATECASE"		=> $SMS_NONE,
+			"ADDPROCEEDING"		=> $SMS_SELF_PARENT,
+			"ADDCOMMENT"		=> $SMS_SELF_PARENT,
+			"ASSIGN"		=> $SMS_SELF_PARENT,
+			"CHANGESTATUS"		=> $SMS_NONE,
+			"CLOSE"			=> $SMS_NONE,
+			"ATTACH"		=> $SMS_NONE
+			);
+
 ?>

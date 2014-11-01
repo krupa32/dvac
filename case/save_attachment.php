@@ -1,11 +1,14 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	session_start();
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+	$case_id = $_POST["case_id"];
 
 	/* check if uploads path exists */
 	$upload_path = $_SERVER["DOCUMENT_ROOT"] . $upload_dir;
@@ -49,6 +52,9 @@
 		goto out;
 	}
 
+	/* send sms if required */
+	$sms = "added an attachment";
+	check_and_send_sms("ATTACH", $_SESSION["user_id"], $case_id, $sms);
 
 	$ret = "ok";
 

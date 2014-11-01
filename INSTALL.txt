@@ -1,0 +1,54 @@
+
+Packages to be installed
+------------------------
+make
+libmysqlclient-dev
+minicom
+
+Files to be edited
+-------------------
+/etc/apache2/sites-available/000-default.conf
+	Change DocumentRoot to /var/www/dvac
+	This will require restart of apache server
+
+/etc/php5/apache2/php.ini
+	upload_max_filesize = 64M
+	post_max_size = 64M
+
+Installation - Software
+------------------------
+Copy the source directory to /var/www/dvac
+
+# mysql -u root -p < initdb.sql
+# mkdir /var/www/dvac/case/uploads
+# chmod a+w /var/www/dvac/case/uploads
+# crontab /var/www/dvac/backup/backup.crontab
+
+
+Installation - SMS Service
+--------------------------
+# chmod 666 /dev/ttyS0
+# minicom -s
+	Select serial port setup and set device as /dev/ttyS0, baud 115200,
+        no flow control.
+In minicom type,
+        A                      [this starts communication]
+        AT<enter>              [check for OK]
+        AT+CPIN=nnnn<enter>    [this sets the SIM pin to 'nnnn']
+After all this, the green LED in the GSM board should blink with
+ON and 3 seconds OFF.
+
+
+
+Restoration - Software
+----------------------
+Insert pen drive
+Note down new disk name [sdb or sdc]
+# mount /dev/sdb1 /mnt/tmp
+# cd /tmp
+# tar -xzf /mnt/tmp/highcourtbackup/2014-10-25.tgz
+# cp ./root/highcourtbackup/* /var/www/dvac/
+# cd /var/www/dvac
+# mysql -u root -p < db.sql
+
+

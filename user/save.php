@@ -7,7 +7,8 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 	$q = "update users set name='${_POST['name']}', grade=${_POST['grade']}, " .
-		"reporting_to=${_POST['reporting_to']}, location=${_POST['location']} where id=${_SESSION['user_id']}";
+		"reporting_to=${_POST['reporting_to']}, location=${_POST['location']}, " .
+	        "phone='${_POST['phone']}' where id=${_SESSION['user_id']}";
 
 	if (!$db->query($q))
 		$ret = $db->error;

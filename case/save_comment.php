@@ -1,9 +1,12 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	session_start();
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
+
+	$case_id = $_POST['case_id'];
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
@@ -23,6 +26,12 @@
 		$ret = $db->error;
 		goto out;
 	}
+
+	$activity_id = $db->insert_id;
+
+	/* send sms if required */
+	$sms = "added a comment: $comment";
+	check_and_send_sms("ADDCOMMENT", $_SESSION["user_id"], $case_id, $sms);
 
 	$ret = "ok";
 

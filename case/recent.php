@@ -120,6 +120,7 @@
 	/* form a list of caseids from the query result.
 	 * filter only cases investigated by team.
 	 */
+	$caseids = array();
 	while ($row = $res->fetch_assoc()) {
 		if (in_array($row["investigator"], $team_ids))
 			$caseids[] = $row["case_id"];

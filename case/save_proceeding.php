@@ -1,5 +1,6 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	session_start();
 	if (!$_SESSION["user_id"])
@@ -16,6 +17,7 @@
 	if ($_POST["hall"] == "")
 		$_POST["hall"] = 0;
 
+	$case_id = $_POST["case_id"];
 	$judge = $db->real_escape_string($_POST["judge"]);
 	$comment = $db->real_escape_string($_POST["comment"]);
 	
@@ -43,6 +45,10 @@
 		$ret = $db->error;
 		goto out;
 	}
+
+	/* send sms if required */
+	$sms = "added a proceeding: $comment";
+	check_and_send_sms("ADDPROCEEDING", $_SESSION["user_id"], $case_id, $sms);
 
 	$ret = "ok";
 

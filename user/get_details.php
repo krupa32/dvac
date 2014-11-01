@@ -6,7 +6,7 @@
 	$id = $_SESSION["user_id"];
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
-	$q = "select name,grade,reporting_to,location from users where id=$id";
+	$q = "select name,grade,reporting_to,location,phone from users where id=$id";
 	$res = $db->query($q);
 	$row = $res->fetch_assoc();
 	$ret = $row;

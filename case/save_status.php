@@ -1,5 +1,6 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	session_start();
 	if (!$_SESSION["user_id"])
@@ -23,6 +24,10 @@
 		$ret = $db->error . "query=" . $q;
 		goto out;
 	}
+
+	/* send sms if required */
+	$sms = "changed case status";
+	check_and_send_sms("CHANGESTATUS", $_SESSION["user_id"], $case_id, $sms);
 
 	$ret = "ok";
 

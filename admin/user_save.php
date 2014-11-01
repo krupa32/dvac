@@ -17,7 +17,7 @@
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 	if ($_POST["action"] == "new")
-		$q = "insert into users values(null, '${_POST['login']}', '${_POST['name']}', ${_POST['grade']}, '$password', $rep_id, $location, 0)";
+		$q = "insert into users values(null, '${_POST['login']}', '${_POST['name']}', ${_POST['grade']}, '$password', $rep_id, $location, 0, null)";
 	else if ($_POST["action"] == "update")
 		$q = "update users set login='${_POST["login"]}', name='${_POST['name']}', grade=${_POST['grade']} where id=${_POST['id']}";
 	else

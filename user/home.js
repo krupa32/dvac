@@ -6,12 +6,15 @@ var home = {
 			utils.dynamic_combo('#user_location', '/common/get_locations.php', function(){
 				/* get user details and fill */
 				$.get('/user/get_details.php', null, function(data){
+					//console.log('get_details: recv: ' + data);
 					var resp = JSON.parse(data);
 					$('#user_name').val(resp.name);
 					$('#user_grade').val(resp.grade);
-					$('#user_rep_officer').val(resp.reporting_to_name);
 					$('#user_rep_officer').data('id', resp.reporting_to);
+					if (resp.reporting_to != '0')
+						$('#user_rep_officer').val(resp.reporting_to_name);
 					$('#user_location').val(resp.location);
+					$('#user_phone').val(resp.phone);
 				});
 			});
 		});
@@ -35,6 +38,7 @@ var home = {
 		param.grade = $('#user_grade').val();
 		param.reporting_to = $('#user_rep_officer').data('id');
 		param.location = $('#user_location').val();
+		param.phone = $('#user_phone').val();
 		$.post('/user/save.php', param, function(data){
 			//console.log('save recv:' + data);
 			var resp = JSON.parse(data);

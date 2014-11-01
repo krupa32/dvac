@@ -1,5 +1,6 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	/* if a regular case num is given, try to get its id.
 	 * if it doesnt exist in db, add it and get its id.
@@ -60,9 +61,13 @@
 	if ($_POST["id"]) {
 		$case_id = intval($_POST["id"]);
 		$type = $activities["UPDATECASE"];
+		$activity = "UPDATECASE";
+		$sms = "updated case details";
 	} else {
 		$case_id = $db->insert_id;
 		$type = $activities["ADDCASE"];
+		$activity = "ADDCASE";
+		$sms = "added new case";
 	}
 
 	$q = "insert into activities values($type, ${_SESSION['user_id']}, $case_id, $case_id, null)";
@@ -70,6 +75,9 @@
 		$ret = $db->error;
 		goto out;
 	}
+
+	/* send sms if required */
+	check_and_send_sms($activity, $_SESSION["user_id"], $case_id, $sms);
 
 	$ret = $case_id;
 

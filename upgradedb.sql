@@ -8,8 +8,11 @@ use dvac;
 -- alter table users add last_login int;
 
 -- for r8
-create table regularcases(id int primary key auto_increment, case_num text);
-alter table cases add regularcase int;
-alter table attachments add type tinyint;
-alter table attachments add comment text;
+-- create table regularcases(id int primary key auto_increment, case_num text);
+-- alter table cases add regularcase int;
+-- alter table attachments add type tinyint;
+-- alter table attachments add comment text;
 
+-- for r9
+create table smsqueue(id int primary key auto_increment, phone varchar(16), sms text);
+alter table users add phone varchar(16);

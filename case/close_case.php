@@ -1,5 +1,6 @@
 <?php
 	include "../common/config.php";
+	include "../common/utils.php";
 
 	session_start();
 	if (!$_SESSION["user_id"])
@@ -21,6 +22,10 @@
 		$ret = $db->error;
 		goto out;
 	}
+
+	/* send sms if required */
+	$sms = "closed case";
+	check_and_send_sms("CLOSE", $_SESSION["user_id"], $case_id, $sms);
 
 	$ret = "ok";
 
