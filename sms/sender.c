@@ -9,39 +9,57 @@
  * 	- removes the record if successfully sent
  */
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <sys/file.h>
 #include <errno.h>
 #include <termios.h>
 #include <mysql/mysql.h>
 
+#define SERIAL_INTERVAL		(100*1000)	/* 100 ms */
+
 static int lock_fd;
 
-/* This function sends the given command and waits for a response.
- * If cmnd is NULL, it will skip writing and just read from the modem.
- * If expected is NULL, then comparing is not done.
- * Note that both can be NULL ;)
+/* This function sends the given command and waits for a response
+ * for a maximum of 'timeout' millisec.
  * If the response contains string pointer by 'expected', it returns 0.
  * Else returns -1
  */
-int send_command(int fd, char *cmnd, char *expected)
+int send_command(int fd, char *cmnd, char *expected, int timeout)
 {
-	int len;
-	char buf[256];
+	int i, ret = -1, len = 0, nbytes_read = 0, iterations;
+	char buf[256], tmp[256], cmndbuf[256];
 
-	if (cmnd)
-		write(fd, cmnd, strlen(cmnd));
+	/* convert timeout to msec */
+	timeout *= 1000;
 
-	len = read(fd, buf, 256);
-	buf[len] = 0;
-	//printf("recv %d bytes:[%s]\n", len, buf);
+	/* SMS supports only 160 chars max */
+	memset(tmp, 0, 256);
+	strncpy(tmp, cmnd, 160);
+	sprintf(cmndbuf, "%s\x1A", tmp);
 
-	if (expected && !strstr(buf, expected)) {
-		printf("error sending command:%s\n", cmnd ? cmnd : "NULL");
-		return -1;
+	//printf("sending command [%d bytes]:\n%s\n", strlen(cmndbuf), cmndbuf);
+	write(fd, cmndbuf, strlen(cmndbuf));
+
+	for (i = 1; i <= timeout; i += SERIAL_INTERVAL) {
+
+		usleep(SERIAL_INTERVAL);
+
+		nbytes_read = read(fd, &buf[len], 256);
+		len += nbytes_read;
+		buf[len] = 0;
+
+		if (strstr(buf, expected)) {
+			//printf("recv %d bytes in %d ms:\n[%s]\n", len, i/1000, buf);
+			ret = 0;
+			break;
+		}
 	}
 
-	return 0;
+	if (ret != 0)
+		printf("error sending command:[%s]\nrecv:[%s]\n", cmnd, buf);
+
+	return ret;
 }
 
 
@@ -52,14 +70,10 @@ int send_sms(int fd, char *phone, char *sms)
 	printf("sending sms:%s,%s\n", phone, sms);
 
 	sprintf(buf, "AT+CMGS=\"%s\"\r", phone);
-	send_command(fd, buf, ">");
+	if (send_command(fd, buf, ">", 500) < 0)
+		return -1;
 
-	sprintf(buf, "%s\x1A", sms);
-	if (send_command(fd, buf, "CMGS") < 0)
-		return -1;
-	if (send_command(fd, NULL, NULL) < 0)
-		return -1;
-	if (send_command(fd, NULL, "OK") < 0)
+	if (send_command(fd, sms, "OK", 5000) < 0)
 		return -1;
 
 	return 0;
@@ -78,8 +92,8 @@ int process_sms(int fd)
 		goto out1;
 	}
 
-	if (mysql_real_connect(db, "localhost", "root", "fossil27", "dvac", 0, NULL, 0) == NULL) {
-		printf("error connecting\n");
+	if (mysql_real_connect(db, "localhost", "root", "123456", "dvac", 0, NULL, 0) == NULL) {
+		printf("error connecting to db\n");
 		goto out2;
 	}
 
@@ -102,8 +116,14 @@ int process_sms(int fd)
 
 	while (row = mysql_fetch_row(res)) {
 
-		if (send_sms(fd, row[1], row[2]) < 0)
-			break;
+		if (send_sms(fd, row[1], row[2]) < 0) {
+			/* Some problem in sending sms. It could be due to
+			 * invalid mobile number, busy network, anything.
+			 * So we skip to the next sms in Q. The failed sms
+			 * continues to sit in the DB.
+			 */
+			continue;
+		}
 
 		sprintf(q, "delete from smsqueue where id=%s", row[0]);
 		if (mysql_query(db, q) != 0)
@@ -154,19 +174,20 @@ int init_modem(int fd)
 
 	/* set baud rate */
 	tcgetattr(fd, &opt);
-	cfsetispeed(&opt, B115200);
+	cfsetispeed(&opt, B9600);
+	cfmakeraw(&opt);
 	tcsetattr(fd, TCSANOW, &opt);
 
 	/* disable modem echo */
-	if (send_command(fd, "ATE0\r", "OK") < 0)
+	if (send_command(fd, "ATE0\r", "OK", 500) < 0)
 		return -1;
 
 	/* send at command */
-	if (send_command(fd, "AT\r", "OK") < 0)
+	if (send_command(fd, "AT\r", "OK", 500) < 0)
 		return -1;
 
 	/* enable text mode for sms */
-	if (send_command(fd, "AT+CMGF=1\r", "OK") < 0)
+	if (send_command(fd, "AT+CMGF=1\r", "OK", 500) < 0)
 		return -1;
 
 	return 0;
@@ -185,7 +206,7 @@ int main()
 	}
 
 	/* open serial port to communicate with modem */
-	if ((fd = open("/dev/ttyS0", O_RDWR)) < 0) {
+	if ((fd = open("/dev/ttyUSB0", O_RDWR)) < 0) {
 		printf("error opening serial port\n");
 		goto out2;
 	}
