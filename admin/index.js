@@ -38,6 +38,10 @@ var app = {
 			app.move_cases();
 		});
 
+		$('button#remove_user').click(function(){
+			app.user_remove();
+		});
+
 		app.user_list_update();
 
 	},
@@ -72,6 +76,22 @@ var app = {
 		param.name = $('#name').val();
 		param.grade = $('#grade').val();
 		$.post('/admin/user_save.php', param, function(data){
+			//console.log('user_save recv:' + data);
+			var resp = JSON.parse(data);
+			if (resp != 'ok') {
+				alert('Error:' + data);
+				return;
+			}
+			$('div#user_edit').dialog('close');
+			app.user_list_update();
+		});
+	},
+
+	user_remove: function() {
+		var param = {};
+		param.action = 'remove';
+		param.id = $('#user_edit').data('id');
+		$.post('/admin/user_remove.php', param, function(data){
 			//console.log('user_save recv:' + data);
 			var resp = JSON.parse(data);
 			if (resp != 'ok') {

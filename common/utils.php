@@ -200,7 +200,10 @@ out:
 
 	function check_and_send_sms($activity, $doer_id, $case_id, $sms)
 	{
-		global $sms_list, $SMS_NONE, $SMS_SELF_PARENT, $SMS_ANCESTORS;
+		global $sms_list, $SMS_NONE, $SMS_SELF_PARENT, $SMS_ANCESTORS, $sms_enabled;
+
+		if (!$sms_enabled)
+			return;
 
 		if ($sms_list[$activity] == $SMS_NONE)
 	       		return;
@@ -209,7 +212,8 @@ out:
 		$case_num = $details["case_num"];
 		$status = $details["status"];
 
-		$doer = get_name_grade($_SESSION['user_id']);
+		if ($doer_id)
+			$doer = get_name_grade($doer_id);
 		$sms = "$case_num: $doer $sms";
 		$to_list = get_sms_to_list($activity, $case_id);
 		foreach($to_list as $to_id) {

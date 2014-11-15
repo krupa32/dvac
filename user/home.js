@@ -27,6 +27,11 @@ var home = {
 			}
 		});
 
+		$('#user_rep_officer').blur(function(){
+			if ($(this).val() == '')
+				$(this).data('id', 0);
+		});
+
 		$('#btn_save').click(home.save);
 		$('#btn_changepassword').click(home.change_password);
 

@@ -31,6 +31,11 @@
 	<tr><td>&nbsp;</td><td>Move all cases investigated by/assigned to this user to:</td></tr>
 	<tr><td>&nbsp;</td><td><input type="text" id="to"></input></td></tr>
 	<tr><td>&nbsp;</td><td><button id="move_cases">Move Cases</button></td></tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>Remove this user from the organization tree.
+		Before removing, please ensure that no other user is reporting to this user.<br>
+		[Note: The user will still remain in the database, but will only be removed from the tree]</td></tr>
+	<tr><td>&nbsp;</td><td><button id="remove_user">Remove User</button></td></tr>
 
 </table>
 </div> <!-- #edit_user -->
