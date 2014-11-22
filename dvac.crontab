@@ -3,4 +3,4 @@
 0 0 * * * /var/www/dvac/backup/backup.sh
 
 # proceedings checker at 10:00 AM everyday
-* 10 * * *	php /var/www/dvac/sms/proceedings_lookahead.php > /tmp/proceedings.log
+0 10 * * *	php /var/www/dvac/sms/proceedings_lookahead.php > /tmp/proceedings.log
