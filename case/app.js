@@ -12,6 +12,16 @@ var app = {
 			alert('Error (' + opt.url + '): ' + xhr.status + ' ' + xhr.statusText);
 			$('.ajaxstatus').hide();
 		});
+
+		/* when any button is clicked, disable it immediately
+		 * for few secs. this will prevent unintentional multiple
+		 * clicks caused by old mouses.
+		 */
+		$('button').click(function(){
+			var b = this;
+			$(b).attr('disabled', true);
+			setTimeout(function(){ $(b).attr('disabled', false); }, 2000);
+		});
 	},
 	
 	popstate: function(state) {

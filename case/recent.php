@@ -117,13 +117,25 @@
 
 	$res = $db->query($q);
 
-	/* form a list of caseids from the query result.
-	 * filter only cases investigated by team.
-	 */
-	$caseids = array();
+	/* form a list of cases from the query result. */
+	$allcases = array();
 	while ($row = $res->fetch_assoc()) {
-		if (in_array($row["investigator"], $team_ids))
-			$caseids[] = $row["case_id"];
+		$allcases[] = $row;
+	}
+
+	/* filter only cases investigated by team. */
+	$caseids = array();
+	foreach ($allcases as $case) {
+
+		if (in_array($_SESSION["user_id"], $reporting_officer_ids)) {
+			/* The user is a reporting officer.
+			 * All cases are visible to reporting officers.
+			 * So no filter.
+			 */
+			$caseids[] = $case["case_id"];
+
+		} else if (in_array($case["investigator"], $team_ids))
+			$caseids[] = $case["case_id"];
 	}
 
 	/* The query for 'recent' may return duplicate caseids.

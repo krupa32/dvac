@@ -1,7 +1,7 @@
 <?php
 
-	include "/home/krupa/work/dvac/common/config.php";
-	include "/home/krupa/work/dvac/common/utils.php";
+	include "/var/www/dvac/common/config.php";
+	include "/var/www/dvac/common/utils.php";
 
 	print "Checking for proceedings\n";
 
