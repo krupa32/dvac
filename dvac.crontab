@@ -4,3 +4,6 @@
 
 # proceedings checker at 10:00 AM everyday
 0 10 * * *	php /var/www/dvac/sms/proceedings_lookahead.php > /tmp/proceedings.log
+
+# reminders checker at 10:00 AM everyday
+0 10 * * *	php /var/www/dvac/sms/reminders_checker.php > /tmp/reminders.log

@@ -32,15 +32,6 @@ var editcase = {
 			}
 		});
 
-		$('#editcase_rc').autocomplete({
-			source: '/common/get_rc_autocomplete.php',
-			select: function(event,ui) {
-				//$('#editcase_rc').val(ui.item.label).data('id', ui.item.value);
-				$('#editcase_rc').val(ui.item.label);
-				return false;
-			}
-		});
-
 
 		$('#editcase_next_hearing').datepicker({ dateFormat:'M d, yy' });
 
@@ -74,18 +65,16 @@ var editcase = {
 			//console.log('editcase.show recv:' + data);
 			var resp = JSON.parse(data);
 			$('#editcase_category').val(resp.category);
+			$('#editcase_court').val(resp.court);
 			$('#editcase_case_num').text(resp.case_num);
 			$('#editcase_investigator').val(resp.investigator).data('id', resp.investigator_id);
-			$('#editcase_rc').val(resp.rc_case_num);
+			$('#editcase_tag').val(resp.tag);
 			$('#editcase_petitioner').val(resp.petitioner);
 			$('#editcase_respondent').val(resp.respondent);
 			$('#editcase_prayer').val(resp.prayer);
 
 			if (resp.next_hearing != 'None')
 				$('#editcase_next_hearing').val(resp.next_hearing);
-
-			if (resp.case_num.indexOf('(MD)') != -1)
-				$('#editcase_court').val(2);
 
 			//  parse the case number and year from case_num
 			var num_index = resp.case_num.lastIndexOf(".") + 1;
@@ -112,8 +101,9 @@ var editcase = {
 		param.id = $('#page_editcase').data('id');
 		param.case_num = $('#editcase_case_num').text();
 		param.category = $('#editcase_category').val();
+		param.court = $('#editcase_court').val();
 		param.investigator = $('#editcase_investigator').data('id');
-		param.rc_case_num = $('#editcase_rc').val().trim();
+		param.tag = $('#editcase_tag').val().trim();
 		param.petitioner = $('#editcase_petitioner').val();
 		param.respondent = $('#editcase_respondent').val();
 		param.prayer = $('#editcase_prayer').val();
@@ -144,7 +134,7 @@ var editcase = {
 		$('#editcase_year').val('Year');
 		editcase.update_case_num();
 		$('#editcase_investigator').val('').data('id', null);
-		$('#editcase_rc').val('');
+		$('#editcase_tag').val('');
 		$('#editcase_petitioner, #editcase_respondent, #editcase_prayer').val('');
 		$('#editcase_next_hearing').val('');
 	},

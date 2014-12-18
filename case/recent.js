@@ -83,8 +83,12 @@ var recent = {
 			c.respondent = c.respondent.substr(0, 60) + '...';
 
 		var divcase = $('<div class="case"></div>').appendTo('#recentarea');
+
 		if (c.recent)
 			divcase.append('<div class="recenttag">Recent</div>');
+
+		if (c.addcase)
+			divcase.append('<div class="newcasetag">New</div>');
 
 		divcase.append('<p class="casenum"><a class="caselink ' + c.status + '" href="' + c.id + '">' + c.case_num + '</a></p>');
 		var extra = '<p class="extra">Petitioner ' + c.petitioner + ', Respondent ' + c.respondent + '<br>';

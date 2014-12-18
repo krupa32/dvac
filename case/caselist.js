@@ -50,8 +50,9 @@ var caselist = {
 			$('.ajaxstatus').text('Done').fadeOut();
 
 			if (cases.length == 0) {
-				$('#caselistarea').append('<div class="aligncenter cl_data">No more items found</div>');
+				$('#caselistarea').append('<div class="aligncenter cl_data">No items found</div>');
 				$('#caselist_more').hide();
+				$('#total').text('Showing ' + caselist.start_item + ' of ' + resp.total);
 				return;
 			}
 
@@ -66,8 +67,7 @@ var caselist = {
 			for (i in cases)
 				caselist.add_case(cases[i]);
 
-			caselist.start_item += cases.length;
-
+			$('#total').text('Showing ' + caselist.start_item + ' of ' + resp.total);
 			$('#page_caselist a.caselink').click(function(e){
 				details.show($(this).attr('href'), true);
 				e.preventDefault();
@@ -82,6 +82,7 @@ var caselist = {
 			c.petitioner = c.petitioner.substr(0, 60) + '...';
 
 		var div = $('<div class="cl_data"></div>').appendTo('#caselistarea');
+		div.append('<div class="cl_serial_no gray">' + (caselist.start_item + 1) + '</div>');
 		div.append('<div class="cl_details"><a class="caselink" href="' + c.id + '">' + c.case_num + '</a></div>');
 		div.append('<div class="cl_next_hearing">' + c.next_hearing + '</div>');
 		div.append('<div class="cl_investigator">' + c.investigator + '</div>');
@@ -93,6 +94,8 @@ var caselist = {
 			div.find('a').addClass('red');
 		else
 			div.find('a').addClass('gray');
+
+		caselist.start_item++;
 	},
 
 

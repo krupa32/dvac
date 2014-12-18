@@ -164,6 +164,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 <div class="page" id="page_caselist">
 	<div class="cl_header">
+		<div class="cl_serial_no">No.</div>
 		<div class="cl_details">Case Details</div>
 		<div class="cl_next_hearing">Next Hearing</div>
 		<div class="cl_investigator">Investigated By</div>
@@ -191,7 +192,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		</div>
 		-->
 	</div> <!-- caselistarea -->
-	
+
+	<div class="aligncenter" id="total">Showing 20 of 200</div>	
 	<div class="aligncenter action"><button class="primary" id="caselist_more">Show More</button></div>
 
 </div> <!-- page_caselist -->
@@ -216,8 +218,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<td><p><span id="editcase_case_num"></span></p>
 	</tr>
 	<tr>
-		<td class="field"><p>Regular Case Number</p></td>
-		<td><p><input type="text" class="fullwidth" id="editcase_rc"></input></p>
+		<td class="field"><p>Tag (RCNo, CCNo etc)</p></td>
+		<td><p><input type="text" class="fullwidth" id="editcase_tag"></input></p>
 	</tr>
 	<tr>
 		<td class="field"><p>Investigating Officer</p></td>
@@ -291,7 +293,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<p class="text">Investigated by<br><span id="details_io"></span></p>
 		<p class="text">Assigned to<br><span id="details_assigned_to"></span></p>
 		<p class="text">Next hearing<br><span id="details_next_hearing"></span></p>
-		<p class="text">Regular Case Number<br><span id="details_rc_case_num"></span></p>
+		<p class="text">Tag<br><span id="details_tag"></span></p>
 		<p class="text">Prayer<br><span id="details_prayer"></span></p>
 		<div id="historyarea">
 			<!--
@@ -438,6 +440,15 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			-->
 		</div>
 
+		<h3>Court</h3>
+		<div id="filter_court">
+			<!--
+			<label><input type="checkbox"></input> Madras</label>
+			<label><input type="checkbox"></input> Madurai</label>
+			<label><input type="checkbox"></input> Supreme Court</label>
+			-->
+		</div>
+
 		<h3>Officer</h3>
 		<div id="filter_officer">
 			<div id="filter_investigator">
@@ -459,8 +470,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		</div>
 
 		<h3>Other</h3>
-		<div id="filter_rc">
-			<p>RC No.<br><input type="text" id="advanced_rc"></input></p>
+		<div id="filter_tag">
+			<p>Tag (RCNo, CCNo, etc)<br><input type="text" id="advanced_tag"></input></p>
 		</div>
 
 

@@ -50,8 +50,8 @@ var details = {
 			$('.ajaxstatus').text('Done').fadeOut();
 			var resp = JSON.parse(data);
 
-			if (resp.rc_case_num == '')
-				resp.rc_case_num = 'None';
+			if (resp.tag == '')
+				resp.tag = 'None';
 
 			$('#details_case_num').text(resp.case_num);
 			$('#details_status').text(resp.status);
@@ -61,7 +61,7 @@ var details = {
 			$('#details_respondent').text(resp.respondent);
 			$('#details_prayer').text(resp.prayer);
 			$('#details_next_hearing').text(resp.next_hearing);
-			$('#details_rc_case_num').text(resp.rc_case_num);
+			$('#details_tag').text(resp.tag);
 
 			// set back color of status
 			$('#details_status').removeClass('red green gray');

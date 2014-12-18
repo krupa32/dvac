@@ -163,6 +163,7 @@
 
 		$case["status"] = array_search($case["status"], $statuses);
 		$case["recent"] = false;
+		$case["addcase"] = false;
 		$case["activities"] = array();
 
 		/* get recent activities for the case */
@@ -184,6 +185,11 @@
 			 */
 			if ($ts > $_SESSION["user_last_login"])
 				$case["recent"] = true;
+
+			/* if the activity is an ADDCASE, mark it */
+			if ($act["type"] == "ADDCASE")
+				$case["addcase"] = true;
+
 		}
 		$res2->close();
 

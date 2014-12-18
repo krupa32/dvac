@@ -14,5 +14,11 @@ use dvac;
 -- alter table attachments add comment text;
 
 -- for r9
-create table smsqueue(id int primary key auto_increment, phone varchar(16), sms text);
-alter table users add phone varchar(16);
+-- create table smsqueue(id int primary key auto_increment, phone varchar(16), sms text);
+-- alter table users add phone varchar(16);
+
+-- for r11
+alter table cases add court tinyint after category;
+update cases set court=1;
+update cases set court=2 where case_num like '%(MD)%';
+alter table cases add tag text;

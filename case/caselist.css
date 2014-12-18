@@ -9,9 +9,12 @@
 #page_caselist {
 	#caselistarea { background:#ddd; }
 	.cl_header { padding:0 1em 1em 1em; font-weight:normal; color:#000; .shadow(#999); }
-	.cl_data { padding:1em; border-bottom:solid 1px #666; border-top:solid 1px #fff; }
+	.cl_data { padding:1em; border-bottom:solid 1px #666; border-top:solid 1px #fff;
+		.gray { color:#666; }
+	}
 
-	.cl_details { display:inline-block; width:30%; text-align:left;  vertical-align:middle;
+	.cl_serial_no { display:inline-block; width:5%; vertical-align:middle; }
+	.cl_details { display:inline-block; width:25%; text-align:left;  vertical-align:middle;
 		.caselink { color:#00f; }
 		.green { color:#060; }
 		.red { color:#c00; }
@@ -22,4 +25,6 @@
 	.cl_location { display:inline-block; width:13%; vertical-align:middle; }
 
 	.extra { font-size:10px; color:#666; }
+	.action { margin:0.5em 0 0 0; }
+	#total { margin:2em 0 0 0; .shadow(#999); }
 }

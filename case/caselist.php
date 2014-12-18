@@ -31,12 +31,11 @@ out1:
 			$q = "select distinct cases.id,cases.case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
 				"from cases inner join users on investigator=users.id " . 
 				    "left join proceedings on proceedings.case_id=cases.id " .
-				    "left join regularcases on regularcases.id=cases.regularcase " .
 				"where true ";
 		} else {
 			$q = "select distinct cases.id,cases.case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
-				"from cases,users,regularcases " .
-				"where investigator=users.id and cases.regularcase=regularcases.id ";
+				"from cases,users " .
+				"where investigator=users.id ";
 		}
 
 		if ($param["status"] && count($param["status"]) > 0) {
@@ -69,6 +68,16 @@ out1:
 			$q = $q . " ) ";
 		}
 
+		if ($param["court"] && count($param["court"]) > 0) {
+			$q = $q . " and ( ";
+			foreach ($param["court"] as $key => $value) {
+				if ($key > 0)
+					$q = $q . " or ";
+				$q = $q . " court=$value ";
+			}
+			$q = $q . " ) ";
+		}
+
 
 		if ($param["investigator"])
 			$q = $q . " and investigator=" . $param["investigator"];
@@ -76,8 +85,8 @@ out1:
 		if ($param["assigned_to"])
 			$q = $q . " and assigned_to=" . $param["assigned_to"];
 
-		if ($param["rc"])
-			$q = $q . " and regularcases.case_num like '%" . $param["rc"] . "%'";
+		if ($param["tag"])
+			$q = $q . " and tag like '%" . $param["tag"] . "%'";
 
 		// only hearingafter
 		if ($param["hearingafter"] && !$param["hearingbefore"]) {
@@ -156,17 +165,17 @@ out1:
 	case "category":
 		$value = $_GET["value"];
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
-			"where category=${categories[$value]} and investigator=users.id ";
+			"where status!=${statuses['CLOSED']} and category=${categories[$value]} and investigator=users.id ";
 		break;
 	case "location":
 		$value = $_GET["value"];
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
-			"where location=${locations[$value]} and investigator=users.id ";
+			"where status!=${statuses['CLOSED']} and location=${locations[$value]} and investigator=users.id ";
 		break;
 	case "user":
 		$value = $_GET["value"];
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
-			"where users.id=$value and investigator=users.id ";
+			"where status!=${statuses['CLOSED']} and users.id=$value and investigator=users.id ";
 		break;
 	case "search":
 		$value = $_GET["value"];
@@ -244,6 +253,8 @@ post_filter:
 	array_multisort($locs, $g, SORT_DESC, $cases);
 
 post_sort:
+	$ret["total"] = count($cases);
+
 	/* apply start and rows now */
 	$cases = array_slice($cases, $start, $rows);
 
