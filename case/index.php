@@ -24,6 +24,7 @@
 	<script type="text/javascript" src="/common/utils.js"></script>
 	<script type="text/javascript" src="/case/app.js"></script>
 	<script type="text/javascript" src="/case/toolbar.js"></script>
+	<script type="text/javascript" src="/case/warnings.js"></script>
 	<script type="text/javascript" src="/case/navigation.js"></script>
 	<script type="text/javascript" src="/case/recent.js"></script>
 	<script type="text/javascript" src="/case/caselist.js"></script>
@@ -51,6 +52,7 @@
 
 			app.init();
 			toolbar.init();
+			warnings.init();
 			navigation.init();
 			recent.init();
 			caselist.init();
@@ -99,6 +101,11 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<p><a href="" id="toolbar_advanced">Advanced Search</a></p>
 	</div>
 </div>
+
+<div class="warnings">
+	<div id="warnings_close">X</div>
+	<div id="warnings_text">You have cases under your range for which proceedings have not been updated. Please check the dashboard.</div>
+</div> <!-- warnings -->
 
 <div class="content">
 	<table><tr>
@@ -360,8 +367,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 <div class="page" id="page_dashboard">
 	<div class="card" id="global">
 		<h6>Total Cases in DVAC</h6>
-		<div class="section" type="global_total">
-			<h1 id="global_num_total"></h1><div class="small">Total</div></div>
+		<div class="section" type="global_open">
+			<h1 id="global_num_open"></h1><div class="small">Open</div></div>
 		<div class="section green" type="global_pending_court">
 			<h1 id="global_num_pending_court"></h1><div class="small">In Court</div></div>
 		<div class="section red" type="global_pending_dvac">
@@ -371,8 +378,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	</div>
 	<div class="card" id="range">
 		<h6>Cases in My Range</h6>
-		<div class="section" type="range_total">
-			<h1 id="range_num_total"></h1><div class="small">Total</div></div>
+		<div class="section" type="range_open">
+			<h1 id="range_num_open"></h1><div class="small">Open</div></div>
 		<div class="section green" type="range_pending_court">
 			<h1 id="range_num_pending_court"></h1><div class="small">In Court</div></div>
 		<div class="section red" type="range_pending_dvac">
@@ -388,7 +395,8 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<h6>By Hearing</h6>
 		<div id="dash_hearing">
 			<div class="count" id="hearing_num_upcoming"></div><p type="upcoming_hearings">Upcoming</p>
-			<div class="count" id="hearing_num_notspecified"></div><p type="notspecified_hearings">Not Specified</p>
+			<div class="count" id="hearing_num_notspecified"></div><p type="notspecified_hearings">Not Specified by Court</p>
+			<div class="count" id="hearing_num_notupdated"></div><p type="notupdated_hearings">Proceeding not Updated</p>
 		</div>
 	</div>
 	<div class="card" id="category">

@@ -74,6 +74,9 @@ button.secondary { background:#ccc; color:#000; border:solid 1px #555; text-shad
 	a,a:visited { color:#999; }
 }
 
+.warnings { padding:1em 4em; background:#ff0; 
+	#warnings_close { float:right; font-weight:bold; cursor:pointer; }
+}
 
 .content 	{ border-top:solid 1px #888; }
 

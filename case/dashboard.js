@@ -39,14 +39,14 @@ var dashboard = {
 	},
 
 	update_global: function(g) {
-		$('#global_num_total').text(g['TOTAL']);
+		$('#global_num_open').text(g['PENDING_IN_COURT'] + g['PENDING_WITH_DVAC']);
 		$('#global_num_pending_court').text(g['PENDING_IN_COURT']);
 		$('#global_num_pending_dvac').text(g['PENDING_WITH_DVAC']);
 		$('#global_num_closed').text(g['CLOSED']);
 	},
 
 	update_range: function(r) {
-		$('#range_num_total').text(r['TOTAL']);
+		$('#range_num_open').text(r['PENDING_IN_COURT'] + r['PENDING_WITH_DVAC']);
 		$('#range_num_pending_court').text(r['PENDING_IN_COURT']);
 		$('#range_num_pending_dvac').text(r['PENDING_WITH_DVAC']);
 		$('#range_num_closed').text(r['CLOSED']);
@@ -77,6 +77,7 @@ var dashboard = {
 	update_hearing: function(h) {
 		$('#hearing_num_upcoming').text(h['upcoming']);
 		$('#hearing_num_notspecified').text(h['notspecified']);
+		$('#hearing_num_notupdated').text(h['notupdated']);
 	},
 
 	update_team: function(t) {

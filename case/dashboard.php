@@ -59,14 +59,11 @@
 	{
 		$hearing["upcoming"] = 0;
 		$hearing["notspecified"] = 0;
+		$hearing["notupdated"] = 0;
 	}
 	function update_hearing(&$hearing, $status, $next_hearing)
 	{
 		global $statuses;
-
-		/* hearings are updated only if case is pending in court */
-		if ($status != $statuses["PENDING_IN_COURT"])
-			return;
 
 		$today = strtotime(date("M j, Y"));
 
@@ -74,6 +71,8 @@
 			$hearing["notspecified"]++;
 		else if ($next_hearing >= $today)
 			$hearing["upcoming"]++;
+		else
+			$hearing["notupdated"]++;
 	}
 	function add_to_team($db, &$team, $id, $name, $grade)
 	{

@@ -138,12 +138,18 @@ out1:
 	case "upcoming_hearings":
 		$from = mktime() - 24*60*60;
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location from cases,users " . 
-			"where next_hearing >= $from and investigator=users.id " .
+			"where status != ${statuses['CLOSED']} and next_hearing >= $from and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "notspecified_hearings":
 		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location from cases,users " . 
-			"where status=${statuses["PENDING_IN_COURT"]} and next_hearing=0 and investigator=users.id " .
+			"where status != ${statuses["CLOSED"]} and next_hearing=0 and investigator=users.id " .
+			"order by next_hearing ";
+		break;
+	case "notupdated_hearings":
+		$from = mktime() - 24*60*60;
+		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location from cases,users " . 
+			"where status != ${statuses['CLOSED']} and next_hearing != 0 and next_hearing < $from and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "range_total":
