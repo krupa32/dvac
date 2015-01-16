@@ -1,5 +1,13 @@
 var advancedsearch = {
 	init: function() {
+		// init directions
+		$.get('/common/get_directions.php', null, function(data){
+			var resp = JSON.parse(data), i;
+			var div = $('#filter_direction');
+			for (i in resp)
+				div.append('<label><input type="checkbox" value="' + resp[i].value + '"></input> ' + resp[i].name + '</label>');
+		});
+
 		// init detachments
 		$.get('/common/get_locations.php', null, function(data){
 			var resp = JSON.parse(data), i;
@@ -75,6 +83,14 @@ var advancedsearch = {
 				param.status[count++] = $(this).val();
 		});
 
+		param.direction = {};
+		count = 0;
+		$('#filter_direction input').each(function(){
+			if (this.checked)
+				param.direction[count++] = $(this).val();
+		});
+
+
 		param.location = {};
 		count = 0;
 		$('#filter_detachment input').each(function(){
@@ -101,8 +117,9 @@ var advancedsearch = {
 		param.hearingafter = $('#advanced_hearingafter').val();
 		param.hearingbefore = $('#advanced_hearingbefore').val();
 		param.tag = $('#advanced_tag').val();
+		param.year = $('#advanced_year').val();
 
-		console.log('param:' + JSON.stringify(param));
+		//console.log('param:' + JSON.stringify(param));
 
 		var arg = { type:'advanced', param:param };
 		caselist.show(arg, false, true);
@@ -110,6 +127,9 @@ var advancedsearch = {
 
 	reset: function() {
 		$('#filter_status input').each(function(){
+			this.checked = false;
+		});
+		$('#filter_direction input').each(function(){
 			this.checked = false;
 		});
 		$('#filter_detachment input').each(function(){
@@ -123,5 +143,6 @@ var advancedsearch = {
 		$('#advanced_hearingafter').val('');
 		$('#advanced_hearingbefore').val('');
 		$('#advanced_tag').val('');
+		$('#advanced_year').val('');
 	}
 };

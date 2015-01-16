@@ -18,7 +18,10 @@ use dvac;
 -- alter table users add phone varchar(16);
 
 -- for r11
-alter table cases add court tinyint after category;
-update cases set court=1;
-update cases set court=2 where case_num like '%(MD)%';
-alter table cases add tag text;
+-- alter table cases add court tinyint after category;
+-- update cases set court=1;
+-- update cases set court=2 where case_num like '%(MD)%';
+-- alter table cases add tag text;
+
+-- for r13
+alter table cases add direction default 0 tinyint after status;

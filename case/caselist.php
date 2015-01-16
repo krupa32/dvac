@@ -48,6 +48,16 @@ out1:
 			$q = $q . " ) ";
 		}
 
+		if ($param["direction"] && count($param["direction"]) > 0) {
+			$q = $q . " and ( ";
+			foreach ($param["direction"] as $key => $value) {
+				if ($key > 0)
+					$q = $q . " or ";
+				$q = $q . " direction=$value ";
+			}
+			$q = $q . " ) ";
+		}
+
 		if ($param["location"] && count($param["location"]) > 0) {
 			$q = $q . " and ( ";
 			foreach ($param["location"] as $key => $value) {
@@ -87,6 +97,9 @@ out1:
 
 		if ($param["tag"])
 			$q = $q . " and tag like '%" . $param["tag"] . "%'";
+
+		if ($param["year"])
+			$q = $q . " and case_num like '%" . $param["year"] . "'";
 
 		// only hearingafter
 		if ($param["hearingafter"] && !$param["hearingbefore"]) {

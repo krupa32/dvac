@@ -8,10 +8,13 @@
 
 	$case_id = $_POST["case_id"];
 	$status = $_POST["status"];
+	$direction = 0;
+	if ($status == $statuses["PENDING_WITH_DVAC"])
+		$direction = $_POST["direction"];
 
 	$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-	$q = "update cases set status=$status where id=$case_id";
+	$q = "update cases set status=$status,direction=$direction where id=$case_id";
 
 	if (!$db->query($q)) {
 		$ret = $db->error . "query=" . $q;

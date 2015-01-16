@@ -62,6 +62,7 @@ var details = {
 			$('#details_prayer').text(resp.prayer);
 			$('#details_next_hearing').text(resp.next_hearing);
 			$('#details_tag').text(resp.tag);
+			$('#details_direction').text(resp.direction);
 
 			// set back color of status
 			$('#details_status').removeClass('red green gray');

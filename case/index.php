@@ -17,6 +17,7 @@
 	<link rel="stylesheet/less" href="/case/reminderlist.css"></link>
 	<link rel="stylesheet/less" href="/case/dashboard.css"></link>
 	<link rel="stylesheet/less" href="/case/advancedsearch.css"></link>
+	<link rel="stylesheet/less" href="/case/changestatus.css"></link>
 
 	<script type="text/javascript" src="/common/jquery.js"></script>
 	<script type="text/javascript" src="/common/jquery-ui.js"></script>
@@ -301,6 +302,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<p class="text">Assigned to<br><span id="details_assigned_to"></span></p>
 		<p class="text">Next hearing<br><span id="details_next_hearing"></span></p>
 		<p class="text">Tag<br><span id="details_tag"></span></p>
+		<p class="text">Direction<br><span id="details_direction"></span></p>
 		<p class="text">Prayer<br><span id="details_prayer"></span></p>
 		<div id="historyarea">
 			<!--
@@ -427,9 +429,17 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<div id="filterarea">
 		<h3>Status</h3>
 		<div id="filter_status">
-			<label><input type="checkbox" value="10"></input> Pending Court</label>
-			<label><input type="checkbox" value="20"></input> Pending DVAC</label>
-			<label><input type="checkbox" value="30"></input> Closed</label>
+			<label><input type="checkbox" value="10"></input> PENDING IN COURT</label>
+			<label><input type="checkbox" value="20"></input> PENDING WITH DVAC</label>
+			<label><input type="checkbox" value="30"></input> CLOSED</label>
+		</div>
+
+		<h3>Direction</h3>
+		<div id="filter_direction">
+			<!--
+			<label><input type="checkbox" value="20"></input> Direction 1</label>
+			<label><input type="checkbox" value="30"></input> Direction 2</label>
+			-->
 		</div>
 
 		<h3>Detachment</h3>
@@ -478,8 +488,13 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		</div>
 
 		<h3>Other</h3>
-		<div id="filter_tag">
-			<p>Tag (RCNo, CCNo, etc)<br><input type="text" id="advanced_tag"></input></p>
+		<div id="filter_other">
+			<div id="filter_tag">
+				<p>Tag (RCNo, CCNo, etc)<br><input type="text" id="advanced_tag"></input></p>
+			</div>
+			<div id="filter_year">
+				<p>Year(yyyy)<br><input type="text" id="advanced_year"></input></p>
+			</div>
 		</div>
 
 
@@ -492,7 +507,9 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 
 <div class="dialog" id="dlg_changestatus">
-	<p><select id="changestatus_status"></select> &nbsp;<button class="primary" id="changestatus_save">Save</button></p>
+	<p><select id="changestatus_status"></select></p>
+	<p><select id="changestatus_direction"></select></p>
+	<p class="alignright"><button class="primary" id="changestatus_save">Save</button></p>
 </div> <!-- dlg_changestatus -->
 
 <div class="dialog" id="dlg_addproceeding">

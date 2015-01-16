@@ -202,4 +202,14 @@
 	 * advance sms to the officers.
 	 */
 	$num_days_proceeding_lookahead = 7;
+
+	/* directions
+	 * Possible directions from court.
+	 * Specified when case is pending with dvac.
+	 */
+	$directions = array(
+			"None"			=> 0,
+			"DIRECTION 1"		=> 10,
+			"DIRECTION 2"		=> 20
+			);
 ?>

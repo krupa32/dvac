@@ -13,6 +13,7 @@
 	$res->close();
 
 	$ret["status"] = array_search($ret["status"], $statuses);
+	$ret["direction"] = array_search($ret["direction"], $directions);
 
 	$ret["investigator_id"] = $ret["investigator"];
 	$ret["investigator"] = get_name_grade($ret["investigator"]);
