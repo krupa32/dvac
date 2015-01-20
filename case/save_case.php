@@ -30,7 +30,7 @@
 			"where id=${_POST['id']}";
 	else
 		$q = "insert into cases values(null, '${_POST['case_num']}', ${_POST['category']}, $court, ${_SESSION['user_id']}, null, " .
-			"$status, $assigned_to, ${_POST['investigator']}, " . 
+			"$status, 0, $assigned_to, ${_POST['investigator']}, " . 
 			"'$petitioner', '$respondent', '$prayer', $hearing, 0, '$tag')";
 
 	if (!$db->query($q)) {
