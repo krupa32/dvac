@@ -182,10 +182,18 @@
 	while ($row = $res->fetch_assoc()) {
 		update_global($ret["global"], $row["status"]);
 
+		if (in_array($_SESSION["user_id"], $reporting_officer_ids)) {
+			/* reporting officers should ALWAYS be allowed to see all cases.
+			 * no team filter required in these cases.
+			 */
+			goto post_filter;
+		}
+
 		/* if case doesnt belong to team, continue */
 		if (!in_array($row["investigator"], $team_ids))
 			continue;
-
+		
+post_filter:
 		update_range($ret["range"], $row["status"]);
 
 		/* the following statistics are only for open cases. so... */
