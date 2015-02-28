@@ -101,6 +101,15 @@ out1:
 		if ($param["year"])
 			$q = $q . " and case_num like '%" . $param["year"] . "'";
 
+		if ($param["petitioner"])
+			$q = $q . " and petitioner like '%" . $param["petitioner"] . "%'";
+
+		if ($param["respondent"])
+			$q = $q . " and respondent like '%" . $param["respondent"] . "%'";
+
+		if ($param["prayer"])
+			$q = $q . " and prayer like '%" . $param["prayer"] . "%'";
+
 		// only hearingafter
 		if ($param["hearingafter"] && !$param["hearingbefore"]) {
 			$ts = strtotime($param["hearingafter"]);
@@ -218,7 +227,7 @@ out1:
 
 	if ($type == "assigned" || in_array($_SESSION["user_id"], $reporting_officer_ids)) {
 		/* 'assigned' cases might be investigated by someone else.
-		 * reporting officers should ALWAYS allowed to see all cases.
+		 * reporting officers should ALWAYS be allowed to see all cases.
 		 * no team filter required in these cases.
 		 */
 		$cases = $allcases;
@@ -274,16 +283,41 @@ post_filter:
 post_sort:
 	$ret["total"] = count($cases);
 
+	/* if its advanced search and a report is requested... */
+	if ($type == "advanced") {
+		if ($_GET["param"]["report"] == "true")
+			goto report;
+	}
+
 	/* apply start and rows now */
 	$cases = array_slice($cases, $start, $rows);
 
+	goto out;
 
+report:
+	/* Special handling for generating reports. Ughh!
+	 * Reports need lot of extra fields that is not queried for caselist.
+	 * So once list of cases are retrieved, for each case, the required
+	 * fields are queried and 'cases' array updated.
+	 */
+	for ($i=0; $i < count($cases); $i++) {
+		$id = $cases[$i]["id"];
+		$q = "select court,respondent,prayer,tag from cases where id=$id";
+		$res = $db->query($q);
+		$row = $res->fetch_assoc();
+		$cases[$i]["court"] = array_search($row["court"], $courts);
+		$cases[$i]["respondent"] = $row["respondent"];
+		$cases[$i]["prayer"] = $row["prayer"];
+		$cases[$i]["tag"] = $row["tag"];
+	}
+
+out:
 	$after = gettimeofday(true);
 
 	$ret["cases"] = $cases;
 	$ret["latency"] = ($after - $before) * 1000; // in millisec
 
 	$db->close();
-out:
+
 	print json_encode($ret);
 ?>

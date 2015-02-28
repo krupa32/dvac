@@ -1,0 +1,12 @@
+#report { border:solid 1px #999; width:150em;
+	td { border:solid 1px #999; }
+	.casenum { width:20em; }
+	.court { width:20em; }
+	.status { width:10em; }
+	.next_hearing { width:10em; }
+	.investigator { width:20em; }
+	.petitioner { width:20em; }
+	.respondent { width:20em; }
+	.prayer { width:20em; }
+	.tag { width:10em; }
+}

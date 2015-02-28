@@ -60,6 +60,7 @@ var advancedsearch = {
 		$('#advanced_hearingbefore').datepicker({ dateFormat:'M d, yy' });
 
 		$('#advanced_search').click(advancedsearch.search);
+		$('#advanced_report').click(advancedsearch.report);
 		$('#advanced_reset').click(advancedsearch.reset);
 
 	},
@@ -73,8 +74,10 @@ var advancedsearch = {
 
 	},
 
-	search: function() {
+	_search: function(report_flag) {
 		var param = {}, count;
+
+		param.report = report_flag;
 
 		param.status = {};
 		count = 0;
@@ -118,11 +121,26 @@ var advancedsearch = {
 		param.hearingbefore = $('#advanced_hearingbefore').val();
 		param.tag = $('#advanced_tag').val();
 		param.year = $('#advanced_year').val();
+		param.petitioner = $('#advanced_petitioner').val();
+		param.respondent = $('#advanced_respondent').val();
+		param.prayer = $('#advanced_prayer').val();
 
 		//console.log('param:' + JSON.stringify(param));
 
 		var arg = { type:'advanced', param:param };
-		caselist.show(arg, false, true);
+
+		if (report_flag)
+			report.show(arg);
+		else
+			caselist.show(arg, false, true);
+	},
+
+	search: function() {
+		advancedsearch._search(false);
+	},
+
+	report: function() {
+		advancedsearch._search(true);
 	},
 
 	reset: function() {

@@ -17,6 +17,7 @@
 	<link rel="stylesheet/less" href="/case/reminderlist.css"></link>
 	<link rel="stylesheet/less" href="/case/dashboard.css"></link>
 	<link rel="stylesheet/less" href="/case/advancedsearch.css"></link>
+	<link rel="stylesheet/less" href="/case/report.css"></link>
 	<link rel="stylesheet/less" href="/case/changestatus.css"></link>
 
 	<script type="text/javascript" src="/common/jquery.js"></script>
@@ -41,6 +42,7 @@
 	<script type="text/javascript" src="/case/reminderlist.js"></script>
 	<script type="text/javascript" src="/case/dashboard.js"></script>
 	<script type="text/javascript" src="/case/advancedsearch.js"></script>
+	<script type="text/javascript" src="/case/report.js"></script>
 	<script type="text/javascript">
 		<?php
 			print "var user_id = ${_SESSION['user_id']};\n";
@@ -69,6 +71,7 @@
 			reminderlist.init();
 			dashboard.init();
 			advancedsearch.init();
+			report.init();
 
 			//console.log('document.ready state:' + JSON.stringify(history.state));
 			recent.show(false, true);
@@ -495,12 +498,22 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<div id="filter_year">
 				<p>Year(yyyy)<br><input type="text" id="advanced_year"></input></p>
 			</div>
+			<div id="filter_petitioner">
+				<p>Petitioner<br><input type="text" id="advanced_petitioner"></input></p>
+			</div>
+			<div id="filter_respondent">
+				<p>Respondent<br><input type="text" id="advanced_respondent"></input></p>
+			</div>
+			<div id="filter_prayer">
+				<p>Prayer<br><input type="text" id="advanced_prayer"></input></p>
+			</div>
 		</div>
 
 
 	</div>
 	<div class="actions aligncenter">
 		<button class="primary" id="advanced_search">Advanced Search</button>
+		<button class="secondary" id="advanced_report">Generate Report</button>
 		<button class="secondary" id="advanced_reset">Reset</button>
 	</div>
 </div> <!-- page_advancedsearch -->
@@ -564,6 +577,11 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<p>Remarks<br><textarea class="fullwidth" id="reminder_comment"></textarea></p>
 	<p class="alignright"><button class="primary" id="reminder_save">Save</button></p>
 </div> <!-- dlg_addreminder -->
+
+<div class="dialog" id="dlg_report">
+	<table id="report">
+	</table>
+</div> <!-- dlg_report -->
 
 </body>
 </html>
