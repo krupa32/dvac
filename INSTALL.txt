@@ -22,6 +22,8 @@ Copy the source directory to /var/www/dvac
 # mysql -u root -p < initdb.sql
 # mkdir /var/www/dvac/case/uploads
 # chmod a+w /var/www/dvac/case/uploads
+# mkdir /var/www/dvac/case/tmp
+# chmod a+w /var/www/dvac/case/tmp
 # crontab /var/www/dvac/backup/backup.crontab
 
 

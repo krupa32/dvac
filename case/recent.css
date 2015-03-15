@@ -12,8 +12,8 @@
 		.newcasetag { float:right; margin:0 0.5em 0 0; padding:0.1em 0.5em; border:dashed 1px #666; background:#f90; }
 		.casenum {
 			a,a:visited 		{ color:#00f; font-size:1.2em; }
-			.PENDING_IN_COURT	{ color:#060; }
-			.PENDING_WITH_DVAC	{ color:#c00; }
+			.OPEN			{ color:#060; }
+			.DVAC_OPEN		{ color:#c00; }
 			.CLOSED			{ color:#666; }
 		}
 		.extra 		{ color:#666; font-size:10pt; }

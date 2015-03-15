@@ -39,16 +39,14 @@ var dashboard = {
 	},
 
 	update_global: function(g) {
-		$('#global_num_open').text(g['PENDING_IN_COURT'] + g['PENDING_WITH_DVAC']);
-		$('#global_num_pending_court').text(g['PENDING_IN_COURT']);
-		$('#global_num_pending_dvac').text(g['PENDING_WITH_DVAC']);
+		$('#global_num_open').text(g['OPEN']);
+		$('#global_num_dvac_open').text(g['DVAC_OPEN']);
 		$('#global_num_closed').text(g['CLOSED']);
 	},
 
 	update_range: function(r) {
-		$('#range_num_open').text(r['PENDING_IN_COURT'] + r['PENDING_WITH_DVAC']);
-		$('#range_num_pending_court').text(r['PENDING_IN_COURT']);
-		$('#range_num_pending_dvac').text(r['PENDING_WITH_DVAC']);
+		$('#range_num_open').text(r['OPEN']);
+		$('#range_num_dvac_open').text(r['DVAC_OPEN']);
 		$('#range_num_closed').text(r['CLOSED']);
 	},
 

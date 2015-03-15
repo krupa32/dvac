@@ -40,7 +40,7 @@
 		$ret = null;
 
 		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
-		$q = "select case_num,status,investigator,assigned_to from cases where id=$id";
+		$q = "select case_num,status,dvac_status,investigator,assigned_to from cases where id=$id";
 		$res = $db->query($q);
 		if ($res && $res->num_rows > 0) {
 			$row = $res->fetch_assoc();
@@ -174,10 +174,10 @@ out1:
 		else
 			$assigned_to_ancestors = $investigator_ancestors;
 
-		/* for cases pending with dvac, sms will be sent to all
+		/* for cases open with dvac, sms will be sent to all
 		 * ancestors. so override whatever was configured.
 		 */
-		if ($status == $statuses["PENDING_WITH_DVAC"])
+		if ($dvac_status == $dvac_statuses["OPEN"])
 			$list = $SMS_ANCESTORS;
 
 		/* sms WILL be sent to investigator, assigned_to and their parents */
@@ -211,6 +211,7 @@ out:
 		$details = get_case_details($case_id);
 		$case_num = $details["case_num"];
 		$status = $details["status"];
+		$dvac_status = $details["dvac_status"];
 
 		if ($doer_id)
 			$doer = get_name_grade($doer_id);

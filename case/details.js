@@ -21,6 +21,10 @@ var details = {
 			changestatus.show($('#page_details').data('id'));
 			e.preventDefault();
 		});
+		$('#details_dvac_change').click(function(e){
+			changedvacstatus.show($('#page_details').data('id'));
+			e.preventDefault();
+		});
 		$('#btn_attach').click(function(){
 			attach.show($('#page_details').data('id'));
 		});
@@ -37,10 +41,13 @@ var details = {
 		if (push)
 			history.pushState({ page:'details', id:id }, '', '#details/' + id);
 
-		if (user_grade == 70 || user_grade == 60) // only director or joint director
+		if (user_grade == 70 || user_grade == 60) { // only director or joint director
 			$('#details_change').show();
-		else
+			$('#details_dvac_change').show();
+		} else {
 			$('#details_change').hide();
+			$('#details_dvac_change').hide();
+		}
 
 		$('.ajaxstatus').text('Loading...').show();
 		var param = {};
@@ -55,6 +62,7 @@ var details = {
 
 			$('#details_case_num').text(resp.case_num);
 			$('#details_status').text(resp.status);
+			$('#details_dvac_status').text(resp.dvac_status);
 			$('#details_io').text(resp.investigator);
 			$('#details_assigned_to').text(resp.assigned_to);
 			$('#details_petitioner').text(resp.petitioner);
@@ -66,12 +74,18 @@ var details = {
 
 			// set back color of status
 			$('#details_status').removeClass('red green gray');
-			if (resp.status == 'PENDING_IN_COURT')
+			if (resp.status == 'OPEN')
 				$('#details_status').addClass('green');
-			else if (resp.status == 'PENDING_WITH_DVAC')
-				$('#details_status').addClass('red');
 			else 
 				$('#details_status').addClass('gray');
+
+			// set back color of dvac status
+			$('#details_dvac_status').removeClass('red green gray');
+			if (resp.dvac_status == 'DVAC_OPEN')
+				$('#details_dvac_status').addClass('red');
+			else 
+				$('#details_dvac_status').addClass('gray');
+
 
 			details.show_history(id);
 
@@ -115,6 +129,9 @@ var details = {
 					break;
 				case "CHANGESTATUS":
 					details.add_change_status_activity(resp[i]);
+					break;
+				case "CHANGEDVACSTATUS":
+					details.add_change_dvac_status_activity(resp[i]);
 					break;
 				case "ATTACH":
 					details.add_attachment_activity(resp[i]);
@@ -176,6 +193,12 @@ var details = {
 		var div = $('<div class="activity"></div>').appendTo('#historyarea');
 		div.append('<p class="title floatright">' + resp.ts + '</p>');
 		div.append('<p class="title">' + resp.doer + ' changed case status to ' + resp.details.status + '</p>');
+	},
+
+	add_change_dvac_status_activity: function(resp) {
+		var div = $('<div class="activity"></div>').appendTo('#historyarea');
+		div.append('<p class="title floatright">' + resp.ts + '</p>');
+		div.append('<p class="title">' + resp.doer + ' changed dvac status to ' + resp.details.dvac_status + '</p>');
 	},
 
 	add_attachment_activity: function(resp) {

@@ -122,16 +122,27 @@
 			"ASSIGN"		=> 5,
 			"CHANGESTATUS"		=> 6,
 			"CLOSE"			=> 7,
-			"ATTACH"		=> 8
+			"ATTACH"		=> 8,
+			"CHANGEDVACSTATUS"	=> 9
 			);
 
 	/* statuses
-	 * case statuses.
+	 * court case statuses.
 	 */
 	$statuses = array(
-		"PENDING_IN_COURT"		=> 10,
-		"PENDING_WITH_DVAC"		=> 20,
+		"OPEN"				=> 10,
 		"CLOSED"			=> 30
+	);
+
+	/* dvac statuses
+	 * dvac status of the case.
+	 * this is independant of court case status.
+	 * ie, court status can be closed, but case can still be open 
+	 * with dvac.
+	 */
+	$dvac_statuses = array(
+		"DVAC_OPEN"			=> 10,
+		"DVAC_CLOSED"			=> 20
 	);
 	
 	/* disposals.
@@ -172,8 +183,8 @@
 	 * for each activity, list of users to whom sms will be sent.
 	 * the possible values for the list (SMS_xxx) are also set below.
 	 *
-	 * note that this list is only for cases pending in court.
-	 * for cases pending with dvac, if list value is not SMS_NONE,
+	 * note that this list is only for cases open in court.
+	 * for cases open with dvac, if list value is not SMS_NONE,
 	 * sms will always be sent to all ancestors.
 	 *
 	 * the PROCEEDINGLOOKAHEAD is a special activity added for the
@@ -191,6 +202,7 @@
 			"ADDCOMMENT"		=> $SMS_SELF_PARENT,
 			"ASSIGN"		=> $SMS_SELF_PARENT,
 			"CHANGESTATUS"		=> $SMS_NONE,
+			"CHANGEDVACSTATUS"	=> $SMS_NONE,
 			"CLOSE"			=> $SMS_NONE,
 			"ATTACH"		=> $SMS_NONE,
 			"PROCEEDINGLOOKAHEAD"	=> $SMS_SELF_PARENT
@@ -205,7 +217,7 @@
 
 	/* directions
 	 * Possible directions from court.
-	 * Specified when case is pending with dvac.
+	 * Specified when case is open with dvac.
 	 */
 	$directions = array(
 			"None"			=> 0,

@@ -8,7 +8,7 @@
 		.green { color:#090; }
 		.red { color:#c00; }
 		.gray { color:#999; }
-		.section { display:inline-block; vertical-align:top; width:24%; padding:1em 0; text-align:center; cursor:pointer; }
+		.section { display:inline-block; vertical-align:top; width:32%; padding:1em 0; text-align:center; cursor:pointer; }
 		.section:hover { background:#eee; }
 		h1 { font-size:2em; }
 		p { padding:0.5em 1em; border-bottom:dotted 1px #999; cursor:pointer; }

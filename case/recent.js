@@ -90,7 +90,7 @@ var recent = {
 		if (c.addcase)
 			divcase.append('<div class="newcasetag">New</div>');
 
-		divcase.append('<p class="casenum"><a class="caselink ' + c.status + '" href="' + c.id + '">' + c.case_num + '</a></p>');
+		divcase.append('<p class="casenum"><a class="caselink ' + c.status + ' ' + c.dvac_status + '" href="' + c.id + '">' + c.case_num + '</a></p>');
 		var extra = '<p class="extra">Petitioner ' + c.petitioner + ', Respondent ' + c.respondent + '<br>';
 		extra += 'Next hearing ' + c.next_hearing;
 		extra += '</p>';
@@ -121,6 +121,9 @@ var recent = {
 			break;
 		case "CHANGESTATUS":
 			recent.add_change_status_activity(divact, a);
+			break;
+		case "CHANGEDVACSTATUS":
+			recent.add_change_dvac_status_activity(divact, a);
 			break;
 		case "ATTACH":
 			recent.add_attachment_activity(divact, a);
@@ -182,6 +185,12 @@ var recent = {
 		var div = $('<div class="activity"></div>').appendTo(divact);
 		div.append('<p class="title floatright">' + a.ts + '</p>');
 		div.append('<p class="title">' + a.doer + ' changed case status to ' + a.details.status + '</p>');
+	},
+
+	add_change_dvac_status_activity: function(divact, a) {
+		var div = $('<div class="activity"></div>').appendTo(divact);
+		div.append('<p class="title floatright">' + a.ts + '</p>');
+		div.append('<p class="title">' + a.doer + ' changed dvac status to ' + a.details.dvac_status + '</p>');
 	},
 
 	add_attachment_activity: function(divact, a) {

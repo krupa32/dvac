@@ -19,6 +19,7 @@
 	<link rel="stylesheet/less" href="/case/advancedsearch.css"></link>
 	<link rel="stylesheet/less" href="/case/report.css"></link>
 	<link rel="stylesheet/less" href="/case/changestatus.css"></link>
+	<link rel="stylesheet/less" href="/case/changedvacstatus.css"></link>
 
 	<script type="text/javascript" src="/common/jquery.js"></script>
 	<script type="text/javascript" src="/common/jquery-ui.js"></script>
@@ -33,6 +34,7 @@
 	<script type="text/javascript" src="/case/editcase.js"></script>
 	<script type="text/javascript" src="/case/details.js"></script>
 	<script type="text/javascript" src="/case/changestatus.js"></script>
+	<script type="text/javascript" src="/case/changedvacstatus.js"></script>
 	<script type="text/javascript" src="/case/addproceeding.js"></script>
 	<script type="text/javascript" src="/case/addcomment.js"></script>
 	<script type="text/javascript" src="/case/closecase.js"></script>
@@ -62,6 +64,7 @@
 			editcase.init();
 			details.init();
 			changestatus.init();
+			changedvacstatus.init();
 			addproceeding.init();
 			addcomment.init();
 			closecase.init();
@@ -189,7 +192,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<div class="cl_investigator">Raj Narayan, DSP
 				<p class="extra">Madurai</p></div>
 			<div class="cl_next_hearing">Jul 24, 2014</div>
-			<div class="cl_last green">PENDING_IN_COURT
+			<div class="cl_last green">OPEN
 				<p class="extra">Last activity 2 days ago</p></div>
 		</div>
 		<div class="cl_data">
@@ -198,7 +201,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 			<div class="cl_investigator">Raj Narayan, DSP
 				<p class="extra">Madurai</p></div>
 			<div class="cl_next_hearing">Jul 24, 2014</div>
-			<div class="cl_last green">PENDING_IN_COURT
+			<div class="cl_last green">OPEN
 				<p class="extra">Last activity 2 yrs ago</p></div>
 		</div>
 		-->
@@ -297,7 +300,12 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 	<div class="details">
 		<p class="floatright"><button class="primary" id="details_edit">Edit</button></p>
 		<p class="casenum" id="details_case_num"></p>
-		<p class="status"><span id="details_status"></span> &nbsp;<a href="" id="details_change">Change</a></p>
+		<p class="status">
+			<span id="details_status"></span> &nbsp;<a href="" id="details_change">Change</a>
+		</p>
+		<p class="status">
+			<span id="details_dvac_status"></span> &nbsp;<a href="" id="details_dvac_change">Change</a>
+		</p>
 		<br>
 		<p class="text">Petitioner<br><span id="details_petitioner"></span></p>
 		<p class="text">Respondent<br><span id="details_respondent"></span></p>
@@ -372,23 +380,19 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 <div class="page" id="page_dashboard">
 	<div class="card" id="global">
 		<h6>Total Cases in DVAC</h6>
-		<div class="section" type="global_open">
-			<h1 id="global_num_open"></h1><div class="small">Open</div></div>
-		<div class="section green" type="global_pending_court">
-			<h1 id="global_num_pending_court"></h1><div class="small">In Court</div></div>
-		<div class="section red" type="global_pending_dvac">
-			<h1 id="global_num_pending_dvac"></h1><div class="small">With DVAC</div></div>
+		<div class="section green" type="global_open">
+			<h1 id="global_num_open"></h1><div class="small">Open in Court</div></div>
+		<div class="section red" type="global_dvac_open">
+			<h1 id="global_num_dvac_open"></h1><div class="small">Open With DVAC</div></div>
 		<div class="section gray" type="global_closed">
 			<h1 id="global_num_closed"></h1><div class="small">Closed</div></div>
 	</div>
 	<div class="card" id="range">
 		<h6>Cases in My Range</h6>
-		<div class="section" type="range_open">
-			<h1 id="range_num_open"></h1><div class="small">Open</div></div>
-		<div class="section green" type="range_pending_court">
-			<h1 id="range_num_pending_court"></h1><div class="small">In Court</div></div>
-		<div class="section red" type="range_pending_dvac">
-			<h1 id="range_num_pending_dvac"></h1><div class="small">With DVAC</div></div>
+		<div class="section green" type="range_open">
+			<h1 id="range_num_open"></h1><div class="small">Open in Court</div></div>
+		<div class="section red" type="range_dvac_open">
+			<h1 id="range_num_dvac_open"></h1><div class="small">Open With DVAC</div></div>
 		<div class="section gray" type="range_closed">
 			<h1 id="range_num_closed"></h1><div class="small">Closed</div></div>
 	</div>
@@ -430,11 +434,20 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 <div class="page" id="page_advancedsearch">
 	<div id="filterarea">
-		<h3>Status</h3>
+		<h3>Court Status</h3>
 		<div id="filter_status">
-			<label><input type="checkbox" value="10"></input> PENDING IN COURT</label>
-			<label><input type="checkbox" value="20"></input> PENDING WITH DVAC</label>
+			<!--
+			<label><input type="checkbox" value="10"></input> OPEN</label>
 			<label><input type="checkbox" value="30"></input> CLOSED</label>
+			-->
+		</div>
+
+		<h3>DVAC Status</h3>
+		<div id="filter_dvac_status">
+			<!--
+			<label><input type="checkbox" value="10"></input> OPEN</label>
+			<label><input type="checkbox" value="30"></input> CLOSED</label>
+			-->
 		</div>
 
 		<h3>Direction</h3>
@@ -521,9 +534,15 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 
 <div class="dialog" id="dlg_changestatus">
 	<p><select id="changestatus_status"></select></p>
-	<p><select id="changestatus_direction"></select></p>
 	<p class="alignright"><button class="primary" id="changestatus_save">Save</button></p>
 </div> <!-- dlg_changestatus -->
+
+<div class="dialog" id="dlg_changedvacstatus">
+	<p><select id="changedvacstatus_status"></select></p>
+	<p><select id="changedvacstatus_direction"></select></p>
+	<p class="alignright"><button class="primary" id="changedvacstatus_save">Save</button></p>
+</div> <!-- dlg_changedvacstatus -->
+
 
 <div class="dialog" id="dlg_addproceeding">
 	<table id="tbl_proceeding">
@@ -579,8 +598,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 </div> <!-- dlg_addreminder -->
 
 <div class="dialog" id="dlg_report">
-	<table id="report">
-	</table>
+	<div id="report"></div>
 </div> <!-- dlg_report -->
 
 </body>

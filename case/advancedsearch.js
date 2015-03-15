@@ -1,5 +1,24 @@
 var advancedsearch = {
 	init: function() {
+
+		// init statuses
+		$.get('/common/get_statuses.php', null, function(data){
+			var resp = JSON.parse(data), i;
+			var div = $('#filter_status');
+			for (i in resp)
+				div.append('<label><input type="checkbox" value="' + resp[i].value + '"></input> ' + 
+					resp[i].name + '</label>');
+		});
+
+		// init dvac statuses
+		$.get('/common/get_dvac_statuses.php', null, function(data){
+			var resp = JSON.parse(data), i;
+			var div = $('#filter_dvac_status');
+			for (i in resp)
+				div.append('<label><input type="checkbox" value="' + resp[i].value + '"></input> ' + 
+					resp[i].name + '</label>');
+		});
+
 		// init directions
 		$.get('/common/get_directions.php', null, function(data){
 			var resp = JSON.parse(data), i;
@@ -84,6 +103,13 @@ var advancedsearch = {
 		$('#filter_status input').each(function(){
 			if (this.checked)
 				param.status[count++] = $(this).val();
+		});
+
+		param.dvac_status = {};
+		count = 0;
+		$('#filter_dvac_status input').each(function(){
+			if (this.checked)
+				param.dvac_status[count++] = $(this).val();
 		});
 
 		param.direction = {};

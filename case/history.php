@@ -46,6 +46,21 @@
 	{
 		global $statuses;
 		$ret["status"] = array_search($status, $statuses);
+
+		/* some old activities may return false as the 'status' field
+		 * values were modified in release 15. so just fallback to
+		 * open.
+		 */
+		if ($ret["status"] == false)
+			$ret["status"] = "OPEN";
+
+		return $ret;
+	}
+
+	function get_dvac_status_details($db, $dvac_status)
+	{
+		global $dvac_statuses;
+		$ret["dvac_status"] = array_search($dvac_status, $dvac_statuses);
 		return $ret;
 	}
 
@@ -92,6 +107,9 @@
 			break;
 		case $activities["CHANGESTATUS"]:
 			$entry["details"] = get_status_details($db, $row["object"]);
+			break;
+		case $activities["CHANGEDVACSTATUS"]:
+			$entry["details"] = get_dvac_status_details($db, $row["object"]);
 			break;
 		case $activities["ATTACH"]:
 			$entry["details"] = get_attachment_details($db, $row["object"]);

@@ -28,12 +28,14 @@ out1:
 		 * If it is ALWAYS joined with proceedings, then only cases WITH proceedings are queried.
 		 */
 		if ($param["hearingafter"] || $param["hearingbefore"]) {
-			$q = "select distinct cases.id,cases.case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
+			$q = "select distinct cases.id,cases.case_num,status,dvac_status," .
+				"investigator,petitioner,cases.next_hearing,location,grade " .
 				"from cases inner join users on investigator=users.id " . 
 				    "left join proceedings on proceedings.case_id=cases.id " .
 				"where true ";
 		} else {
-			$q = "select distinct cases.id,cases.case_num,status,investigator,petitioner,cases.next_hearing,location,grade " .
+			$q = "select distinct cases.id,cases.case_num,status,dvac_status," .
+				"investigator,petitioner,cases.next_hearing,location,grade " .
 				"from cases,users " .
 				"where investigator=users.id ";
 		}
@@ -44,6 +46,16 @@ out1:
 				if ($key > 0)
 					$q = $q . " or ";
 				$q = $q . " status=$value ";
+			}
+			$q = $q . " ) ";
+		}
+
+		if ($param["dvac_status"] && count($param["dvac_status"]) > 0) {
+			$q = $q . " and ( ";
+			foreach ($param["dvac_status"] as $key => $value) {
+				if ($key > 0)
+					$q = $q . " or ";
+				$q = $q . " dvac_status=$value ";
 			}
 			$q = $q . " ) ";
 		}
@@ -135,6 +147,44 @@ out1:
 		return $q;
 	}
 
+	function generate_csv($cases)
+	{
+		$tmpdir = $_SERVER["DOCUMENT_ROOT"] . "/case/tmp/";
+		$latest = exec("ls -t $tmpdir | head -n 1");
+		$csvfilename = basename($latest) + 1;
+		$csvfilename = $csvfilename . ".csv";
+		$filename = $tmpdir . $csvfilename;
+
+		$fp = fopen($filename, "w");
+		if (!$fp)
+			return "error";
+
+		fwrite($fp, "Case No:Court:Court Status:DVAC Status:Investigated By:Petitioner:Respondent:Prayer:Tag\n");
+		for ($i = 0; $i < count($cases); $i++) {
+			$c = $cases[$i];
+			$c["petitioner"] = str_replace("\n", " ", $c["petitioner"]);
+			$c["respondent"] = str_replace("\n", " ", $c["respondent"]);
+			$c["prayer"] = str_replace("\n", " ", $c["prayer"]);
+
+			$str = $c["case_num"] . ":";
+			$str = $str . $c["court"] . ":";
+			$str = $str . $c["status"] . ":";
+			$str = $str . $c["dvac_status"] . ":";
+			$str = $str . $c["investigator"] . ":";
+			$str = $str . $c["petitioner"] . ":";
+			$str = $str . $c["respondent"] . ":";
+			$str = $str . $c["prayer"] . ":";
+			$str = $str . $c["tag"] . ":";
+			$str = $str . "\n";
+
+			fwrite($fp, $str);
+		}
+
+		fclose($fp);
+
+		return $csvfilename;
+	}
+
 	session_start();
 	if (!$_SESSION["user_id"])
 		header("location: /login.php");
@@ -154,60 +204,72 @@ out1:
 	 */
 	switch ($type) {
 	case "assigned":
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where assigned_to=${_SESSION["user_id"]} and investigator=users.id ";
 		break;
 	case "upcoming_hearings":
 		$from = mktime() - 24*60*60;
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status,".
+			"investigator,petitioner,next_hearing,location from cases,users " . 
 			"where status != ${statuses['CLOSED']} and next_hearing >= $from and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "notspecified_hearings":
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location from cases,users " . 
 			"where status != ${statuses["CLOSED"]} and next_hearing=0 and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "notupdated_hearings":
 		$from = mktime() - 24*60*60;
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location from cases,users " . 
 			"where status != ${statuses['CLOSED']} and next_hearing != 0 and next_hearing < $from and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "range_total":
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where investigator=users.id ";
 		break;
-	case "range_pending_court":
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
-			"where status=${statuses["PENDING_IN_COURT"]} and investigator=users.id ";
+	case "range_open":
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where status=${statuses["OPEN"]} and investigator=users.id ";
 		break;
-	case "range_pending_dvac":
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
-			"where status=${statuses["PENDING_WITH_DVAC"]} and investigator=users.id ";
+	case "range_dvac_open":
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"where dvac_status=${dvac_statuses["DVAC_OPEN"]} and investigator=users.id ";
 		break;
 	case "range_closed":
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status=${statuses["CLOSED"]} and investigator=users.id ";
 		break;
 	case "category":
 		$value = $_GET["value"];
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status!=${statuses['CLOSED']} and category=${categories[$value]} and investigator=users.id ";
 		break;
 	case "location":
 		$value = $_GET["value"];
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status!=${statuses['CLOSED']} and location=${locations[$value]} and investigator=users.id ";
 		break;
 	case "user":
 		$value = $_GET["value"];
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status!=${statuses['CLOSED']} and users.id=$value and investigator=users.id ";
 		break;
 	case "search":
 		$value = $_GET["value"];
-		$q = "select cases.id,case_num,status,investigator,petitioner,next_hearing,location,grade from cases,users " . 
+		$q = "select cases.id,case_num,status,dvac_status," .
+			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
 			"where investigator=users.id and (case_num like '%$value%' or petitioner like '%$value%' or respondent like '%$value%')";
 		break;
 	case "advanced":
@@ -251,6 +313,7 @@ post_filter:
 	/* translate numbers in the result to readable texts */
 	for ($i = 0; $i < count($cases); $i++) {
 		$cases[$i]["status"] = array_search($cases[$i]["status"], $statuses);	
+		$cases[$i]["dvac_status"] = array_search($cases[$i]["dvac_status"], $dvac_statuses);	
 		$cases[$i]["investigator"] = get_name_grade($cases[$i]["investigator"]);
 		$cases[$i]["location"] = array_search($cases[$i]["location"], $locations);
 		$cases[$i]["last_activity"] = get_last_activity($db, $cases[$i]["id"]);
@@ -310,6 +373,13 @@ report:
 		$cases[$i]["prayer"] = $row["prayer"];
 		$cases[$i]["tag"] = $row["tag"];
 	}
+
+	/* now that we have case list, generate a report file in
+	 * HOMEDIR/tmp/. All files in tmp dir will be deleted everyday
+	 * during the nightly backup.
+	 */
+	$csvfilename = generate_csv($cases);
+	$cases = $csvfilename;
 
 out:
 	$after = gettimeofday(true);

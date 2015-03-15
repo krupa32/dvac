@@ -10,8 +10,9 @@
 	button { width:12em; }
 	.casenum { font-size:2em; }
 
-	.status { margin:2em 0 0.5em 0;
-		span { padding:0.5em 1em; color:#fff; .shadow(#000); .rounded(1em); }
+	.status { margin:1em 0 0 0;
+		span { display:inline-block; padding:0.5em 1em; width:10em; text-align:center; 
+			color:#fff; .shadow(#000); .rounded(1em); }
 		a,a:visited { color:#00f; }
 	}
 	.red		{ background:#c00; }

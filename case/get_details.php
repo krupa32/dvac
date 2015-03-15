@@ -13,6 +13,7 @@
 	$res->close();
 
 	$ret["status"] = array_search($ret["status"], $statuses);
+	$ret["dvac_status"] = array_search($ret["dvac_status"], $dvac_statuses);
 	$ret["direction"] = array_search($ret["direction"], $directions);
 
 	$ret["investigator_id"] = $ret["investigator"];

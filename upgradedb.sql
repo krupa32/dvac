@@ -24,4 +24,8 @@ use dvac;
 -- alter table cases add tag text;
 
 -- for r13
-alter table cases add direction tinyint default 0 after status;
+-- alter table cases add direction tinyint default 0 after status;
+
+-- for r15
+alter table cases add dvac_status tinyint default 20 after status;
+update cases set status=10,dvac_status=10 where status=20;

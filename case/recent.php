@@ -47,6 +47,22 @@
 
 		$ret["status"] = array_search($status, $statuses);
 
+		/* some old activities may return false as the 'status' field
+		 * values were modified in release 15. so just fallback to
+		 * open.
+		 */
+		if ($ret["status"] == false)
+			$ret["status"] = "OPEN";
+
+		return $ret;
+	}
+
+	function get_dvac_status_details($db, $dvac_status)
+	{
+		global $dvac_statuses;
+
+		$ret["dvac_status"] = array_search($dvac_status, $dvac_statuses);
+
 		return $ret;
 	}
 
@@ -82,6 +98,9 @@
 			break;
 		case "CHANGESTATUS":
 			$details = get_status_details($db, $object);
+			break;
+		case "CHANGEDVACSTATUS":
+			$details = get_dvac_status_details($db, $object);
 			break;
 		case "ATTACH":
 			$details = get_attachment_details($db, $object);
@@ -150,7 +169,8 @@
 	foreach ($caseids as $caseid) {
 
 		/* get case details */
-		$q = "select id,case_num,petitioner,respondent,prayer,status,next_hearing from cases where id=$caseid";
+		$q = "select id,case_num,petitioner,respondent,prayer,status,dvac_status,next_hearing " .
+			"from cases where id=$caseid";
 		$res2 = $db->query($q);
 		$case = $res2->fetch_assoc();
 		if ($case["next_hearing"] == 0) {
@@ -162,6 +182,7 @@
 		$res2->close();
 
 		$case["status"] = array_search($case["status"], $statuses);
+		$case["dvac_status"] = array_search($case["dvac_status"], $dvac_statuses);
 		$case["recent"] = false;
 		$case["addcase"] = false;
 		$case["activities"] = array();

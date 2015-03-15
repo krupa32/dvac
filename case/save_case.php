@@ -13,7 +13,8 @@
 		$hearing = 0;
 
 	/* default values for new case */
-	$status = $statuses["PENDING_IN_COURT"];
+	$status = $statuses["OPEN"];
+	$dvac_status = $dvac_statuses["DVAC_CLOSED"];
 	$assigned_to = $_POST["investigator"];
 
 	$tag = $_POST["tag"];
@@ -24,13 +25,15 @@
 	$court = $_POST["court"];
 
 	if ($_POST["id"])
-		$q = "update cases set case_num='${_POST['case_num']}', category=${_POST['category']}, investigator=${_POST['investigator']}, " .
+		$q = "update cases set case_num='${_POST['case_num']}', category=${_POST['category']}, " .
+			"investigator=${_POST['investigator']}, " .
 			"court=$court, petitioner='$petitioner', respondent='$respondent', prayer='$prayer', " .
 			"next_hearing=$hearing, tag='$tag'" .
 			"where id=${_POST['id']}";
 	else
-		$q = "insert into cases values(null, '${_POST['case_num']}', ${_POST['category']}, $court, ${_SESSION['user_id']}, null, " .
-			"$status, 0, $assigned_to, ${_POST['investigator']}, " . 
+		$q = "insert into cases values(null, '${_POST['case_num']}', ${_POST['category']}, $court, " .
+			"${_SESSION['user_id']}, null, " .
+			"$status, $dvac_status, 0, $assigned_to, ${_POST['investigator']}, " . 
 			"'$petitioner', '$respondent', '$prayer', $hearing, 0, '$tag')";
 
 	if (!$db->query($q)) {

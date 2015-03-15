@@ -33,8 +33,9 @@
 
 	/* upcoming_hearings */
 	$ret["upcoming_hearings"] = 0;
-	$today = strtotime(date("M j, Y"));
-	$q = "select investigator from cases where next_hearing >= $today";
+	//$today = strtotime(date("M j, Y"));
+	$today = mktime() - 24*60*60;
+	$q = "select investigator from cases where status != ${statuses['CLOSED']} and next_hearing >= $today";
 	$res = $db->query($q);
 	while ($res && ($row = $res->fetch_row())) {
 		/* filter cases investigated by team */

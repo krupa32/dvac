@@ -19,6 +19,9 @@ then
 	mkdir -p $BACKUPDIR
 fi
 
+# Remove everything from tmp dir
+rm -f $SYNCDIR/case/tmp/*
+
 # Take backup
 mysqldump -u root -p$MYSQLPASS --databases dvac --add-drop-database > $SYNCDIR/db.sql
 rsync -ru $SITEDIR/* $SYNCDIR

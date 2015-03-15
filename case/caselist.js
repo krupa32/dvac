@@ -88,12 +88,13 @@ var caselist = {
 		div.append('<div class="cl_investigator">' + c.investigator + '</div>');
 		div.append('<div class="cl_location">' + c.location + '</div>');
 
-		if (c.status == 'PENDING_IN_COURT')
+		if (c.status == 'OPEN')
 			div.find('a').addClass('green');
-		else if (c.status == 'PENDING_WITH_DVAC')
-			div.find('a').addClass('red');
 		else
 			div.find('a').addClass('gray');
+
+		if (c.dvac_status == 'DVAC_OPEN')
+			div.find('a').removeClass('green gray').addClass('red');
 
 		caselist.start_item++;
 	},

@@ -10,10 +10,17 @@
 		foreach ($statuses as $key => $val)
 			$global[$key] = 0;
 	}
-	function update_global(&$global, $status)
+	function update_global_with_status(&$global, $status)
 	{
 		global $statuses;
 		$key = array_search($status, $statuses);
+		$global[$key]++;
+		$global["TOTAL"]++;
+	}
+	function update_global_with_dvac_status(&$global, $dvac_status)
+	{
+		global $dvac_statuses;
+		$key = array_search($dvac_status, $dvac_statuses);
 		$global[$key]++;
 		$global["TOTAL"]++;
 	}
@@ -24,10 +31,17 @@
 		foreach ($statuses as $key => $val)
 			$range[$key] = 0;
 	}
-	function update_range(&$range, $status)
+	function update_range_with_status(&$range, $status)
 	{
 		global $statuses;
 		$key = array_search($status, $statuses);
+		$range[$key]++;
+		$range["TOTAL"]++;
+	}
+	function update_range_with_dvac_status(&$range, $dvac_status)
+	{
+		global $dvac_statuses;
+		$key = array_search($dvac_status, $dvac_statuses);
 		$range[$key]++;
 		$range["TOTAL"]++;
 	}
@@ -175,12 +189,13 @@
 	$team_ids = get_team_ids($db, $_SESSION["user_id"], $_SESSION["user_grade"]);
 
 	/* select all cases */
-	$q = "select cases.id,category,status,assigned_to,investigator,next_hearing,name,location from cases,users " .
-		"where investigator=users.id";
+	$q = "select cases.id,category,status,dvac_status,assigned_to,investigator,next_hearing,name,location " .
+		"from cases,users where investigator=users.id";
 	$res = $db->query($q);
 
 	while ($row = $res->fetch_assoc()) {
-		update_global($ret["global"], $row["status"]);
+		update_global_with_status($ret["global"], $row["status"]);
+		update_global_with_dvac_status($ret["global"], $row["dvac_status"]);
 
 		if (in_array($_SESSION["user_id"], $reporting_officer_ids)) {
 			/* reporting officers should ALWAYS be allowed to see all cases.
@@ -194,7 +209,8 @@
 			continue;
 		
 post_filter:
-		update_range($ret["range"], $row["status"]);
+		update_range_with_status($ret["range"], $row["status"]);
+		update_range_with_dvac_status($ret["range"], $row["dvac_status"]);
 
 		/* the following statistics are only for open cases. so... */
 		if ($row["status"] == $statuses["CLOSED"])
