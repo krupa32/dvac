@@ -90,7 +90,15 @@ var recent = {
 		if (c.addcase)
 			divcase.append('<div class="newcasetag">New</div>');
 
-		divcase.append('<p class="casenum"><a class="caselink ' + c.status + ' ' + c.dvac_status + '" href="' + c.id + '">' + c.case_num + '</a></p>');
+		divcase.append('<p class="casenum"><a class="caselink" href="' + c.id + '">' + c.case_num + '</a></p>');
+		if (c.status == 'OPEN')
+			divcase.find('a').addClass('green');
+		else
+			divcase.find('a').addClass('gray');
+
+		if (c.dvac_status == 'DVAC_OPEN')
+			divcase.find('a').removeClass('green gray').addClass('red');
+
 		var extra = '<p class="extra">Petitioner ' + c.petitioner + ', Respondent ' + c.respondent + '<br>';
 		extra += 'Next hearing ' + c.next_hearing;
 		extra += '</p>';

@@ -12,9 +12,9 @@
 		.newcasetag { float:right; margin:0 0.5em 0 0; padding:0.1em 0.5em; border:dashed 1px #666; background:#f90; }
 		.casenum {
 			a,a:visited 		{ color:#00f; font-size:1.2em; }
-			.OPEN			{ color:#060; }
-			.DVAC_OPEN		{ color:#c00; }
-			.CLOSED			{ color:#666; }
+			.green 			{ color:#060; }
+			.red			{ color:#c00; }
+			.gray			{ color:#666; }
 		}
 		.extra 		{ color:#666; font-size:10pt; }
 		.activityarea 	{ margin:1em 0 0 0; background:#bcd; border:solid 1px #999; .rounded();
