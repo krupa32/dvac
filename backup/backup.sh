@@ -20,7 +20,7 @@ then
 fi
 
 # Remove everything from tmp dir
-rm -f $SYNCDIR/case/tmp/*
+rm -f $SITEDIR/case/tmp/*
 
 # Take backup
 mysqldump -u root -p$MYSQLPASS --databases dvac --add-drop-database > $SYNCDIR/db.sql
