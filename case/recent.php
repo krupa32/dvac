@@ -76,6 +76,8 @@
 		$ext = pathinfo($row["name"], PATHINFO_EXTENSION);
 		$row["link"] = "$upload_dir/$attachment_id.$ext";
 		$row["type"] = array_search($row["type"], $attachment_types);
+		if ($row["comment"] == null)
+			$row["comment"] = "";
 		$res->close();
 		return $row;
 	}

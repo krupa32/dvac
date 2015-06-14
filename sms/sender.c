@@ -49,12 +49,15 @@ int send_command(int fd, char *cmnd, char *expected, int timeout)
 		len += nbytes_read;
 		buf[len] = 0;
 
-		if (strstr(buf, expected)) {
+		if (expected && strstr(buf, expected)) {
 			//printf("recv %d bytes in %d ms:\n[%s]\n", len, i/1000, buf);
 			ret = 0;
 			break;
 		}
 	}
+
+	if (expected == NULL) /* nothing expected. treated as success */
+		ret = 0;
 
 	if (ret != 0)
 		printf("error sending command:[%s]\nrecv:[%s]\n", cmnd, buf);
@@ -177,6 +180,10 @@ int init_modem(int fd)
 	cfsetispeed(&opt, B9600);
 	cfmakeraw(&opt);
 	tcsetattr(fd, TCSANOW, &opt);
+
+	/* send a 'A' to initialize communication */
+	if (send_command(fd, "A\r", NULL, 500) < 0)
+		return -1;
 
 	/* disable modem echo */
 	if (send_command(fd, "ATE0\r", "OK", 500) < 0)

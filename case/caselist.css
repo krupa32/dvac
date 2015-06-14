@@ -22,7 +22,7 @@
 	}
 	.cl_next_hearing { display:inline-block; width:20%; vertical-align:middle; }
 	.cl_investigator { display:inline-block; width:35%; vertical-align:middle; }
-	.cl_location { display:inline-block; width:13%; vertical-align:middle; }
+	.cl_location { display:inline-block; width:10%; vertical-align:middle; }
 
 	.extra { font-size:10px; color:#666; }
 	.action { margin:0.5em 0 0 0; }

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.35, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: dvac
 -- ------------------------------------------------------
--- Server version	5.5.38-0ubuntu0.14.04.1
+-- Server version	5.5.35-1ubuntu1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -54,7 +54,7 @@ CREATE TABLE `assignments` (
   `target` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `attachments` (
   `type` tinyint(4) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1032 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,9 +84,12 @@ CREATE TABLE `cases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `case_num` varchar(32) DEFAULT NULL,
   `category` tinyint(4) DEFAULT NULL,
+  `court` tinyint(4) DEFAULT NULL,
   `creator` int(11) DEFAULT NULL,
   `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` tinyint(4) DEFAULT NULL,
+  `dvac_status` tinyint(4) DEFAULT '20',
+  `direction` tinyint(4) DEFAULT '0',
   `assigned_to` int(11) DEFAULT NULL,
   `investigator` int(11) DEFAULT NULL,
   `petitioner` text,
@@ -94,9 +97,10 @@ CREATE TABLE `cases` (
   `prayer` text,
   `next_hearing` int(11) DEFAULT NULL,
   `regularcase` int(11) DEFAULT NULL,
+  `tag` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `case_num` (`case_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1270 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +115,7 @@ CREATE TABLE `comments` (
   `case_id` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1456 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +139,7 @@ CREATE TABLE `proceedings` (
   `next_hearing` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4124 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +153,7 @@ CREATE TABLE `regularcases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `case_num` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=535 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +170,7 @@ CREATE TABLE `reminders` (
   `remind_on` int(11) DEFAULT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +185,7 @@ CREATE TABLE `smsqueue` (
   `phone` varchar(16) DEFAULT NULL,
   `sms` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1188 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,7 +207,7 @@ CREATE TABLE `users` (
   `phone` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -215,4 +219,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-25  9:58:09
+-- Dump completed on 2015-05-30 13:20:31

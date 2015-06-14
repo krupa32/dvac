@@ -90,7 +90,7 @@ var details = {
 			details.show_history(id);
 
 			/* if case is closed, all buttons are disabled */
-			if (resp.status == 'CLOSED')
+			if (resp.status == 'CLOSED' && resp.dvac_status == 'DVAC_CLOSED')
 				$('#page_details button').attr('disabled', true).removeClass('primary');
 			else
 				$('#page_details button').attr('disabled', false).addClass('primary');
