@@ -4,13 +4,14 @@
 
 	function get_proceeding_details($db, $proc_id)
 	{
-		global $courts, $counsels, $disposals;
+		global $courts, $counsels, $disposals, $judge_prefix;
 
 		$q = "select court,hall,judge,counsel,disposal,next_hearing,comment from proceedings where id=$proc_id";
 		$res = $db->query($q);
 		$row = $res->fetch_assoc();
 		$res->close();
 		$row["court"] = array_search($row["court"], $courts);
+		$row["judge"] = $judge_prefix . " " . $row["judge"];
 		$row["counsel"] = array_search($row["counsel"], $counsels);
 		$row["disposal"] = array_search($row["disposal"], $disposals);
 		if ($row["next_hearing"]) {

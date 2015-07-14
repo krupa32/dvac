@@ -1,14 +1,23 @@
 #!/bin/bash
 
+# Backup procedure is as follows:
+# - All code and database is compressed and backed up under 
+#   BACKUPDIR/BACKUPNAME.tgz
+# - All uploads (files) are backed up under BACKUPDIR/uploads/ dir
+# - Last 7 versions of code are retained. Older ones deleted.
+# - Only latest version of uploads/ dir are retained.
+
 # Configuration variables
 SITEDIR=/var/www/dvac
 SYNCDIR=/root/highcourtbackup
 BACKUPDIR=/mnt/usb/highcourtbackup
+UPLOADBACKUPDIR=$BACKUPDIR/uploads
 MYSQLPASS=123456
 RETAIN=7
 
 BACKUPNAME=`date +%Y-%m-%d`
 
+# Create required sync and backup directories
 if [ ! -d $SYNCDIR ]
 then
 	mkdir -p $SYNCDIR
@@ -19,14 +28,21 @@ then
 	mkdir -p $BACKUPDIR
 fi
 
+if [ ! -d $UPLOADBACKUPDIR ]
+then
+	mkdir -p $UPLOADBACKUPDIR
+fi
+
 # Remove everything from tmp dir
 rm -f $SITEDIR/case/tmp/*
 
-# Take backup
+# Sync the uploads
+rsync -u $SITEDIR/case/uploads/* $UPLOADBACKUPDIR/
+
+# Take backup of code and database
 mysqldump -u root -p$MYSQLPASS --databases dvac --add-drop-database > $SYNCDIR/db.sql
-rsync -ru $SITEDIR/* $SYNCDIR
+rsync -ru --exclude="*/uploads/*" --exclude="*/tmp/*" $SITEDIR/* $SYNCDIR
 tar -czf $BACKUPDIR/$BACKUPNAME.tgz $SYNCDIR/*
-#zip -r $BACKUPDIR/$BACKUPNAME.zip $SYNCDIR/*
 
 # remove older backups (if any)
 NUMBACKUPS=`ls -t1 $BACKUPDIR/* | wc -l`

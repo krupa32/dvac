@@ -220,8 +220,14 @@
 	 * Specified when case is open with dvac.
 	 */
 	$directions = array(
-			"None"			=> 0,
 			"DIRECTION 1"		=> 10,
-			"DIRECTION 2"		=> 20
+			"DIRECTION 2"		=> 20,
+			"Otherwise Important"	=> 0
 			);
+
+	/* judge_prefix
+	 * Prefix to be used to address judges.
+	 * Eg, Justice, Hon'ble Justice etc.
+	 */
+	$judge_prefix = "Hon'ble Justice";
 ?>
