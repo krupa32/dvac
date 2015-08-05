@@ -44,7 +44,7 @@ if [ $NUMBACKUPS -gt $RETAIN ]
 then
 	OLDBACKUPS=`expr $NUMBACKUPS - $RETAIN`
 	#echo "oldbackups=$OLDBACKUPS" >> $BACKUPDIR/log.txt
-	for i in `ls -t1 $BACKUPDIR/*.tgz | head -n $OLDBACKUPS`
+	for i in `ls -tr1 $BACKUPDIR/*.tgz | head -n $OLDBACKUPS`
 	do
 		rm $i
 	done
