@@ -9,10 +9,11 @@
 
 	<link rel="stylesheet" href="/common/jquery-ui.css"></link>
 	<link rel="stylesheet/less" href="/common/common.css"></link>
+	<link rel="stylesheet/less" href="/common/common_print.css" media="print"></link>
 	<link rel="stylesheet/less" href="/case/recent.css"></link>
 	<link rel="stylesheet/less" href="/case/caselist.css"></link>
 	<link rel="stylesheet/less" href="/case/editcase.css"></link>
-	<link rel="stylesheet/less" href="/case/details.css"></link>
+	<link rel="stylesheet/less" href="/case/details.css" media="screen,print"></link>
 	<link rel="stylesheet/less" href="/case/addproceeding.css"></link>
 	<link rel="stylesheet/less" href="/case/reminderlist.css"></link>
 	<link rel="stylesheet/less" href="/case/dashboard.css"></link>

@@ -1,0 +1,33 @@
+/* This is a 'less' style css.
+ * So make sure you use rel="stylesheet/less" AND 
+ * include less.js AFTER including this.
+ */
+
+
+/* common and useful classes */
+.alignright	{ text-align:right; }
+.aligncenter	{ text-align:center; }
+.box		{ background:none; }
+.fullwidth	{ width:100%; }
+.floatleft	{ float:left; }
+.floatright	{ float:right; }
+.clear		{ clear:both; }
+
+
+
+/* html element defaults */
+* 	{ margin:0; padding:0; font:inherit; }
+/*	{ border:dotted 1px #f00; }*/
+html	{ overflow-y:scroll; }
+body 	{ background:none; font:11pt opensans,sans,arial; }
+a,input,select,textarea,button { display:none; }
+table	{ width:100%; border-spacing:0; }
+
+.ajaxstatus, .current_user { display:none; }
+.header, .toolbar { display: none; }
+
+.nav { display:none; }
+
+.pagearea	{ padding:0; vertical-align:top; }
+
+
