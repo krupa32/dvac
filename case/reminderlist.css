@@ -18,7 +18,9 @@
 	.rl_case { display:inline-block; width:25%; vertical-align:middle;
 		.caselink { color:#00f; }
 	}
-	.rl_comment { display:inline-block; width:60%; vertical-align:middle; }
+	.rl_comment { display:inline-block; width:50%; vertical-align:middle; }
 	.rl_remind_on { display:inline-block; width:13%; vertical-align:middle; }
-
+	.rl_action { display:inline-block; width:10%; vertical-align:middle; text-align:center; 
+		.dismisslink { color:#090; }
+	}
 }

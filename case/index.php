@@ -360,6 +360,7 @@ Welcome <?php print $_SESSION["user_name"]; ?>
 		<div class="rl_case">Case</div>
 		<div class="rl_comment">Remarks</div>
 		<div class="rl_remind_on">When</div>
+		<div class="rl_action">Action</div>
 	</div>
 	<div id="reminderlistarea">
 		<!--

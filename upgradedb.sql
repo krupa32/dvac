@@ -27,5 +27,9 @@ use dvac;
 -- alter table cases add direction tinyint default 0 after status;
 
 -- for r15
-alter table cases add dvac_status tinyint default 20 after status;
-update cases set status=10,dvac_status=10 where status=20;
+-- alter table cases add dvac_status tinyint default 20 after status;
+-- update cases set status=10,dvac_status=10 where status=20;
+
+-- for r17
+alter table reminders add column dismissed tinyint default 1 after remind_on;
+update reminders set dismissed = 1 where remind_on < (UNIX_TIMESTAMP() - 24*3600);

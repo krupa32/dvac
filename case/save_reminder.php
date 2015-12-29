@@ -16,7 +16,7 @@
 
 	$comment = $db->real_escape_string($_POST["comment"]);
 
-	$q = "insert into reminders values(null, $user_id, $case_id, $on, '$comment')";
+	$q = "insert into reminders values(null, $user_id, $case_id, $on, 0, '$comment')";
 	if (!$db->query($q)) {
 		$ret = $db->error;
 		goto out;
