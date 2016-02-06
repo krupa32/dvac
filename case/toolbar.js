@@ -26,5 +26,9 @@ var toolbar = {
 			advancedsearch.show(true);
 			e.preventDefault();
 		});
+
+		if (!(user_caps & CAP_ADDCASE))
+			$('#toolbar_addcase').attr('disabled', true);
+
 	}
 };

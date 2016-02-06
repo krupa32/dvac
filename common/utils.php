@@ -14,6 +14,22 @@
 		return $ret;
 	}
 
+	function get_capabilities($id)
+	{
+		global $db_host, $db_user, $db_password, $db_name, $grades, $capabilities;
+
+		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
+		$q = "select grade from users where id=$id";
+		$res = $db->query($q);
+		$row = $res->fetch_assoc();
+		$grade = array_search($row["grade"], $grades);
+		$caps = $capabilities[$grade];
+
+		$res->close();
+		$db->close();
+		return $caps;
+	}
+
 	function get_rc_case_num($id)
 	{
 		global $db_host, $db_user, $db_password, $db_name;

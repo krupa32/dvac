@@ -1,4 +1,6 @@
 <?php
+	include "../common/config.php";
+	include "../common/utils.php";
 	session_start();
 	if (!$_SESSION["user_id"] || $_SESSION["user_id"] == "admin")
 		header("location: /login.php");
@@ -51,6 +53,8 @@
 			print "var user_id = ${_SESSION['user_id']};\n";
 			print "var user_name = '${_SESSION['user_name']}';\n";
 			print "var user_grade = ${_SESSION['user_grade']};\n";
+			$caps = get_capabilities($_SESSION["user_id"]);
+			print "var user_caps = $caps;\n";
 		?>
 		$(document).ready(function(){
 			$('.page').detach().appendTo('.pagearea').hide();

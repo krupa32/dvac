@@ -165,6 +165,8 @@
 		goto out;
 	}
 
+	$caps = get_capabilities($_SESSION["user_id"]);
+
 	$ret = array(
 		"global" 	=> array(),
 		"range" 	=> array(),
@@ -197,8 +199,8 @@
 		update_global_with_status($ret["global"], $row["status"]);
 		update_global_with_dvac_status($ret["global"], $row["dvac_status"]);
 
-		if (in_array($_SESSION["user_id"], $reporting_officer_ids)) {
-			/* reporting officers should ALWAYS be allowed to see all cases.
+		if ($caps & $CAP_NOTEAMFILTER) {
+			/* All cases are visible to this user.
 			 * no team filter required in these cases.
 			 */
 			goto post_filter;

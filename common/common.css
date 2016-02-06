@@ -55,6 +55,7 @@ button	{ padding:0.3em 1em; .rounded(); }
 button:disabled	{ border:solid 1px #666; .gradient(#999, #666); }
 button.primary { background:@pbtnbg; color:@pbtnfg; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(@pbtnbg, darken(@pbtnbg,30%)); }
 button.secondary { background:#ccc; color:#000; border:solid 1px #555; text-shadow:1px 1px 1px #eee; .gradient(#ccc, #999); }
+button.primary:disabled	{ border:solid 1px #666; .gradient(#999, #666); }
 
 
 .ajaxstatus { display:none; position:fixed; width:50%; top:25px; padding:1em; background:#ff0; border:solid 2px #999; text-align:center; }

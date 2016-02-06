@@ -49,13 +49,15 @@
 	 * in gaps of 10 to accomodate new grades in the future.
 	 */
 	$grades = array(
-			"Inspector"	=> 10,
-			"DSP"		=> 20,
-			"ADSP"		=> 30,
-			"SP"		=> 40,
-			"Deputy Dir"	=> 50,
-			"Joint Dir"	=> 60,
-			"Director"	=> 70
+				"Guest"			=> 5,
+			"Inspector"		=> 10,
+			"Inspector(Court)"	=> 15,
+			"DSP"			=> 20,
+			"ADSP"			=> 30,
+			"SP"			=> 40,
+			"Deputy Dir"		=> 50,
+			"Joint Dir"		=> 60,
+			"Director"		=> 70
 			);
 
 	/* courts
@@ -220,9 +222,11 @@
 	 * Specified when case is open with dvac.
 	 */
 	$directions = array(
-			"DIRECTION 1"		=> 10,
-			"DIRECTION 2"		=> 20,
-			"Otherwise Important"	=> 0
+			"Direction to Register "	        	=> 10,
+			"Direction to Complete Investigation "		=> 20,
+                        "Direction to Complete Trial "                  => 30,
+                        "Misc "                                         => 40,
+			"Otherwise Important"				=> 0
 			);
 
 	/* judge_prefix
@@ -230,4 +234,48 @@
 	 * Eg, Justice, Hon'ble Justice etc.
 	 */
 	$judge_prefix = "Hon'ble Justice";
+
+	/* capabilities bitmasks
+	 * Every grade will have certain capabilities as a bitmask.
+	 * The possible capabilities constants are listed below.
+	 * 8 7 6 5 4 3 2 1 0 (Bit)
+	 *                 Add case
+	 *               Edit case
+	 *             Change case status
+	 *           Attach
+	 *         Add proceeding
+	 *       Comment
+	 *     Assign
+	 *   Add reminder
+	 * No team filter
+	 *
+	 * VERY IMPORTANT: The bitmasks should be in sync with those
+	 * in /case/app.js. The selective disabling of buttons based
+	 * on capabilities i actually done by javascript.
+	 */
+	$CAP_ADDCASE 		= 0x1;
+	$CAP_EDITCASE		= 0x2;
+	$CAP_CHANGECASESTATUS	= 0x4;
+	$CAP_ATTACH		= 0x8;
+	$CAP_ADDPROCEEDING	= 0x10;
+	$CAP_COMMENT		= 0x20;
+	$CAP_ASSIGN		= 0x40;
+	$CAP_ADDREMINDER	= 0x80;
+	$CAP_NOTEAMFILTER	= 0x100;
+
+	/* capabilities
+	 * Actual capabilities of different users.
+	 */
+	$capabilities = array(
+			"Guest"			=> 0x100,
+			"Inspector"		=> 0x0BB,
+			"Inspector(Court)"	=> 0x1BB,
+			"DSP"			=> 0x0FB,
+			"ADSP"			=> 0x0FB,
+			"SP"			=> 0x0FB,
+			"Deputy Dir"		=> 0x0FB,
+			"Joint Dir"		=> 0x0FF,
+			"Director"		=> 0x0FF
+			);
+
 ?>

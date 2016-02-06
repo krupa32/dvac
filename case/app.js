@@ -1,3 +1,19 @@
+
+/* User capabilities.
+ *
+ * VERY IMPORTANT: This should be in sync with the capabilities
+ * defined in /common/config.php.
+ */
+var CAP_ADDCASE 		= 0x1;
+var CAP_EDITCASE		= 0x2;
+var CAP_CHANGECASESTATUS	= 0x4;
+var CAP_ATTACH			= 0x8;
+var CAP_ADDPROCEEDING		= 0x10;
+var CAP_COMMENT			= 0x20;
+var CAP_ASSIGN			= 0x40;
+var CAP_ADDREMINDER		= 0x80;
+var CAP_NOTEAMFILTER		= 0x100;
+
 var app = {
 	init: function() {
 		window.onpopstate = function(h) {

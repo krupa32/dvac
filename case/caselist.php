@@ -192,6 +192,7 @@ out1:
 	$type = $_GET["type"];
 	$start = $_GET["start_item"];
 	$rows = $num_items_per_fetch;
+	$caps = get_capabilities($_SESSION["user_id"]);
 
 	$ret = array();
 
@@ -287,9 +288,9 @@ out1:
 		$allcases[] = $row;
 	$res->close();
 
-	if ($type == "assigned" || in_array($_SESSION["user_id"], $reporting_officer_ids)) {
+	if ($type == "assigned" || ($caps & $CAP_NOTEAMFILTER)) {
 		/* 'assigned' cases might be investigated by someone else.
-		 * reporting officers should ALWAYS be allowed to see all cases.
+		 * some users have capability to see all cases.
 		 * no team filter required in these cases.
 		 */
 		$cases = $allcases;

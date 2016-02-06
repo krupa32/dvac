@@ -119,6 +119,7 @@
 
 	$start = $_GET["start_item"];
 	$rows = $num_items_per_fetch;
+	$caps = get_capabilities($_SESSION["user_id"]);
 
 	$ret = array();
 	$cases = array();
@@ -149,9 +150,8 @@
 	$caseids = array();
 	foreach ($allcases as $case) {
 
-		if (in_array($_SESSION["user_id"], $reporting_officer_ids)) {
-			/* The user is a reporting officer.
-			 * All cases are visible to reporting officers.
+		if ($caps & $CAP_NOTEAMFILTER) {
+			/* All cases are visible to this user.
 			 * So no filter.
 			 */
 			$caseids[] = $case["case_id"];

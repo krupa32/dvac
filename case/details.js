@@ -32,6 +32,24 @@ var details = {
 			addreminder.show($('#page_details').data('id'));
 		});
 
+		if (!(user_caps & CAP_CHANGECASESTATUS)) {
+			$('#details_change').hide();
+			$('#details_dvac_change').hide();
+		}
+
+		if (!(user_caps & CAP_EDITCASE))
+			$('#details_edit').attr('disabled', true);
+		if (!(user_caps & CAP_ATTACH))
+			$('#btn_attach').attr('disabled', true);
+		if (!(user_caps & CAP_ADDPROCEEDING))
+			$('#btn_addproceeding').attr('disabled', true);
+		if (!(user_caps & CAP_COMMENT))
+			$('#btn_addcomment').attr('disabled', true);
+		if (!(user_caps & CAP_ASSIGN))
+			$('#btn_assign').attr('disabled', true);
+		if (!(user_caps & CAP_ADDREMINDER))
+			$('#btn_addreminder').attr('disabled', true);
+
 	},
 
 	show: function(id, push) {
@@ -40,14 +58,6 @@ var details = {
 
 		if (push)
 			history.pushState({ page:'details', id:id }, '', '#details/' + id);
-
-		if (user_grade == 70 || user_grade == 60) { // only director or joint director
-			$('#details_change').show();
-			$('#details_dvac_change').show();
-		} else {
-			$('#details_change').hide();
-			$('#details_dvac_change').hide();
-		}
 
 		$('.ajaxstatus').text('Loading...').show();
 		var param = {};
@@ -92,8 +102,8 @@ var details = {
 			/* if case is closed, all buttons are disabled */
 			if (resp.status == 'CLOSED' && resp.dvac_status == 'DVAC_CLOSED')
 				$('#page_details button').attr('disabled', true).removeClass('primary');
-			else
-				$('#page_details button').attr('disabled', false).addClass('primary');
+			//else
+			//	$('#page_details button').attr('disabled', false).addClass('primary');
 
 			$('#page_details').show();
 		});
