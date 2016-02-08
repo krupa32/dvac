@@ -267,7 +267,7 @@
 	 * Actual capabilities of different users.
 	 */
 	$capabilities = array(
-			"Guest"			=> 0x100,
+			"Guest"			=> 0x108,
 			"Inspector"		=> 0x0BB,
 			"Inspector(Court)"	=> 0x1BB,
 			"DSP"			=> 0x0FB,

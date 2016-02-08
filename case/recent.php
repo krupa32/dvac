@@ -134,7 +134,7 @@
 	$team_ids = get_team_ids($db, $_SESSION["user_id"], $_SESSION["user_grade"]);
 
 	/* get list of cases with recent activity */
-	$q = "select case_id,investigator from activities,cases " .
+	$q = "select case_id,investigator,assigned_to from activities,cases " .
 		"where datediff(now(), activities.ts) < $num_days_recent_activity and case_id=cases.id " .
 		"order by activities.ts desc";
 
@@ -156,8 +156,13 @@
 			 */
 			$caseids[] = $case["case_id"];
 
-		} else if (in_array($case["investigator"], $team_ids))
+		} else if (in_array($case["investigator"], $team_ids) ||
+			   in_array($case["assigned_to"], $team_ids)) {
+			/* case should be either investigated by or
+			 * assigned to team.
+			 */
 			$caseids[] = $case["case_id"];
+		}
 	}
 
 	/* The query for 'recent' may return duplicate caseids.

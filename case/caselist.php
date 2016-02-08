@@ -29,13 +29,13 @@ out1:
 		 */
 		if ($param["hearingafter"] || $param["hearingbefore"]) {
 			$q = "select distinct cases.id,cases.case_num,status,dvac_status," .
-				"investigator,petitioner,cases.next_hearing,location,grade " .
+				"investigator,assigned_to,petitioner,cases.next_hearing,location,grade " .
 				"from cases inner join users on investigator=users.id " . 
 				    "left join proceedings on proceedings.case_id=cases.id " .
 				"where true ";
 		} else {
 			$q = "select distinct cases.id,cases.case_num,status,dvac_status," .
-				"investigator,petitioner,cases.next_hearing,location,grade " .
+				"investigator,assigned_to,petitioner,cases.next_hearing,location,grade " .
 				"from cases,users " .
 				"where investigator=users.id ";
 		}
@@ -206,71 +206,71 @@ out1:
 	switch ($type) {
 	case "assigned":
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where assigned_to=${_SESSION["user_id"]} and investigator=users.id ";
 		break;
 	case "upcoming_hearings":
 		$from = mktime() - 24*60*60;
 		$q = "select cases.id,case_num,status,dvac_status,".
-			"investigator,petitioner,next_hearing,location from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location from cases,users " . 
 			"where status != ${statuses['CLOSED']} and next_hearing >= $from and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "notspecified_hearings":
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location from cases,users " . 
 			"where status != ${statuses["CLOSED"]} and next_hearing=0 and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "notupdated_hearings":
 		$from = mktime() - 24*60*60;
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location from cases,users " . 
 			"where status != ${statuses['CLOSED']} and next_hearing != 0 and next_hearing < $from and investigator=users.id " .
 			"order by next_hearing ";
 		break;
 	case "range_total":
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where investigator=users.id ";
 		break;
 	case "range_open":
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status=${statuses["OPEN"]} and investigator=users.id ";
 		break;
 	case "range_dvac_open":
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where dvac_status=${dvac_statuses["DVAC_OPEN"]} and investigator=users.id ";
 		break;
 	case "range_closed":
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status=${statuses["CLOSED"]} and investigator=users.id ";
 		break;
 	case "category":
 		$value = $_GET["value"];
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status!=${statuses['CLOSED']} and category=${categories[$value]} and investigator=users.id ";
 		break;
 	case "location":
 		$value = $_GET["value"];
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status!=${statuses['CLOSED']} and location=${locations[$value]} and investigator=users.id ";
 		break;
 	case "user":
 		$value = $_GET["value"];
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where status!=${statuses['CLOSED']} and users.id=$value and investigator=users.id ";
 		break;
 	case "search":
 		$value = $_GET["value"];
 		$q = "select cases.id,case_num,status,dvac_status," .
-			"investigator,petitioner,next_hearing,location,grade from cases,users " . 
+			"investigator,assigned_to,petitioner,next_hearing,location,grade from cases,users " . 
 			"where investigator=users.id and (case_num like '%$value%' or petitioner like '%$value%' or respondent like '%$value%')";
 		break;
 	case "advanced":
@@ -302,10 +302,11 @@ out1:
 	 */
 	$team_ids = get_team_ids($db, $_SESSION["user_id"], $_SESSION["user_grade"]);
 
-	/* remove cases not investigated by team */
+	/* filter cases that are either investigated by or not assigned to team */
 	$cases = array();
 	foreach ($allcases as $case) {
-		if (in_array($case["investigator"], $team_ids))
+		if (in_array($case["investigator"], $team_ids) ||
+		    in_array($case["assigned_to"], $team_ids))
 			$cases[] = $case;
 	}
 
@@ -316,6 +317,7 @@ post_filter:
 		$cases[$i]["status"] = array_search($cases[$i]["status"], $statuses);	
 		$cases[$i]["dvac_status"] = array_search($cases[$i]["dvac_status"], $dvac_statuses);	
 		$cases[$i]["investigator"] = get_name_grade($cases[$i]["investigator"]);
+		$cases[$i]["assigned_to"] = get_name_grade($cases[$i]["assigned_to"]);
 		$cases[$i]["location"] = array_search($cases[$i]["location"], $locations);
 		$cases[$i]["last_activity"] = get_last_activity($db, $cases[$i]["id"]);
 		if ($cases[$i]["next_hearing"] == 0)
