@@ -57,7 +57,8 @@
 			"SP"			=> 40,
 			"Deputy Dir"		=> 50,
 			"Joint Dir"		=> 60,
-			"Director"		=> 70
+			"Director"		=> 70,
+			"Manager CBranch"	=> 80
 			);
 
 	/* courts
@@ -275,7 +276,8 @@
 			"SP"			=> 0x0FB,
 			"Deputy Dir"		=> 0x0FB,
 			"Joint Dir"		=> 0x0FF,
-			"Director"		=> 0x0FF
+			"Director"		=> 0x0FF,
+			"Manager CBranch"	=> 0x1FF
 			);
 
 ?>
