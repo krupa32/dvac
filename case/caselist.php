@@ -150,7 +150,7 @@ out1:
 	function generate_csv($cases)
 	{
 		$tmpdir = $_SERVER["DOCUMENT_ROOT"] . "/case/tmp/";
-		$latest = exec("ls -t $tmpdir | head -n 1");
+		$latest = exec("ls -t $tmpdir/*.csv | head -n 1");
 		$csvfilename = basename($latest) + 1;
 		$csvfilename = $csvfilename . ".csv";
 		$filename = $tmpdir . $csvfilename;
@@ -183,6 +183,58 @@ out1:
 		fclose($fp);
 
 		return $csvfilename;
+	}
+
+	function generate_html($cases)
+	{
+		$tmpdir = $_SERVER["DOCUMENT_ROOT"] . "/case/tmp/";
+		$latest = exec("ls -t $tmpdir/*.html | head -n 1");
+		$htmlfilename = basename($latest) + 1;
+		$htmlfilename = $htmlfilename . ".html";
+		$filename = $tmpdir . $htmlfilename;
+
+		$fp = fopen($filename, "w");
+		if (!$fp)
+			return "error";
+
+		fwrite($fp, "<html><body><table border=1 cellpadding=2 style=\"width:1000; font:12px sans;\">");
+
+		/* header */
+		fwrite($fp, "<tr>");
+		fwrite($fp, "<td style=\"width:80\">Case No</td>");
+		fwrite($fp, "<td style=\"width:80\">Court</td>");
+		fwrite($fp, "<td style=\"width:80\">Court Status</td>");
+		fwrite($fp, "<td style=\"width:80\">DVAC Status</td>");
+		fwrite($fp, "<td style=\"width:100\">Investigated By</td>");
+		fwrite($fp, "<td style=\"width:100\">Petitioner</td>");
+		fwrite($fp, "<td style=\"width:100\">Respondent</td>");
+		fwrite($fp, "<td style=\"width:300\">Prayer</td>");
+		fwrite($fp, "<td style=\"width:80\">Tag</td>");
+		fwrite($fp, "</tr>");
+
+		for ($i = 0; $i < count($cases); $i++) {
+			$c = $cases[$i];
+			$c["petitioner"] = str_replace("\n", "<br>", $c["petitioner"]);
+			$c["respondent"] = str_replace("\n", "<br>", $c["respondent"]);
+			$c["prayer"] = str_replace("\n", "<br>", $c["prayer"]);
+
+			$str = "<td style=\"width:80\">" . $c["case_num"] . "</td>";
+			$str = $str . "<td style=\"width:80\">" . $c["court"] . "</td>";
+			$str = $str . "<td style=\"width:80\">" . $c["status"] . "</td>";
+			$str = $str . "<td style=\"width:80\">" . $c["dvac_status"] . "</td>";
+			$str = $str . "<td style=\"width:100\">" . $c["investigator"] . "</td>";
+			$str = $str . "<td style=\"width:100\">" . $c["petitioner"] . "</td>";
+			$str = $str . "<td style=\"width:100\">" . $c["respondent"] . "</td>";
+			$str = $str . "<td style=\"width:300\">" . $c["prayer"] . "</td>";
+			$str = $str . "<td style=\"width:80\">" . $c["tag"] . "</td>";
+
+			fwrite($fp, "<tr>" . $str . "</tr>");
+		}
+
+		fwrite($fp, "</table></body></html>");
+		fclose($fp);
+
+		return $htmlfilename;
 	}
 
 	session_start();
@@ -378,11 +430,14 @@ report:
 	}
 
 	/* now that we have case list, generate a report file in
-	 * HOMEDIR/tmp/. All files in tmp dir will be deleted everyday
+	 * case/tmp/. All files in tmp dir will be deleted everyday
 	 * during the nightly backup.
 	 */
 	$csvfilename = generate_csv($cases);
-	$cases = $csvfilename;
+	$htmlfilename = generate_html($cases);
+	$cases = "";
+	$cases["csv"] = $csvfilename;
+	$cases["html"] = $htmlfilename;
 
 out:
 	$after = gettimeofday(true);

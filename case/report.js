@@ -24,7 +24,8 @@ var report = {
 			//console.log(data);
 			$('.ajaxstatus').text('Done').fadeOut();
 
-			$('#report').html('Report can be downloaded from <a href="/case/tmp/' + resp.cases + '">here</a>');
+			$('#report').html('CSV can be downloaded from <a href="/case/tmp/' + resp.cases['csv'] + '">here</a><br>' +
+					'HTML can be viewed <a href="/case/tmp/' + resp.cases['html'] + '" target="_blank">here</a>');
 			$('#dlg_report').dialog('open');
 
 		});
