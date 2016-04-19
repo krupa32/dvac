@@ -6,8 +6,12 @@
 		$db = new mysqli($db_host, $db_user, $db_password, $db_name);
 		$q = "select name,grade from users where id=$id";
 		$res = $db->query($q);
-		$row = $res->fetch_assoc();
-		$ret = $row["name"] . ", " . array_search($row["grade"], $grades);
+		if ($res && $res->num_rows > 0) {
+			$row = $res->fetch_assoc();
+			$ret = $row["name"] . ", " . array_search($row["grade"], $grades);
+		} else {
+			$ret = "Unknown";
+		}
 
 		$res->close();
 		$db->close();

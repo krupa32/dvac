@@ -201,6 +201,7 @@ out1:
 
 		/* header */
 		fwrite($fp, "<tr>");
+		fwrite($fp, "<td style=\"width:80\">S.No</td>");
 		fwrite($fp, "<td style=\"width:80\">Case No</td>");
 		fwrite($fp, "<td style=\"width:80\">Court</td>");
 		fwrite($fp, "<td style=\"width:80\">Court Status</td>");
@@ -218,7 +219,8 @@ out1:
 			$c["respondent"] = str_replace("\n", "<br>", $c["respondent"]);
 			$c["prayer"] = str_replace("\n", "<br>", $c["prayer"]);
 
-			$str = "<td style=\"width:80\">" . $c["case_num"] . "</td>";
+			$str = "<td style=\"width:80\">" . ($i + 1) . "</td>";
+			$str = $str . "<td style=\"width:80\">" . $c["case_num"] . "</td>";
 			$str = $str . "<td style=\"width:80\">" . $c["court"] . "</td>";
 			$str = $str . "<td style=\"width:80\">" . $c["status"] . "</td>";
 			$str = $str . "<td style=\"width:80\">" . $c["dvac_status"] . "</td>";
