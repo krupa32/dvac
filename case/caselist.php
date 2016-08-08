@@ -131,7 +131,7 @@ out1:
 		// only hearingbefore
 		if ($param["hearingbefore"] && !$param["hearingafter"]) {
 			// since the given date is ON or before, midnight of next day is used
-			$ts = strtotime($param["hearingbefore"]) + (24 * 60 * 60);
+			$ts = strtotime($param["hearingbefore"]);
 			$q = $q . " and ( (proceedings.next_hearing != 0 and proceedings.next_hearing <= $ts) or " .
 				"(cases.next_hearing != 0 and cases.next_hearing <= $ts) )";
 		}
@@ -139,7 +139,7 @@ out1:
 		// both hearingafter and hearingbefore
 		if ($param["hearingafter"] && $param["hearingbefore"]) {
 			$afterts = strtotime($param["hearingafter"]);
-			$beforets = strtotime($param["hearingbefore"]) + (24 * 60 * 60);
+			$beforets = strtotime($param["hearingbefore"]);
 			$q = $q . " and ( (proceedings.next_hearing >= $afterts and proceedings.next_hearing <= $beforets) or " .
 				"(cases.next_hearing >= $afterts and cases.next_hearing <= $beforets) )";
 		}
